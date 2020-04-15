@@ -24,6 +24,8 @@
           integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
           crossorigin="anonymous">
 
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+
 <!--    ustawienia z listyzakupów-->
 <!--    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">-->
 <!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
@@ -60,10 +62,8 @@
                 <!--                    <a class="nav-link" href="http://robertburek.pl" target="_blank">Autor</a>-->
                 <!--                </li>-->
             </ul>
-            <form class="form-inline my-2 my-lg-0" method="POST" action="/amerykaspolka"
-                  th:object="${amerykaSpolkaFind}">
-                <input class="form-control mr-sm-2" type="search" placeholder="Ticker"
-                       th:field="*{ticker}">
+            <form class="form-inline my-2 my-lg-0" method="POST" action="/amerykaspolka" th:object="${amerykaSpolkaFind}">
+                <input class="form-control mr-sm-2" type="search" placeholder="Ticker" th:field="*{ticker}">
                 <button class="btn btn-outline-success my-2 my-sm-0 myColor" type="submit">Szukaj</button>
             </form>
         </div>
@@ -183,7 +183,8 @@
                     <div th:each="industry : ${industryList}" class="custom-control custom-switch myIndustry" hidden>
 <!--                        th:value="${prod.id}" th:id="'btnSelect'+${prod.id}"-->
                         <input type="checkbox" class="custom-control-input" th:id="'industry'+${industry.id}">
-                        <label th:text="${industry.name}" class="custom-control-label myLabelStrategy" th:for="'industry'+${industry.id}">NameIndustry</label>
+                        <label th:text="${industry.name}" class="custom-control-label myLabelStrategy myIndustryLabel" th:value="${industry.id}"
+                               th:for="'industry'+${industry.id}">NameIndustry</label>
                     </div>
 
 <!--                    <div class="custom-control custom-switch myIndustry" hidden>-->
@@ -389,7 +390,7 @@
             <h4>Wyniki wyszukiwania:</h4>
             <p></p>
             <div class="listSpolka" id="position">
-                <table class="table table-hover bg-light">
+                <table id="mojeZmiany" class="table table-hover bg-light">
                     <thead>
                     <tr>
 
@@ -459,17 +460,17 @@
         <p>Copyright &copy; 2020 - <a href="http://robertburek.pl" target="_blank">Robert Burek</a></p>
     </footer>
 </div>
-<script th:inline="javascript">
+<!--<script th:inline="javascript">-->
 
-    let industryList = [[${industryList}]];
-    console.log(industryList);
-    console.log("Zrobiłem listę Industry.");
+<!--    let industryList = [[${industryList}]];-->
+<!--    console.log(industryList);-->
+<!--    console.log("Zrobiłem listę Industry.");-->
 
 <!--    let sectorList = [[${sectorList}]];-->
 <!--    console.log(sectorList);-->
 <!--    console.log("Zrobiłem listę Sector.");-->
 
-</script>
+<!-- </script>-->
 <script th:src="@{/js/app.js}"></script>
 </body>
 </html>

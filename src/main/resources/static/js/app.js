@@ -18,6 +18,7 @@
 let sectorsList = document.querySelectorAll('.mySector');
 let marketsList = document.querySelectorAll('.myMarket');
 let industriesList = document.querySelectorAll('.myIndustry');
+let industryLabelList = document.querySelectorAll('.myIndustryLabel');
 let sectorButton = document.querySelector('#sectorButton');
 let marketButton = document.querySelector('#marketButton');
 let industryButton = document.querySelector('#industryButton');
@@ -29,7 +30,38 @@ document.addEventListener('DOMContentLoaded', function () {
     console.log(sectorButton);
     selectSectorsList();
     selectMarketsList();
-    selectIndustriesList()
+    selectIndustriesList();
+
+    [].forEach.call(sectorsList, function (sectorElement) {
+        sectorElement.addEventListener('click', function (event) {
+            let index = 1;
+            index = this.getAttribute('value');
+            $("#mojeZmiany").load('/amerykastrategie/sector/' + index);
+        })
+    });
+
+    [].forEach.call(industryLabelList, function (industryElement) {
+        industryElement.addEventListener('click', function (event) {
+            // sendIndustry2(17);
+            // loadData(17);
+            // loca/tion.href="/amerykastrategie/17";
+            // document.getElementById("mojeZmiany").innerHTML=
+            //     updateEventCount(17);
+            let index = 1;
+            // console.log(this.getAttribute('value'));
+            // console.log(event.value);
+            // console.log(event);
+            // console.log(industryElement.value());
+            index = this.getAttribute('value');
+            // console.log(index);
+            // let url = '/amerykastrategie/id?id='+index;
+            // url = url + '/' + $('#mojeZmiany').val();
+            // $("#mojeZmiany").load(url);
+            $("#mojeZmiany").load('/amerykastrategie/id?id=' + index);
+
+            // retrieveGuests(17);
+        })
+    });
 
     // [].forEach.call(sectorButton, function(swap) {
     //     swap.addEventListener('mouseover', () => {
@@ -51,9 +83,9 @@ document.addEventListener('DOMContentLoaded', function () {
 //     })
 // };
 
-function sendIndustry(index){
-    fetch("/strategie", {
-        method: "get",
+function sendIndustry(index) {
+    fetch("/amerykastrategie", {
+        method: "put",
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
@@ -64,15 +96,56 @@ function sendIndustry(index){
     })
 };
 
-function Industry(id,name){
-    this.id=id;
-    this.name=name;
+function sendIndustry2(index) {
+    fetch("/amerykastrategie/id?id=" + index)
+        .then(res => {
+            console.log(industryList[index]);
+            console.log(res.body);
+            // document.getElementById("mojeZmiany").innerHTML = res.prototype;
+        });
+};
+
+function retrieveGuests(index) {
+    // var url = '/amerykastrategie/id?id='+index;
+    var url = '/amerykastrategie/id?id=' + index;
+
+    if ($('#mojeZmiany').val() != '') {
+        url = url + '/' + $('#mojeZmiany').val();
+    }
+
+    $("#mojeZmiany").load(url);
+}
+
+function updateEventCount(index) {
+    $.get("/amerykastrategie/id?id=" + index, function (fragment) { // get from controller
+        $("#mojeZmiany").replaceWith(fragment); // update snippet of page
+    });
+}
+
+function loadData(index) {
+    const xhr = new XMLHttpRequest();
+
+    // xhr.addEventListener("load", function() {
+    //     showUsers(xhr.response);
+    //     showCars(xhr.response);
+    //     showMovies(xhr.response);
+    // });
+
+    document.getElementById("mojeZmiany").innerHTML = xhr.open("GET", "/amerykastrategie/id?id=" + index, true);
+    // xhr.send();
+    ;
+
+}
+
+function Industry(id, name) {
+    this.id = id;
+    this.name = name;
 };
 
 function selectSectorsList() {
     sectorButton.addEventListener('click', function (event) {
         [].forEach.call(sectorsList, function (sectorElement) {
-            if (sectorElement.hidden==true) {
+            if (sectorElement.hidden == true) {
                 sectorElement.hidden = false;
             } else {
                 sectorElement.hidden = true;
@@ -84,7 +157,7 @@ function selectSectorsList() {
 function selectMarketsList() {
     marketButton.addEventListener('click', function (event) {
         [].forEach.call(marketsList, function (marketElement) {
-            if (marketElement.hidden==true) {
+            if (marketElement.hidden == true) {
                 marketElement.hidden = false;
             } else {
                 marketElement.hidden = true;
@@ -96,7 +169,7 @@ function selectMarketsList() {
 function selectIndustriesList() {
     industryButton.addEventListener('click', function (event) {
         [].forEach.call(industriesList, function (industryElement) {
-            if (industryElement.hidden==true) {
+            if (industryElement.hidden == true) {
                 industryElement.hidden = false;
             } else {
                 industryElement.hidden = true;

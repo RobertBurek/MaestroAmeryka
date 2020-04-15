@@ -48,10 +48,8 @@
                 <!--                    <a class="nav-link" href="http://robertburek.pl" target="_blank">Autor</a>-->
                 <!--                </li>-->
             </ul>
-            <form class="form-inline my-2 my-lg-0" method="POST" action="/amerykaspolka"
-                  th:object="${amerykaSpolkaFind}">
-                <input class="form-control mr-sm-2" type="search" placeholder="Ticker"
-                       th:field="*{ticker}">
+            <form class="form-inline my-2 my-lg-0" method="POST" action="/amerykaspolka" th:object="${amerykaSpolkaFind}">
+                <input class="form-control mr-sm-2" type="search" placeholder="Ticker" th:field="*{ticker}">
                 <button class="btn btn-outline-success my-2 my-sm-0 myColor" type="submit">Szukaj</button>
             </form>
         </div>
@@ -82,7 +80,7 @@
                                 class="fa fa-edit"></i></a></td>
                         <!--                        <td class="textCenter"><a href="#"><i class="fa fa-edit"></i></a></td>-->
                         <!--                        <td><a th:href="@{/amerykaSpolka/del(index=${amerykaSpolka.ticker})}"><i class="fa fa-trash"></i></a></td>-->
-                        <td class="textCenter"><a href="#"><i class="fa fa-trash"></i></a></td>
+                        <td class="textCenter"><a href="/amerykastrategie"><i class="fa fa-trash"></i></a></td>
                     </tr>
                     </tbody>
 

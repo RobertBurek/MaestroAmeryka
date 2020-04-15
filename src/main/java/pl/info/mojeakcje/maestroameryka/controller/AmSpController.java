@@ -51,6 +51,7 @@ public class AmSpController {
 
     @GetMapping("/")
     public String getAll(Model model) {
+        amerykaSpolkiStretegie = (List<AmerykaSpolkaStrategia>) amSpStrategyRepository.findAll();
         amerykaSpolki = (List<AmerykaSpolka>) amSpRepository.findAll();
 //        amerykaSpolki.stream().map(amerykaSpolka -> Double.parseDouble(amerykaSpolka.getDay0119()))
         log.info(ANSI_BLUE + "Odczyt wszystkich danych z bazy ..." + ANSI_RESET);
@@ -143,34 +144,33 @@ public class AmSpController {
     }
 
 
-    @GetMapping("/strategie")
-    public String getAllStrategy(Model model) {
-        amerykaSpolkiStretegie = (List<AmerykaSpolkaStrategia>) amSpStrategyRepository.findAll();
-//        amerykaSpolki.stream().map(amerykaSpolka -> Double.parseDouble(amerykaSpolka.getDay0119()))
-        log.info(ANSI_BLUE + "Odczyt wszystkich danych z bazy ..." + ANSI_RESET);
-        model.addAttribute("industryList", industryList);
-        model.addAttribute("sectorList", sectorList);
-        model.addAttribute("amerykaSpolkiStrategie", amerykaSpolkiStretegie);
-        model.addAttribute("amerykaSpolkaNew", new AmerykaSpolka());
-        model.addAttribute("amerykaSpolkaFind", new AmerykaSpolka());
-        return "amerykastrategie";
-    }
-
-//            return "redirect:/design";
-
-    @PutMapping
-    public String modificationList(@RequestBody Industry industry) {
-//        int index=0;
-        log.info("Wysłałem : " + industry);
-//        for (Industry ind :industryList) {
-//            if (ind.getId()==industry.getId()) break;
-//            else index++;
-//        }
-        amerykaSpolkiStretegie=amerykaSpolkiStretegie
-                .stream()
-                .filter(amerykaSpolkaStrategia -> amerykaSpolkaStrategia.getIndustry().equals(industry.getName()))
-                .collect(Collectors.toList());
-        return "redirect:/strategie";
-    }
+//    @GetMapping("/strategie")
+//    public String getAllStrategy(Model model) {
+////        amerykaSpolkiStretegie = (List<AmerykaSpolkaStrategia>) amSpStrategyRepository.findAll();
+////        amerykaSpolki.stream().map(amerykaSpolka -> Double.parseDouble(amerykaSpolka.getDay0119()))
+//        log.info(ANSI_BLUE + "Odczyt wszystkich danych z bazy ..." + ANSI_RESET);
+//        model.addAttribute("industryList", industryList);
+//        model.addAttribute("sectorList", sectorList);
+//        model.addAttribute("amerykaSpolkiStrategie", amerykaSpolkiStretegie);
+//        model.addAttribute("amerykaSpolkaNew", new AmerykaSpolka());
+//        model.addAttribute("amerykaSpolkaFind", new AmerykaSpolka());
+//        return "amerykastrategie";
+//    }
+//
+//    @PutMapping("/strategie")
+//    public void modificationList(@RequestBody Industry industry) {
+////        int index=0;
+//        log.info("Wysłałem : " + industry);
+////        for (Industry ind :industryList) {
+////            if (ind.getId()==industry.getId()) break;
+////            else index++;
+////        }
+//        amerykaSpolkiStretegie = (List<AmerykaSpolkaStrategia>) amSpStrategyRepository.findAll();
+//        amerykaSpolkiStretegie=amerykaSpolkiStretegie
+//                .stream()
+//                .filter(amerykaSpolkaStrategia -> amerykaSpolkaStrategia.getIndustry().equals(industry.getName()))
+//                .collect(Collectors.toList());
+////        return "redirect:/strategie";
+//    }
 
 }
