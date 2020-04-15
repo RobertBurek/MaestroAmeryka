@@ -1,0 +1,416 @@
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, sans-serif;
+    font-size: 16px;
+}
+
+h1 {
+    font-size: 2rem;
+}
+
+h3 {
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+a {
+    text-decoration: none;
+    color: #777;
+    width: 80px;
+}
+
+img {
+    max-width: 100%;
+}
+
+.mySector{
+    margin-left: 10px;
+}
+
+.myMarket{
+    margin-left: 10px;
+}
+
+.myIndustry{
+    margin-left: 10px;
+}
+
+.myPokaz{
+    margin-top: 10px;
+}
+
+.positive {
+    color: green;
+    font-weight: bold;
+}
+
+.negative {
+    color: red;
+    font-weight: bold;
+}
+
+.isNote{
+    color: #0095ff;
+}
+
+.myLabelStrategy{
+    font-size: 14px;
+}
+
+.myNaviButton{
+    display: flex;
+    margin-left: 40%;
+}
+
+.myColumn{
+    width: 50%;
+    margin: 20px 10px;
+    padding-left: 50px;
+}
+
+.myForm{
+    display: flex;
+}
+
+.myDisplayFlex{
+    display: flex;
+    height: 22px;
+}
+
+.label-course{
+    padding-top: 0px;
+    width: 134px;
+    text-align: center;
+}
+
+.input-course{
+    width: 110px;
+    margin-right: 25%;
+}
+
+.bg-dark {
+    background-color: #dde5ec!important;
+    border-radius: .35rem;
+}
+
+.myTable td{
+    padding: 0px;
+    border-top: 0px;
+    vertical-align: middle;
+}
+
+.myBorder{
+border: 2px solid #61a5ea;
+}
+
+.table thead th{
+    vertical-align: middle;
+}
+
+.tableWidth{
+    width: 34%;
+}
+
+.tableWidthSector{
+    width: 30%;
+}
+
+.textCenter{
+    text-align: center;
+}
+
+.listSpolka {
+    max-height: 96%;
+    overflow: auto;
+
+}
+
+.listMarket{
+    background-color: #f1f1f1;
+}
+
+.listIndustry{
+    max-height: 290px;
+    overflow: auto;
+    background-color: #f1f1f1;
+}
+
+.listSector{
+    max-height: 290px;
+    overflow: auto;
+    background-color: #f1f1f1;
+}
+
+.myColor{
+    color: #61a5ea;
+    border-color: #61a5ea;
+}
+
+.myColor:hover {
+    background-color: #61a5ea;
+    border-color: #61a5ea;
+}
+
+.btn-outline-success {
+    color: #61a5ea;
+    background-color: transparent;
+    background-image: none;
+    border-color: #61a5ea;
+    margin: 0 15px 0 10px;
+}
+
+.btn-outline-success:hover {
+    color: #fff;
+    background-color: #61a5ea;
+    border-color: #61a5ea;
+}
+
+.btn-outline-success:not(:disabled):not(.disabled).active, .btn-outline-success:not(:disabled):not(.disabled):active, .show>.btn-outline-success.dropdown-toggle {
+    color: #fff;
+    background-color: #61a5ea;
+    border-color: #61a5ea;
+}
+
+
+/* Container */
+.container {
+    max-width: 1400px;
+    margin: 20px auto;
+    border: 1px solid #e1e1e1;
+    border-radius: 5px;
+    box-shadow: 0 0 35px rgba(0, 0, 0, 0.1);
+}
+
+/* Main */
+main {
+    display: flex;
+    justify-content: space-between;
+    height: 1220px;
+}
+
+label{
+    width: 90%;
+}
+
+/* Article */
+article {
+    width: 72%;
+    padding: 30px;
+    /*height: 1100px;*/
+}
+
+/* Aside */
+aside {
+    width: 28%;
+    padding: 20px;
+    background-color: #f8f8f8;
+    border-left: 1px solid #e1e1e1;
+}
+
+.widget {
+    margin-bottom: 40px;
+}
+
+.widget img {
+    float: left;
+    margin: 0 12px 5px 0;
+    width: 47%;
+}
+
+.widget:after {
+    content: '';
+    display: table;
+    clear: both;
+}
+
+.widget ul {
+    list-style-type: square;
+    padding: 0 0 0 18px;
+    margin: 0;
+}
+
+.widget li {
+    margin-bottom: 15px;
+}
+
+/* Footer */
+footer {
+    background: #f8f8f8;
+    border-top: 1px solid #e1e1e1;
+    padding: 22px 15px;
+    text-align: center;
+}
+
+footer p {
+    margin: 0;
+}
+
+section p {
+    text-align: justify;
+}
+
+/*MEDIA*/
+@media (max-width: 1320px ) {
+    .listSpolka {
+        max-height: 95%;
+    }
+    main {
+        height: 1350px;
+    }
+}
+
+@media (max-width: 1150px ) {
+    .listSpolka {
+        max-height: 95%;
+    }
+    main {
+        height: 1700px;
+    }
+    .input-course {
+        width: 100px;
+        margin-right: 10%;
+    }
+}
+
+@media (max-width: 960px ) {
+    .listSpolka {
+        max-height: 95%;
+    }
+    main {
+        height: 1750px;
+    }
+}
+
+@media (max-width: 910px ) {
+    .listSpolka {
+        max-height: 97%;
+    }
+    main {
+        height: 1800px;
+    }
+}
+
+@media (max-width: 840px ) {
+    .listSpolka {
+        max-height: 97%;
+    }
+    main {
+        height: 1840px;
+    }
+    .myNaviButton{
+        margin-left: 30%;
+    }
+    article {
+        padding: 0px;
+    }
+}
+
+@media (max-width: 800px ) {
+    .listSpolka {
+        max-height: 97%;
+    }
+    main {
+        height: 2250px;
+    }
+    .myColumn {
+        width: 46%;
+        margin: 10px 0px;
+        padding-left: 5px;
+    }
+    .myNaviButton{
+        margin-left: 20%;
+    }
+}
+
+@media (max-width: 758px ) {
+    .listSpolka {
+        max-height: 97%;
+    }
+    main {
+        height: 2500px;
+    }
+}
+
+@media (max-width: 700px ) {
+    .listSpolka {
+        max-height: 97%;
+    }
+    main {
+        height: 25200px;
+    }
+}
+
+@media (max-width: 680px ) {
+    .listSpolka {
+        max-height: 97%;
+    }
+    main {
+        height: 1940px;
+    }
+    section p {
+        font-size: 80%;
+    }
+}
+
+@media (max-width: 620px ) {
+    .listSpolka {
+        max-height: 97%;
+    }
+    main {
+        height: 2170px;
+    }
+    .myColumn {
+        width: 50%;
+        margin: 0px 0px;
+        padding-left: 0px;
+    }
+    .btn-outline-success {
+        font-size: 90%;
+    }
+    h3 {
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 566px ) {
+    .listSpolka {
+        max-height: 97%;
+    }
+    main {
+        height: 2250px;
+    }
+    .input-course{
+        margin-right: 2px;
+        font-size: 90%;
+        width: 80px;
+    }
+    .myForm{
+        font-size: 80%;
+    }
+    .btn-outline-success {
+        font-size: 80%;
+    }
+    section p {
+        font-size: 74%;
+    }
+    h3 {
+        font-size: 1.0rem;
+    }
+}
+
+@media (max-width: 458px ) {
+    .listSpolka {
+        max-height: 97%;
+    }
+    main {
+        height: 2500px;
+    }
+    .btn-outline-success {
+        font-size: 60%;
+    }
+}

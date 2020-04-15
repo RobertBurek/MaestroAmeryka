@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" th:href="@{/img/Logo_Icon.png}">
+    <title>Maestro Finansów</title>
+    <link rel="stylesheet" th:href="@{/css/normalize.css}">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,700,700i&amp;subset=latin-ext" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
+          crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark myBorder">
+        <a class="navbar-brand" href="/"><img th:src="@{/img/LogoMF.png}" alt=""></a>
+        <img style=" width: 450px;" th:src="@{/img/slang13.png}" alt="">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
+                aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <!--                <li class="nav-item">-->
+                <!--                    <a class="nav-link" th:href="@{/loginOpenID}">Login-->
+                <!--&lt;!&ndash;                        <img src="https://github.com/fluidicon.png" style="height: 19px; width: 19px;"/>&ndash;&gt;-->
+                <!--&lt;!&ndash;                        <img th:src="@{/img/LogoChrome.png}" style="height: 19px; width: 19px;"/>&ndash;&gt;-->
+                <!--                        <span class="sr-only">(current)</span>-->
+                <!--                    </a>-->
+                <!--                </li>-->
+                <!--                <li class="nav-item">-->
+                <!--                    <a class="nav-link" href="http://robertburek.pl" target="_blank">Autor</a>-->
+                <!--                </li>-->
+            </ul>
+            <form class="form-inline my-2 my-lg-0" method="POST" action="/amerykaspolka"
+                  th:object="${amerykaSpolkaFind}">
+                <input class="form-control mr-sm-2" type="search" placeholder="Ticker"
+                       th:field="*{ticker}">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Szukaj</button>
+            </form>
+        </div>
+    </nav>
+    <main>
+        <article>
+            <section style="width: 100%;">
+                </br></br>
+                <h3 th:text="'Zmodyfikuj dane spółki: ' + ${amerykaSpolkaModified.name} + ' (' + ${amerykaSpolkaModified.ticker} + ')'">
+                    Zmodyfikuj dane spólki.</h3>
+                <!--                action="/nameDay/save/edit"-->
+
+                <form method="POST" th:action="@{/amerykaspolka/save/edit}" th:object="${amerykaSpolkaModified}">
+                    <div class="myForm">
+                        <div class="myColumn">
+                            <input th:field="*{id}" class="form-control" id="id" type="hidden">
+                            <div class="form-group">
+                                <label for="ticker">Ticker :
+                                    <input th:field="*{ticker}" type="text" class="form-control" name="ticker" disabled>
+                                    <input th:field="*{ticker}" class="form-control" id="ticker" type="hidden">
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label for="nameSpolka">Name :
+                                    <input th:field="*{name}" type="text" class="form-control" id="nameSpolka"
+                                           name="nameSpolka"
+                                           placeholder="Name">
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label for="market">Market :
+                                    <input th:field="*{market}" type="text" class="form-control" id="market"
+                                           name="market"
+                                           placeholder="Market">
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label for="sector">Sector :
+                                    <input th:field="*{sector}" type="text" class="form-control" id="sector"
+                                           name="sector"
+                                           placeholder="Sector"></label>
+                            </div>
+                            <div class="form-group">
+                                <label for="industry">Industry :
+                                    <input th:field="*{industry}" type="text" class="form-control" id="industry"
+                                           name="industry"
+                                           placeholder="Industry">
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label for="note">Note :
+                                    <textarea th:field="*{note}" type="textArea" class="form-control" id="note"
+                                              name="note"
+                                              rows="9" cols="50" placeholder="Your note ...">
+                            </textarea>
+                                </label>
+                            </div>
+                            <!--                    <div style="display: flex; margin: 0 20px 0 15px;">-->
+                            <!--                    <button type="submit" class="btn btn-outline-success">Modyfikuj</button>-->
+                            <!--                    <a class="btn btn-outline-success" href="/">Powrót</a>-->
+                            <!--                    </div>-->
+                        </div>
+                        <div class="myColumn">
+                            Historical stock :
+                            <div class="form-group myDisplayFlex">
+                                <label for="day0720" class="label-course">07-2020 :</label>
+                                <input th:field="*{day0720}" type="text" class="form-control input-course" id="day0720"
+                                       name="day0720"
+                                       placeholder="course">
+                            </div>
+                            <div class="form-group myDisplayFlex">
+                                <label for="day0620" class="label-course">06-2020 :</label>
+                                <input th:field="*{day0620}" type="text" class="form-control input-course" id="day0620"
+                                       name="day0620"
+                                       placeholder="course">
+                            </div>
+                            <div class="form-group myDisplayFlex">
+                                <label for="day0520" class="label-course">05-2020 :</label>
+                                <input th:field="*{day0520}" type="text" class="form-control input-course" id="day0520"
+                                       name="day0520"
+                                       placeholder="course">
+                            </div>
+                            <div class="form-group myDisplayFlex">
+                                <label for="day0420" class="label-course">04-2020 :</label>
+                                <input th:field="*{day0420}" type="text" class="form-control input-course" id="day0420"
+                                       name="day0420"
+                                       placeholder="course">
+                            </div>
+                            <div class="form-group myDisplayFlex">
+                                <label for="day0320" class="label-course">03-2020 :</label>
+                                <input th:field="*{day0320}" type="text" class="form-control input-course" id="day0320"
+                                       name="day0320"
+                                       placeholder="course">
+                            </div>
+                            <div class="form-group myDisplayFlex">
+                                <label for="day0220" class="label-course">02-2020 :</label>
+                                <input th:field="*{day0220}" type="text" class="form-control input-course" id="day0220"
+                                       name="day0220"
+                                       placeholder="course">
+                            </div>
+                            <div class="form-group myDisplayFlex">
+                                <label for="day0120" class="label-course">01-2020 :</label>
+                                <input th:field="*{day0120}" type="text" class="form-control input-course" id="day0120"
+                                       name="day0120"
+                                       placeholder="course">
+                            </div>
+                            <div class="form-group myDisplayFlex">
+                                <label for="day1219" class="label-course">12-2019 :</label>
+                                <input th:field="*{day1219}" type="text" class="form-control input-course" id="day1219"
+                                       name="day1219"
+                                       placeholder="course">
+                            </div>
+                            <div class="form-group myDisplayFlex">
+                                <label for="day1119" class="label-course">11-2019 :</label>
+                                <input th:field="*{day1119}" type="text" class="form-control input-course" id="day1119"
+                                       name="day1119"
+                                       placeholder="course">
+                            </div>
+                            <div class="form-group myDisplayFlex">
+                                <label for="day0919" class="label-course">09-2019 :</label>
+                                <input th:field="*{day0919}" type="text" class="form-control input-course" id="day0919"
+                                       name="day0919"
+                                       placeholder="course">
+                            </div>
+                            <div class="form-group myDisplayFlex">
+                                <label for="day0819" class="label-course">08-2019 :</label>
+                                <input th:field="*{day0819}" type="text" class="form-control input-course" id="day0819"
+                                       name="day0819"
+                                       placeholder="course">
+                            </div>
+                            <div class="form-group myDisplayFlex">
+                                <label for="day0719" class="label-course">07-2019 :</label>
+                                <input th:field="*{day0719}" type="text" class="form-control input-course" id="day0719"
+                                       name="day0719"
+                                       placeholder="course">
+                            </div>
+                            <div class="form-group myDisplayFlex">
+                                <label for="day0619" class="label-course">06-2019 :</label>
+                                <input th:field="*{day0619}" type="text" class="form-control input-course" id="day0619"
+                                       name="day0619"
+                                       placeholder="course">
+                            </div>
+                            <div class="form-group myDisplayFlex">
+                                <label for="day0519" class="label-course">05-2019 :</label>
+                                <input th:field="*{day0519}" type="text" class="form-control input-course" id="day0519"
+                                       name="day0519"
+                                       placeholder="course">
+                            </div>
+                            <div class="form-group myDisplayFlex">
+                                <label for="day0419" class="label-course">04-2019 :</label>
+                                <input th:field="*{day0419}" type="text" class="form-control input-course" id="day0419"
+                                       name="day0419"
+                                       placeholder="course">
+                            </div>
+                            <div class="form-group myDisplayFlex">
+                                <label for="day0319" class="label-course">03-2019 :</label>
+                                <input th:field="*{day0319}" type="text" class="form-control input-course" id="day0319"
+                                       name="day0319"
+                                       placeholder="course">
+                            </div>
+                            <div class="form-group myDisplayFlex">
+                                <label for="day0219" class="label-course">02-2019 :</label>
+                                <input th:field="*{day0219}" type="text" class="form-control input-course" id="day0219"
+                                       name="day0219"
+                                       placeholder="course">
+                            </div>
+                            <div class="form-group myDisplayFlex">
+                                <label for="day0119" class="label-course">01-2019 :</label>
+                                <input th:field="*{day0119}" type="text" class="form-control input-course" id="day0119"
+                                       name="day0119"
+                                       placeholder="course">
+                            </div>
+                            <div class="form-group myDisplayFlex">
+                                <label for="day1218" class="label-course">12-2018 :</label>
+                                <input th:field="*{day1218}" type="text" class="form-control input-course" id="day1218"
+                                       name="day1218"
+                                       placeholder="course">
+                            </div>
+                        </div>
+                    </div>
+                    <!--                <button type="submit" class="btn btn-outline-success">Modyfikuj</button>-->
+                    <div class="myNaviButton">
+                        <button type="submit" class="btn btn-outline-success">Modyfikuj</button>
+                        <a class="btn btn-outline-success" href="/">Powrót</a>
+                    </div>
+                </form>
+                <!--            <div style="display: flex; margin: 0 20px 0 40%;">-->
+                <!--                <button type="submit" class="btn btn-outline-success">Modyfikuj</button>-->
+                <!--                <a class="btn btn-outline-success" href="/">Powrót</a>-->
+                <!--            </div>-->
+                </br>
+                <!--            <a class="btn btn-outline-success" href="/">Powrót</a>-->
+            </section>
+        </article>
+
+
+        <!--        <article style="height: 600px;">-->
+        <!--            <h3 th:text="'Znalezione spółki: ' + ${amerykaSpolkaNew.ticker}">Daty przypisane do tego imienia: </h3>-->
+        <!--            <p></p>-->
+        <!--            <div style="height: 95%; overflow: auto;">-->
+        <!--                <table class="table table-hover bg-light">-->
+        <!--                    <thead>-->
+        <!--                    <tr>-->
+        <!--                        <th>Ticker</th>-->
+        <!--                        <th class="tableWidth">Name</th>-->
+        <!--                        <th>Stock</th>-->
+        <!--                        <th>Market</th>-->
+        <!--                        <th class="textCenter">Edit</th>-->
+        <!--                        <th class="textCenter">Delete</th>-->
+        <!--                    </tr>-->
+        <!--                    </thead>-->
+        <!--                    <tbody>-->
+        <!--                    <tr th:each="amerykaSpolka: ${amerykaSpolki}">-->
+        <!--                        <td th:text="${amerykaSpolka.ticker}"/>-->
+        <!--                        <td class="tableWidth" th:text="${amerykaSpolka.name}"/>-->
+        <!--                        <td th:text="${amerykaSpolka.day0320}"/>-->
+        <!--                        <td th:text="${amerykaSpolka.market}"/>-->
+        <!--                        &lt;!&ndash;                        <td><a th:href="@{/amerykaSpolka/edit(index=${amerykaSpolka.ticker})}"><i class="fa fa-edit"></i></a></td>&ndash;&gt;-->
+        <!--                        <td class="textCenter"><a href="#"><i class="fa fa-edit"></i></a></td>-->
+        <!--                        &lt;!&ndash;                        <td><a th:href="@{/amerykaSpolka/del(index=${amerykaSpolka.ticker})}"><i class="fa fa-trash"></i></a></td>&ndash;&gt;-->
+        <!--                        <td class="textCenter"><a href="#"><i class="fa fa-trash"></i></a></td>-->
+        <!--                    </tr>-->
+        <!--                    </tbody>-->
+
+        <!--                </table>-->
+
+
+        <!--                <table class="table table-hover bg-light">-->
+        <!--                    <thead>-->
+        <!--                    <tr>-->
+        <!--                        &lt;!&ndash;<th>Id</th>&ndash;&gt;-->
+        <!--                        <th>Imie</th>-->
+        <!--                        <th>Dzień imienin</th>-->
+        <!--                        <th>Edycja</th>-->
+        <!--                        &lt;!&ndash;                        <th>Usuwanie</th>&ndash;&gt;-->
+        <!--                    </tr>-->
+        <!--                    </thead>-->
+        <!--                    <tbody>-->
+        <!--                    <tr th:each="nameDay: ${nameDays}">-->
+        <!--                        &lt;!&ndash;<td th:text="${nameDay.id}"/>&ndash;&gt;-->
+        <!--                        <td th:text="${nameDay.name}"/>-->
+        <!--                        <td th:text="${nameDay.dayMonth}"/>-->
+        <!--                        <td><a th:href="@{/nameDay/edit(index=${nameDay.id})}"><i class="fa fa-edit"></i></a></td>-->
+        <!--                        &lt;!&ndash;                        <td><a href="#">Edytuj</a></td>&ndash;&gt;-->
+        <!--                        &lt;!&ndash;                        <td><a th:href="@{/nameDay/del(index=${nameDay.id})}">Usuń</a></td>&ndash;&gt;-->
+        <!--                        &lt;!&ndash;                        <td><a href="#">Usuń</a></td>&ndash;&gt;-->
+        <!--                    </tr>-->
+        <!--                    </tbody>-->
+        <!--                </table>-->
+        <!--            </div>-->
+        <!--        </article>-->
+        <aside>
+            <section class="widget">
+                <h3>O projekcie</h3>
+                <img th:src="@{/img/prezes.jfif}" alt="">
+
+                <p>Mając na uwadze chyżo nadciągający oczyszczający kryzys finansowy, a przede wszystkim ogromne bieżące
+                    potrzeby
+                    edukacyjne Polaków z zakresie świadomego, efektywnego i odpowiedzialnego KOMPONOWANIA własnych
+                    FINANSÓW OSOBISTYCH,
+                    wczoraj tj. 2020.02.02 o godzinie 20:02 rozpoczęliśmy realizacje projektu MAESTRO FINANSÓW.
+                </p>
+                <p>Zapraszam do kontaktu oraz współpracy na każdym etapie urzeczywistnienia tej innowacyjnej idei,
+                    gdyż jest to Wasza rewolucja w KOMPONOWANIU Waszych finansów osobistych.</p>
+            </section>
+            <section class="widget">
+                <h3>Z ostatniej chwili</h3>
+                <img th:src="@{/img/dlugopisy.jfif}" alt="">
+                <p>
+                    Od samego początku Maestro Finansów chce być i jest odpowiedzialny społecznie, pomocny ludziom i
+                    innowacyjny. Dostrzegając obecną
+                    i przyszłą konieczność ograniczenia wzajemnego przekazywania sobie koronawirusa, zdecydowaliśmy się
+                    zamówić (dzięki temu już teraz
+                    pomagamy naszym przedsiębiorcom) i rozdać kilka tysięcy jednorazowych papierowych długopisów,
+                    gdyż z przerażeniem widzimy, iż nadal w wielu miejscach funkcjonują „długopisy przekazywacze
+                    wirusa”.
+                </p>
+                <p>
+                    Zainteresowanych otrzymaniem paczuszki jednorazowych długopisów „uprasza się na privie” o podanie
+                    paczkomatu,
+                    w którym odbiorą oni swój antywirbox. Natomiast firmy zachęcamy do pójścia w nasze ślady,
+                    bowiem dużo lepsze dla nas wszystkich jest przekazywanie serdecznego uśmiechu,
+                    a wirusa w każdej postaci niezwłocznie wyrzucajmy do kosza (wirusolodzy pozwalają do "zwykłego").
+                </p>
+            </section>
+        </aside>
+
+        <!--        <aside>-->
+        <!--            <section class="widget">-->
+        <!--                </br></br></br>-->
+        <!--                <h5>Zmodyfikuj dane:</h5>-->
+        <!--&lt;!&ndash;                action="/nameDay/save/edit"&ndash;&gt;-->
+        <!--                <form method="POST" th:action="@{/amerykaSpolka/save/edit}"  th:object="${amerykaSpolkaNew}">-->
+        <!--                    <input th:field="*{id}" class="form-control" id="id" type="hidden">-->
+        <!--                    <div class="form-group">-->
+        <!--                        <label for="ticker">Ticker:</label>-->
+        <!--                        <input th:field="*{ticker}" type="text" class="form-control"  name="ticker" disabled>-->
+        <!--                        <input th:field="*{ticker}" class="form-control" id="ticker" type="hidden">-->
+        <!--                    </div>-->
+        <!--                    <div class="form-group">-->
+        <!--                        <label for="nameSpolka">Name:</label>-->
+        <!--                        <input th:field="*{name}" type="text" class="form-control" id="nameSpolka" name="nameSpolka"-->
+        <!--                               placeholder="Name">-->
+        <!--                    </div>-->
+        <!--                    <button type="submit" class="btn btn-outline-success">Modyfikuj</button>-->
+
+        <!--                </form>-->
+        <!--                <a class="btn btn-outline-success" href="/">Powrót</a>-->
+        <!--            </section>-->
+
+        <!--        </aside>-->
+    </main>
+    <footer>
+        <p>Copyright &copy; 2020 - <a href="http://robertburek.pl" target="_blank">Robert Burek</a></p>
+    </footer>
+</div>
+</body>
+</html>

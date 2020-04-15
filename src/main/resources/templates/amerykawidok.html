@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" th:href="@{/img/Logo_Icon.png}">
+    <title>Maestro Finansów</title>
+    <link rel="stylesheet" th:href="@{/css/normalize.css}">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,700,700i&amp;subset=latin-ext" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
+          crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark myBorder">
+        <a class="navbar-brand" href="/"><img th:src="@{/img/LogoMF.png}" alt=""></a>
+        <img style=" width: 450px;" th:src="@{/img/slang13.png}" alt="">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
+                aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <!--                <li class="nav-item">-->
+                <!--                    <a class="nav-link" th:href="@{/loginOpenID}">Login-->
+                <!--&lt;!&ndash;                        <img src="https://github.com/fluidicon.png" style="height: 19px; width: 19px;"/>&ndash;&gt;-->
+                <!--&lt;!&ndash;                        <img th:src="@{/img/LogoChrome.png}" style="height: 19px; width: 19px;"/>&ndash;&gt;-->
+                <!--                        <span class="sr-only">(current)</span>-->
+                <!--                    </a>-->
+                <!--                </li>-->
+                <!--                <li class="nav-item">-->
+                <!--                    <a class="nav-link" href="http://robertburek.pl" target="_blank">Autor</a>-->
+                <!--                </li>-->
+            </ul>
+            <form class="form-inline my-2 my-lg-0" method="POST" action="/amerykaspolka"
+                  th:object="${amerykaSpolkaFind}">
+                <input class="form-control mr-sm-2" type="search" placeholder="Ticker"
+                       th:field="*{ticker}">
+                <button class="btn btn-outline-success my-2 my-sm-0 myColor" type="submit">Szukaj</button>
+            </form>
+        </div>
+    </nav>
+    <main>
+        <article>
+            <h1>Rynek amerykański</h1>
+            <p></p>
+            <div class="listSpolka" id="position">
+                <table class="table table-hover bg-light">
+                    <thead>
+                    <tr>
+                        <th>Ticker</th>
+                        <th class="tableWidth">Name</th>
+                        <th>Stock</th>
+                        <th>Market</th>
+                        <th class="textCenter">Edit</th>
+                        <th class="textCenter">Delete</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="amerykaSpolka: ${amerykaSpolki}">
+                        <td th:text="${amerykaSpolka.ticker}"/>
+                        <td class="tableWidth" th:text="${amerykaSpolka.name}"/>
+                        <td th:text="${amerykaSpolka.day0320}"/>
+                        <td th:text="${amerykaSpolka.market}"/>
+                        <td class="textCenter"><a th:href="@{/amerykaspolka/edit(index=${amerykaSpolka.id})}"><i
+                                class="fa fa-edit"></i></a></td>
+                        <!--                        <td class="textCenter"><a href="#"><i class="fa fa-edit"></i></a></td>-->
+                        <!--                        <td><a th:href="@{/amerykaSpolka/del(index=${amerykaSpolka.ticker})}"><i class="fa fa-trash"></i></a></td>-->
+                        <td class="textCenter"><a href="#"><i class="fa fa-trash"></i></a></td>
+                    </tr>
+                    </tbody>
+
+                </table>
+
+            </div>
+        </article>
+        <aside>
+            <section class="widget">
+                <h3>O projekcie</h3>
+                <img th:src="@{/img/prezes.jfif}" alt="">
+
+                <p>Mając na uwadze chyżo nadciągający oczyszczający kryzys finansowy, a przede wszystkim ogromne bieżące
+                    potrzeby
+                    edukacyjne Polaków z zakresie świadomego, efektywnego i odpowiedzialnego KOMPONOWANIA własnych
+                    FINANSÓW OSOBISTYCH,
+                    wczoraj tj. 2020.02.02 o godzinie 20:02 rozpoczęliśmy realizacje projektu MAESTRO FINANSÓW.
+                </p>
+                <p>Zapraszam do kontaktu oraz współpracy na każdym etapie urzeczywistnienia tej innowacyjnej idei,
+                    gdyż jest to Wasza rewolucja w KOMPONOWANIU Waszych finansów osobistych.</p>
+            </section>
+            <section class="widget">
+                <h3>Z ostatniej chwili</h3>
+                <img th:src="@{/img/dlugopisy.jfif}" alt="">
+                <p>
+                    Od samego początku Maestro Finansów chce być i jest odpowiedzialny społecznie, pomocny ludziom i
+                    innowacyjny. Dostrzegając obecną
+                    i przyszłą konieczność ograniczenia wzajemnego przekazywania sobie koronawirusa, zdecydowaliśmy się
+                    zamówić (dzięki temu już teraz
+                    pomagamy naszym przedsiębiorcom) i rozdać kilka tysięcy jednorazowych papierowych długopisów,
+                    gdyż z przerażeniem widzimy, iż nadal w wielu miejscach funkcjonują „długopisy przekazywacze
+                    wirusa”.
+                </p>
+                <p>
+                    Zainteresowanych otrzymaniem paczuszki jednorazowych długopisów „uprasza się na privie” o podanie
+                    paczkomatu,
+                    w którym odbiorą oni swój antywirbox. Natomiast firmy zachęcamy do pójścia w nasze ślady,
+                    bowiem dużo lepsze dla nas wszystkich jest przekazywanie serdecznego uśmiechu,
+                    a wirusa w każdej postaci niezwłocznie wyrzucajmy do kosza (wirusolodzy pozwalają do "zwykłego").
+                </p>
+            </section>
+        </aside>
+    </main>
+    <footer>
+        <p>Copyright &copy; 2020 - <a href="http://robertburek.pl" target="_blank">Robert Burek</a></p>
+    </footer>
+</div>
+</body>
+</html>
