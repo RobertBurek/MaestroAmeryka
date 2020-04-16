@@ -16,7 +16,9 @@
 // let cleanList = document.querySelector('#cleanList');
 // let cleanAll = document.querySelector('#cleanAll');
 let sectorsList = document.querySelectorAll('.mySector');
+let sectorsLabelList = document.querySelectorAll('.mySectorLabel');
 let marketsList = document.querySelectorAll('.myMarket');
+let myMarketLabel = document.querySelectorAll('.myMarketLabel');
 let industriesList = document.querySelectorAll('.myIndustry');
 let industryLabelList = document.querySelectorAll('.myIndustryLabel');
 let sectorButton = document.querySelector('#sectorButton');
@@ -32,11 +34,21 @@ document.addEventListener('DOMContentLoaded', function () {
     selectMarketsList();
     selectIndustriesList();
 
-    [].forEach.call(sectorsList, function (sectorElement) {
+    [].forEach.call(myMarketLabel, function (marketElement) {
+        marketElement.addEventListener('click', function (event) {
+            let index = 1;
+            index = this.getAttribute('value');
+            // console.log(index);
+            $("#mojeZmiany").load('/amerykastrategie/find/' + index + '&' + 'market');
+        })
+    });
+
+    [].forEach.call(sectorsLabelList, function (sectorElement) {
         sectorElement.addEventListener('click', function (event) {
             let index = 1;
             index = this.getAttribute('value');
-            $("#mojeZmiany").load('/amerykastrategie/sector/' + index);
+            // console.log(index);
+            $("#mojeZmiany").load('/amerykastrategie/find/' + index + '&' + 'sector');
         })
     });
 
@@ -57,8 +69,8 @@ document.addEventListener('DOMContentLoaded', function () {
             // let url = '/amerykastrategie/id?id='+index;
             // url = url + '/' + $('#mojeZmiany').val();
             // $("#mojeZmiany").load(url);
-            $("#mojeZmiany").load('/amerykastrategie/id?id=' + index);
-
+            // $("#mojeZmiany").load('/amerykastrategie/id?id=' + index);
+            $("#mojeZmiany").load('/amerykastrategie/find/' + index + '&' + 'industry');
             // retrieveGuests(17);
         })
     });

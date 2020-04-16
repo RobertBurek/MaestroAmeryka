@@ -43,11 +43,11 @@
 <body>
 <div class="container">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark myBorder">
-        <a class="navbar-brand" href="/"><img th:src="@{/img/LogoMF.png}" alt=""></a>
+        <a class="navbar-brand" href="/"><img th:src="@{/img/MAESTRO5Z.png}" alt=""></a>
         <img style=" width: 450px;" th:src="@{/img/slang13.png}" alt="">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
                 aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon myBackgrandButton"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
@@ -74,231 +74,74 @@
                 <p></p>
                 <h5>Pokaż spółki według:</h5>
                 <p>
+
+<!--                MARKET                         -->
                 <div class="custom-control custom-switch myPokaz">
-                    <input type="checkbox" class="custom-control-input" id="customSwitch1">
-                    <label class="custom-control-label" for="customSwitch1" id="marketButton">Market</label>
+                    <input type="checkbox" class="custom-control-input" id="customSwitchMarket">
+                    <label class="custom-control-label" for="customSwitchMarket" id="marketButton">Market</label>
                 </div>
                 <div class="listMarket">
-                    <div class="custom-control custom-switch myMarket" hidden>
-                        <input type="checkbox" class="custom-control-input" id="market1">
-                        <label class="custom-control-label myLabelStrategy" for="market1">NYSE</label>
-                    </div>
-                    <div class="custom-control custom-switch myMarket" hidden>
-                        <input type="checkbox" class="custom-control-input" id="market2">
-                        <label class="custom-control-label myLabelStrategy" for="market2">NasdaqGS</label>
-                    </div>
-                    <div class="custom-control custom-switch myMarket" hidden>
-                        <input type="checkbox" class="custom-control-input" id="market3">
-                        <label class="custom-control-label myLabelStrategy" for="market3">NasdaqGM</label>
-                    </div>
-                    <div class="custom-control custom-switch myMarket" hidden>
-                        <input type="checkbox" class="custom-control-input" id="market4">
-                        <label class="custom-control-label myLabelStrategy" for="market4">NasdaqCM</label>
-                    </div>
-                    <div class="custom-control custom-switch myMarket" hidden>
-                        <input type="checkbox" class="custom-control-input" id="market5">
-                        <label class="custom-control-label myLabelStrategy" for="market5">BATS</label>
-                    </div>
-                    <div class="custom-control custom-switch myMarket" hidden>
-                        <input type="checkbox" class="custom-control-input" id="market6">
-                        <label class="custom-control-label myLabelStrategy" for="market6">Other OTC</label>
-                    </div>
-                    <div class="custom-control custom-switch myMarket" hidden>
-                        <input type="checkbox" class="custom-control-input" id="market7">
-                        <label class="custom-control-label myLabelStrategy" for="market7">Puste</label>
+                    <div th:each="market : ${marketList}" class="custom-control custom-switch myMarket" hidden>
+                        <input type="checkbox" class="custom-control-input" th:id="'market'+${market.id}">
+                        <label th:text="${market.name}" class="custom-control-label myLabelStrategy myMarketLabel" th:value="${market.id}"
+                               th:for="'market'+${market.id}">NameMarket</label>
                     </div>
                 </div>
 
+<!--                    <div class="custom-control custom-switch myMarket" hidden>-->
+<!--                        <input type="checkbox" class="custom-control-input" id="market1">-->
+<!--                        <label class="custom-control-label myLabelStrategy" for="market1">NYSE</label>-->
+<!--                    </div>-->
+<!--                    <div class="custom-control custom-switch myMarket" hidden>-->
+<!--                        <input type="checkbox" class="custom-control-input" id="market2">-->
+<!--                        <label class="custom-control-label myLabelStrategy" for="market2">NasdaqGS</label>-->
+<!--                    </div>-->
+<!--                    <div class="custom-control custom-switch myMarket" hidden>-->
+<!--                        <input type="checkbox" class="custom-control-input" id="market3">-->
+<!--                        <label class="custom-control-label myLabelStrategy" for="market3">NasdaqGM</label>-->
+<!--                    </div>-->
+<!--                    <div class="custom-control custom-switch myMarket" hidden>-->
+<!--                        <input type="checkbox" class="custom-control-input" id="market4">-->
+<!--                        <label class="custom-control-label myLabelStrategy" for="market4">NasdaqCM</label>-->
+<!--                    </div>-->
+<!--                    <div class="custom-control custom-switch myMarket" hidden>-->
+<!--                        <input type="checkbox" class="custom-control-input" id="market5">-->
+<!--                        <label class="custom-control-label myLabelStrategy" for="market5">BATS</label>-->
+<!--                    </div>-->
+<!--                    <div class="custom-control custom-switch myMarket" hidden>-->
+<!--                        <input type="checkbox" class="custom-control-input" id="market6">-->
+<!--                        <label class="custom-control-label myLabelStrategy" for="market6">Other OTC</label>-->
+<!--                    </div>-->
+<!--                    <div class="custom-control custom-switch myMarket" hidden>-->
+<!--                        <input type="checkbox" class="custom-control-input" id="market7">-->
+<!--                        <label class="custom-control-label myLabelStrategy" for="market7">Puste</label>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--                SECTOR                         -->
                 <div class="custom-control custom-switch myPokaz">
-                    <input type="checkbox" class="custom-control-input" id="customSwitch2">
-<!--                    <input type="checkbox" class="custom-control-input" id="sectorButton">-->
-                    <label class="custom-control-label" for="customSwitch2" id="sectorButton">Sector</label>
-<!--                    <label class="custom-control-label" for="sectorButton">Sector</label>-->
+                    <input type="checkbox" class="custom-control-input" id="customSwitchSector">
+                    <label class="custom-control-label" for="customSwitchSector" id="sectorButton">Sector</label>
                 </div>
                 <div  class="listSector">
-                    <div class="custom-control custom-switch mySector" hidden>
-                        <input type="checkbox" class="custom-control-input" id="sector1">
-                        <label class="custom-control-label myLabelStrategy" for="sector1">Basic Materials</label>
-                    </div>
-                    <div class="custom-control custom-switch mySector" hidden>
-                        <input type="checkbox" class="custom-control-input" id="sector2">
-                        <label class="custom-control-label myLabelStrategy" for="sector2">Communication Services</label>
-                    </div>
-                    <div class="custom-control custom-switch mySector" hidden>
-                        <input type="checkbox" class="custom-control-input" id="sector3">
-                        <label class="custom-control-label myLabelStrategy" for="sector3">Consumer Cyclical</label>
-                    </div>
-                    <div class="custom-control custom-switch mySector" hidden>
-                        <input type="checkbox" class="custom-control-input" id="sector4">
-                        <label class="custom-control-label myLabelStrategy" for="sector4">Consumer CyclicalIndustry</label>
-                    </div>
-                    <div class="custom-control custom-switch mySector" hidden>
-                        <input type="checkbox" class="custom-control-input" id="sector5">
-                        <label class="custom-control-label myLabelStrategy" for="sector5">Consumer Defensive</label>
-                    </div>
-                    <div class="custom-control custom-switch mySector" hidden>
-                        <input type="checkbox" class="custom-control-input" id="sector6">
-                        <label class="custom-control-label myLabelStrategy" for="sector6">Consumer Goods</label>
-                    </div>
-                    <div class="custom-control custom-switch mySector" hidden>
-                        <input type="checkbox" class="custom-control-input" id="sector7">
-                        <label class="custom-control-label myLabelStrategy" for="sector7">Energy</label>
-                    </div>
-                    <div class="custom-control custom-switch mySector" hidden>
-                        <input type="checkbox" class="custom-control-input" id="sector8">
-                        <label class="custom-control-label myLabelStrategy" for="sector8">Financial Services</label>
-                    </div>
-                    <div class="custom-control custom-switch mySector" hidden>
-                        <input type="checkbox" class="custom-control-input" id="sector9">
-                        <label class="custom-control-label myLabelStrategy" for="sector9">Healthcare</label>
-                    </div>
-                    <div class="custom-control custom-switch mySector" hidden>
-                        <input type="checkbox" class="custom-control-input" id="sector10">
-                        <label class="custom-control-label myLabelStrategy" for="sector10">Industrials</label>
-                    </div>
-                    <div class="custom-control custom-switch mySector" hidden>
-                        <input type="checkbox" class="custom-control-input" id="sector11">
-                        <label class="custom-control-label myLabelStrategy" for="sector11">Real Estate</label>
-                    </div>
-                    <div class="custom-control custom-switch mySector" hidden>
-                        <input type="checkbox" class="custom-control-input" id="sector12">
-                        <label class="custom-control-label myLabelStrategy" for="sector12">Technology</label>
-                    </div>
-                    <div class="custom-control custom-switch mySector" hidden>
-                        <input type="checkbox" class="custom-control-input" id="sector13">
-                        <label class="custom-control-label myLabelStrategy" for="sector13">Utilities</label>
-                    </div>
-                    <div class="custom-control custom-switch mySector" hidden>
-                        <input type="checkbox" class="custom-control-input" id="sector14">
-                        <label class="custom-control-label myLabelStrategy" for="sector14">Puste</label>
+                    <div th:each="sector : ${sectorList}" class="custom-control custom-switch mySector" hidden>
+                        <input type="checkbox" class="custom-control-input" th:id="'sector'+${sector.id}">
+                        <label th:text="${sector.name}" class="custom-control-label myLabelStrategy mySectorLabel" th:value="${sector.id}"
+                               th:for="'sector'+${sector.id}">NameSector</label>
                     </div>
                 </div>
 
-
+<!--                INDUSTRY                         -->
                 <div class="custom-control custom-switch myPokaz">
                     <input type="checkbox" class="custom-control-input" id="customSwitchIndustry">
                     <label class="custom-control-label" for="customSwitchIndustry" id="industryButton">Industry</label>
                 </div>
                 <div class="listIndustry">
                     <div th:each="industry : ${industryList}" class="custom-control custom-switch myIndustry" hidden>
-<!--                        th:value="${prod.id}" th:id="'btnSelect'+${prod.id}"-->
                         <input type="checkbox" class="custom-control-input" th:id="'industry'+${industry.id}">
                         <label th:text="${industry.name}" class="custom-control-label myLabelStrategy myIndustryLabel" th:value="${industry.id}"
                                th:for="'industry'+${industry.id}">NameIndustry</label>
                     </div>
-
-<!--                    <div class="custom-control custom-switch myIndustry" hidden>-->
-<!--                        <input type="checkbox" class="custom-control-input" id="industry1">-->
-<!--                        <label class="custom-control-label myLabelStrategy" for="industry1">Advertising Agencies</label>-->
-<!--                    </div>-->
-<!--                    <div class="custom-control custom-switch myIndustry" hidden>-->
-<!--                        <input type="checkbox" class="custom-control-input" id="industry2">-->
-<!--                        <label class="custom-control-label myLabelStrategy" for="industry2">Aerospace & Defense</label>-->
-<!--                    </div>-->
-<!--                    <div class="custom-control custom-switch myIndustry" hidden>-->
-<!--                        <input type="checkbox" class="custom-control-input" id="industry3">-->
-<!--                        <label class="custom-control-label myLabelStrategy" for="industry3">Agricultural Inputs</label>-->
-<!--                    </div>-->
-<!--                    <div class="custom-control custom-switch myIndustry" hidden>-->
-<!--                        <input type="checkbox" class="custom-control-input" id="industry4">-->
-<!--                        <label class="custom-control-label myLabelStrategy" for="industry4">Airlines</label>-->
-<!--                    </div>-->
-<!--                    <div class="custom-control custom-switch myIndustry" hidden>-->
-<!--                        <input type="checkbox" class="custom-control-input" id="industry5">-->
-<!--                        <label class="custom-control-label myLabelStrategy" for="industry5">Aluminum</label>-->
-<!--                    </div>-->
-<!--                    <div class="custom-control custom-switch myIndustry" hidden>-->
-<!--                        <input type="checkbox" class="custom-control-input" id="industry6">-->
-<!--                        <label class="custom-control-label myLabelStrategy" for="industry6">Apparel Manufacturing</label>-->
-<!--                    </div>-->
-<!--                    <div class="custom-control custom-switch myIndustry" hidden>-->
-<!--                        <input type="checkbox" class="custom-control-input" id="industry7">-->
-<!--                        <label class="custom-control-label myLabelStrategy" for="industry7">Apparel Retail</label>-->
-<!--                    </div>-->
-<!--                    <div class="custom-control custom-switch myIndustry" hidden>-->
-<!--                        <input type="checkbox" class="custom-control-input" id="industry8">-->
-<!--                        <label class="custom-control-label myLabelStrategy" for="industry8">Asset Management</label>-->
-<!--                    </div>-->
-<!--                    <div class="custom-control custom-switch myIndustry" hidden>-->
-<!--                        <input type="checkbox" class="custom-control-input" id="industry9">-->
-<!--                        <label class="custom-control-label myLabelStrategy" for="industry9">Auto & Truck Dealerships</label>-->
-<!--                    </div>-->
-<!--                    <div class="custom-control custom-switch myIndustry" hidden>-->
-<!--                        <input type="checkbox" class="custom-control-input" id="industry10">-->
-<!--                        <label class="custom-control-label myLabelStrategy" for="industry10">Auto Manufacturers</label>-->
-<!--                    </div>-->
-<!--                    <div class="custom-control custom-switch myIndustry" hidden>-->
-<!--                        <input type="checkbox" class="custom-control-input" id="industry11">-->
-<!--                        <label class="custom-control-label myLabelStrategy" for="industry11">Auto Parts</label>-->
-<!--                    </div>-->
-<!--                    <div class="custom-control custom-switch myIndustry" hidden>-->
-<!--                        <input type="checkbox" class="custom-control-input" id="industry12">-->
-<!--                        <label class="custom-control-label myLabelStrategy" for="industry12">Banks—Diversified</label>-->
-<!--                    </div>-->
-<!--                    <div class="custom-control custom-switch myIndustry" hidden>-->
-<!--                        <input type="checkbox" class="custom-control-input" id="industry13">-->
-<!--                        <label class="custom-control-label myLabelStrategy" for="industry13">Banks—Regional</label>-->
-<!--                    </div>-->
-<!--                    <div class="custom-control custom-switch myIndustry" hidden>-->
-<!--                        <input type="checkbox" class="custom-control-input" id="industry14">-->
-<!--                        <label class="custom-control-label myLabelStrategy" for="industry14">Beverages—Brewers</label>-->
-<!--                    </div>-->
-<!--                    <div class="custom-control custom-switch myIndustry" hidden>-->
-<!--                        <input type="checkbox" class="custom-control-input" id="industry15">-->
-<!--                        <label class="custom-control-label myLabelStrategy" for="industry15">Beverages—Non-Alcoholic</label>-->
-<!--                    </div>-->
-<!--                    <div class="custom-control custom-switch myIndustry" hidden>-->
-<!--                        <input type="checkbox" class="custom-control-input" id="industry16">-->
-<!--                        <label class="custom-control-label myLabelStrategy" for="industry16">Beverages - Wineries & Distilleries</label>-->
-<!--                    </div>-->
-<!--                    <div class="custom-control custom-switch myIndustry" hidden>-->
-<!--                        <input type="checkbox" class="custom-control-input" id="industry17">-->
-<!--                        <label class="custom-control-label myLabelStrategy" for="industry17">Biotechnology</label>-->
-<!--                    </div>-->
-<!--                    <div class="custom-control custom-switch myIndustry" hidden>-->
-<!--                        <input type="checkbox" class="custom-control-input" id="industry18">-->
-<!--                        <label class="custom-control-label myLabelStrategy" for="industry18">Broadcasting</label>-->
-<!--                    </div>-->
-<!--                    <div class="custom-control custom-switch myIndustry" hidden>-->
-<!--                        <input type="checkbox" class="custom-control-input" id="industry19">-->
-<!--                        <label class="custom-control-label myLabelStrategy" for="industry19">Building Materials</label>-->
-<!--                    </div>-->
-<!--                    <div class="custom-control custom-switch myIndustry" hidden>-->
-<!--                        <input type="checkbox" class="custom-control-input" id="industry20">-->
-<!--                        <label class="custom-control-label myLabelStrategy" for="industry20">Building Products & Equipment</label>-->
-<!--                    </div>-->
-<!--                    <div class="custom-control custom-switch myIndustry" hidden>-->
-<!--                        <input type="checkbox" class="custom-control-input" id="industry21">-->
-<!--                        <label class="custom-control-label myLabelStrategy" for="industry21">Business Equipment & Supplies</label>-->
-<!--                    </div>-->
-<!--                    <div class="custom-control custom-switch myIndustry" hidden>-->
-<!--                        <input type="checkbox" class="custom-control-input" id="industry22">-->
-<!--                        <label class="custom-control-label myLabelStrategy" for="industry22">Capital Markets</label>-->
-<!--                    </div>-->
-<!--                    <div class="custom-control custom-switch myIndustry" hidden>-->
-<!--                        <input type="checkbox" class="custom-control-input" id="industry23">-->
-<!--                        <label class="custom-control-label myLabelStrategy" for="industry23">Chemicals</label>-->
-<!--                    </div>-->
-<!--                    <div class="custom-control custom-switch myIndustry" hidden>-->
-<!--                        <input type="checkbox" class="custom-control-input" id="industry24">-->
-<!--                        <label class="custom-control-label myLabelStrategy" for="industry24">Communication Equipment</label>-->
-<!--                    </div>-->
-<!--                    <div class="custom-control custom-switch myIndustry" hidden>-->
-<!--                        <input type="checkbox" class="custom-control-input" id="industry25">-->
-<!--                        <label class="custom-control-label myLabelStrategy" for="industry25">Computer Hardware</label>-->
-<!--                    </div>-->
-<!--                    <div class="custom-control custom-switch myIndustry" hidden>-->
-<!--                        <input type="checkbox" class="custom-control-input" id="industry26">-->
-<!--                        <label class="custom-control-label myLabelStrategy" for="industry26">Confectioners</label>-->
-<!--                    </div>-->
-<!--                    <div class="custom-control custom-switch myIndustry" hidden>-->
-<!--                        <input type="checkbox" class="custom-control-input" id="industry27">-->
-<!--                        <label class="custom-control-label myLabelStrategy" for="industry27">Consulting Services</label>-->
-<!--                    </div>-->
-<!--                    <div class="custom-control custom-switch myIndustry" hidden>-->
-<!--                        <input type="checkbox" class="custom-control-input" id="industry">-->
-<!--                        <label class="custom-control-label myLabelStrategy" for="industry">Puste</label>-->
-<!--                    </div>-->
                 </div>
 
 
@@ -386,7 +229,7 @@
                 </p>
             </section>
         </aside>
-        <article style="width: 78%;">
+        <article style="width: 78%; padding: 15px;">
             <h4>Wyniki wyszukiwania:</h4>
             <p></p>
             <div class="listSpolka" id="position">
@@ -432,11 +275,11 @@
                         </td>
                         <!--                        <td th:text="${amerykaSpolkaStrategia.sector}"/>-->
 <!--                        <td class="textCenter" style="vertical-align:middle;" th:text="${amerykaSpolkaStrategia.yTD}"-->
-                        <td style="vertical-align:middle;" th:text="${amerykaSpolkaStrategia.yTD}"
+                        <td style="vertical-align:middle; padding: 0px;" th:text="${amerykaSpolkaStrategia.yTD + ' %'}"
                             th:class="${amerykaSpolkaStrategia.yTD.startsWith('-')} ? 'textCenter negative' : 'textCenter positive'"/>
-                        <td style="vertical-align:middle;" th:text="${amerykaSpolkaStrategia.m1TD}"
+                        <td style="vertical-align:middle; padding: 0px;" th:text="${amerykaSpolkaStrategia.m1TD + ' %'}"
                             th:class="${amerykaSpolkaStrategia.m1TD.startsWith('-')} ? 'textCenter negative' : 'textCenter positive'"/>
-                        <td class="textCenter" style="vertical-align:middle;" th:text="${amerykaSpolkaStrategia.m2TD}"
+                        <td style="vertical-align:middle; padding: 0px;" th:text="${amerykaSpolkaStrategia.m2TD + ' %'}"
                             th:class="${amerykaSpolkaStrategia.m2TD.startsWith('-')} ? 'textCenter negative' : 'textCenter positive'"/>
                         <td class="textCenter" style="vertical-align:middle;">
                             <a th:href="@{/amerykaspolka/edit(index=${amerykaSpolkaStrategia.id})}">

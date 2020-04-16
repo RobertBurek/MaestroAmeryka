@@ -96,6 +96,14 @@ public class DBfromCSV {
             String day0520New = "";
             String day0620New = "";
             String day0720New = "";
+            String day0820New = "";
+            String day0920New = "";
+            String day1020New = "";
+            String day1120New = "";
+            String day1220New = "";
+            String yTDNew = "";
+            String m1TDNew = "";
+            String m2TDNew = "";
             long i = 1L;
             while (scanner.hasNextLine()) {
                 Scanner lineScanner = new Scanner(scanner.nextLine());
@@ -126,6 +134,14 @@ public class DBfromCSV {
                 if (lineScanner.hasNextLine()) day0520New = lineScanner.next();
                 if (lineScanner.hasNextLine()) day0620New = lineScanner.next();
                 if (lineScanner.hasNextLine()) day0720New = lineScanner.next();
+                if (lineScanner.hasNextLine()) day0820New = lineScanner.next();
+                if (lineScanner.hasNextLine()) day0920New = lineScanner.next();
+                if (lineScanner.hasNextLine()) day1020New = lineScanner.next();
+                if (lineScanner.hasNextLine()) day1120New = lineScanner.next();
+                if (lineScanner.hasNextLine()) day1220New = lineScanner.next();
+                if (lineScanner.hasNextLine()) yTDNew = lineScanner.next();
+                if (lineScanner.hasNextLine()) m1TDNew = lineScanner.next();
+                if (lineScanner.hasNextLine()) m2TDNew = lineScanner.next();
                 amerykaSpolka = new AmerykaSpolka(tickerNew, nameNew, marketNew, sectorNew, industryNew);
                 amerykaSpolka.setId(i);
                 i++;
@@ -150,6 +166,14 @@ public class DBfromCSV {
                 amerykaSpolka.setDay0520(day0520New);
                 amerykaSpolka.setDay0620(day0620New);
                 amerykaSpolka.setDay0720(day0720New);
+                amerykaSpolka.setDay0820(day0820New);
+                amerykaSpolka.setDay0920(day0920New);
+                amerykaSpolka.setDay1020(day1020New);
+                amerykaSpolka.setDay1120(day1120New);
+                amerykaSpolka.setDay1220(day1220New);
+                amerykaSpolka.setyTD(yTDNew);
+                amerykaSpolka.setM1TD(m1TDNew);
+                amerykaSpolka.setM2TD(m2TDNew);
                 amerykaSpolki.add(amerykaSpolka);
                 lineScanner.close();
             }

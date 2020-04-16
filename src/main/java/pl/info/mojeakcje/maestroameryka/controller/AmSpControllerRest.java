@@ -8,16 +8,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import pl.info.mojeakcje.maestroameryka.DBfromCSV;
-import pl.info.mojeakcje.maestroameryka.DBfromCSV_D;
 import pl.info.mojeakcje.maestroameryka.model.AmerykaSpolka;
-import pl.info.mojeakcje.maestroameryka.model.AmerykaSpolkaD;
 import pl.info.mojeakcje.maestroameryka.model.AmerykaSpolkaStrategia;
 import pl.info.mojeakcje.maestroameryka.repository.AmSpRepository;
-import pl.info.mojeakcje.maestroameryka.repository.AmSpRepositoryD;
 import pl.info.mojeakcje.maestroameryka.repository.AmSpStrategyRepository;
 
 import java.util.List;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static pl.info.mojeakcje.maestroameryka.MaestroamerykaApplication.*;
@@ -35,13 +31,9 @@ public class AmSpControllerRest {
     @Autowired
     AmSpRepository amSpRepository;
     @Autowired
-    AmSpRepositoryD amSpRepositoryD;
-    @Autowired
     AmSpStrategyRepository amSpStrategyRepository;
     @Autowired
     DBfromCSV dBfromCSV;
-    @Autowired
-    DBfromCSV_D dBfromCSVD;
 
     @Value("${data.folder.csv}")
     String myPath;
@@ -50,7 +42,7 @@ public class AmSpControllerRest {
     @GetMapping("/odczytdanychzplikucsv/{nameFile}") //ceny miesięczne w formacie string
     public String setDataToBase(@PathVariable String nameFile) {
         log.info("NameFile " + ANSI_BLUE + nameFile + ANSI_RESET);
-//        nameFile = "AmerykaSpolki.csv";
+        nameFile = "AmerykaSpolki.csv";
         Iterable<AmerykaSpolka> amerykaSp = dBfromCSV.readFromFile(myPath + nameFile);
         amerykaSp.forEach(amerykaSpolka -> {
             log.info(amerykaSpolka.getTicker() + " -  " + ANSI_BLUE + amerykaSpolka.getName() + ANSI_RESET);
@@ -65,18 +57,6 @@ public class AmSpControllerRest {
         return amSpRepository.findAll();
     }
 
-    @GetMapping("/odczytdanychzcsv/{nameFile}") //ceny miesięczne w formacie double
-    public String setDataToBaseD(@PathVariable String nameFile) {
-        log.info("NameFile " + ANSI_BLUE + nameFile + ANSI_RESET);
-        nameFile = "AmerykaSpolkiD.csv";
-        Iterable<AmerykaSpolkaD> amerykaSpD = dBfromCSVD.readFromFile(myPath + nameFile);
-        amerykaSpD.forEach(amerykaSpolkaD -> {
-            log.info(amerykaSpolkaD.getTicker() + " -  " + ANSI_BLUE + amerykaSpolkaD.getName() + ANSI_RESET);
-            amSpRepositoryD.save(amerykaSpolkaD);
-        });
-        return "Dane wczytane z kliku " + myPath + nameFile;
-    }
-
     @GetMapping("/tworzenietabelistrategia") //na podstawie tabeli ameryka_spolka tworzy tabelę strategie
     public String createTableStrategy() {
         amerykaSpolkiStretegie = ((List<AmerykaSpolka>) amSpRepository.findAll())
@@ -89,8 +69,6 @@ public class AmSpControllerRest {
     }
 
 
-
-
 //    @GetMapping("/")
 //    public Iterable<AmerykaSpolka> getAll() {
 //        log.info(ANSI_BLUE + "Wypisałem wszystkie dane z bazy MaestroAmeryka z tabeli: ameryka_spolka" + ANSI_RESET);
@@ -100,7 +78,7 @@ public class AmSpControllerRest {
     @GetMapping("/danezbazy/{ticker}")
     public AmerykaSpolka getSpolkaTicker(@PathVariable String ticker) {
         log.info(ANSI_BLUE + "Dane z bazy MaestroAmeryka z tabeli: ameryka_spolka, spolka: " + ticker.toUpperCase() + ANSI_RESET);
-        return ((List<AmerykaSpolka>)amSpRepository.findAll())
+        return ((List<AmerykaSpolka>) amSpRepository.findAll())
                 .stream()
                 .filter(amerykaSpolka -> amerykaSpolka.getTicker().equals(ticker.toUpperCase()))
                 .findAny().orElse(new AmerykaSpolka());

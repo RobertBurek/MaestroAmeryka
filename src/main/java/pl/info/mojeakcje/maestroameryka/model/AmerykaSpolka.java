@@ -36,6 +36,14 @@ public class AmerykaSpolka {
     private String day0520;
     private String day0620;
     private String day0720;
+    private String day0820;
+    private String day0920;
+    private String day1020;
+    private String day1120;
+    private String day1220;
+    private String yTD;
+    private String m1TD;
+    private String m2TD;
 
     public AmerykaSpolka() {
     }
@@ -52,7 +60,7 @@ public class AmerykaSpolka {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -264,6 +272,70 @@ public class AmerykaSpolka {
         this.day0720 = day0720;
     }
 
+    public String getDay0820() {
+        return day0820;
+    }
+
+    public void setDay0820(String day0820) {
+        this.day0820 = day0820;
+    }
+
+    public String getDay0920() {
+        return day0920;
+    }
+
+    public void setDay0920(String day0920) {
+        this.day0920 = day0920;
+    }
+
+    public String getDay1020() {
+        return day1020;
+    }
+
+    public void setDay1020(String day1020) {
+        this.day1020 = day1020;
+    }
+
+    public String getDay1120() {
+        return day1120;
+    }
+
+    public void setDay1120(String day1120) {
+        this.day1120 = day1120;
+    }
+
+    public String getDay1220() {
+        return day1220;
+    }
+
+    public void setDay1220(String day1220) {
+        this.day1220 = day1220;
+    }
+
+    public String getyTD() {
+        return yTD;
+    }
+
+    public void setyTD(String yTD) {
+        this.yTD = yTD;
+    }
+
+    public String getM1TD() {
+        return m1TD;
+    }
+
+    public void setM1TD(String m1TD) {
+        this.m1TD = m1TD;
+    }
+
+    public String getM2TD() {
+        return m2TD;
+    }
+
+    public void setM2TD(String m2TD) {
+        this.m2TD = m2TD;
+    }
+
     @Override
     public String toString() {
         return "AmerykaSpolka{" +
@@ -274,26 +346,9 @@ public class AmerykaSpolka {
                 ", sector='" + sector + '\'' +
                 ", industry='" + industry + '\'' +
                 ", note='" + note + '\'' +
-                ", day1218='" + day1218 + '\'' +
-                ", day0119='" + day0119 + '\'' +
-                ", day0219='" + day0219 + '\'' +
                 ", day0319='" + day0319 + '\'' +
-                ", day0419='" + day0419 + '\'' +
-                ", day0519='" + day0519 + '\'' +
-                ", day0619='" + day0619 + '\'' +
-                ", day0719='" + day0719 + '\'' +
-                ", day0819='" + day0819 + '\'' +
-                ", day0919='" + day0919 + '\'' +
-                ", day1019='" + day1019 + '\'' +
-                ", day1119='" + day1119 + '\'' +
-                ", day1219='" + day1219 + '\'' +
-                ", day0120='" + day0120 + '\'' +
-                ", day0220='" + day0220 + '\'' +
                 ", day0320='" + day0320 + '\'' +
                 ", day0420='" + day0420 + '\'' +
-                ", day0520='" + day0520 + '\'' +
-                ", day0620='" + day0620 + '\'' +
-                ", day0720='" + day0720 + '\'' +
                 '}';
     }
 }

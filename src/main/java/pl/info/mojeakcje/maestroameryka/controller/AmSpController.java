@@ -3,17 +3,20 @@ package pl.info.mojeakcje.maestroameryka.controller;
 import lombok.extern.log4j.Log4j2;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+
 import pl.info.mojeakcje.maestroameryka.model.AmerykaSpolka;
 import pl.info.mojeakcje.maestroameryka.model.AmerykaSpolkaStrategia;
-import pl.info.mojeakcje.maestroameryka.model.Industry;
 import pl.info.mojeakcje.maestroameryka.repository.AmSpRepository;
 import pl.info.mojeakcje.maestroameryka.repository.AmSpStrategyRepository;
-import pl.info.mojeakcje.maestroameryka.service.CreateStrategy;
 
 import java.util.List;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import static pl.info.mojeakcje.maestroameryka.MaestroamerykaApplication.*;
@@ -36,9 +39,9 @@ public class AmSpController {
 //        this.createStrategy = createStrategy;
 //    }
 
-        public AmSpController(AmSpRepository amSpRepository,
+    public AmSpController(AmSpRepository amSpRepository,
 //                              CreateStrategy createStrategy,
-                              AmSpStrategyRepository amSpStrategyRepository) {
+                          AmSpStrategyRepository amSpStrategyRepository) {
         this.amSpStrategyRepository = amSpStrategyRepository;
         this.amSpRepository = amSpRepository;
 //        this.createStrategy = createStrategy;

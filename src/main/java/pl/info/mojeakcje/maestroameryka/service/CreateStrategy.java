@@ -2,7 +2,6 @@ package pl.info.mojeakcje.maestroameryka.service;
 
 import lombok.extern.log4j.Log4j2;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
 import pl.info.mojeakcje.maestroameryka.model.AmerykaSpolka;
 import pl.info.mojeakcje.maestroameryka.model.AmerykaSpolkaStrategia;
 import pl.info.mojeakcje.maestroameryka.repository.AmSpRepository;

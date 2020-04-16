@@ -4,15 +4,16 @@ import lombok.extern.log4j.Log4j2;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import pl.info.mojeakcje.maestroameryka.model.AmerykaSpolka;
-import pl.info.mojeakcje.maestroameryka.model.AmerykaSpolkaStrategia;
-import pl.info.mojeakcje.maestroameryka.model.Industry;
-import pl.info.mojeakcje.maestroameryka.model.Sector;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import pl.info.mojeakcje.maestroameryka.model.*;
 import pl.info.mojeakcje.maestroameryka.repository.AmSpRepository;
 import pl.info.mojeakcje.maestroameryka.repository.AmSpStrategyRepository;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import static pl.info.mojeakcje.maestroameryka.MaestroamerykaApplication.*;
@@ -24,6 +25,8 @@ import static pl.info.mojeakcje.maestroameryka.MaestroamerykaApplication.*;
 @Log4j2
 @Controller
 public class AmSpStrategyController {
+
+    private static List<Szukana> szukane = new ArrayList<>();
 
     protected final org.slf4j.Logger log = LoggerFactory.getLogger(getClass());
 
@@ -43,6 +46,7 @@ public class AmSpStrategyController {
 //        log.info(ANSI_BLUE + "Odczyt wszystkich danych z bazy ..." + ANSI_RESET);
         model.addAttribute("industryList", industryList);
         model.addAttribute("sectorList", sectorList);
+        model.addAttribute("marketList", marketList);
         model.addAttribute("amerykaSpolkiStrategie", amerykaSpolkiStretegie);
         model.addAttribute("amerykaSpolkaNew", new AmerykaSpolka());
         model.addAttribute("amerykaSpolkaFind", new AmerykaSpolka());
@@ -52,15 +56,15 @@ public class AmSpStrategyController {
     @GetMapping("/amerykastrategie/id")
 //    public String getIndustryStrategy(@PathVariable Integer id, Model model) {
     public String getIndustryStrategy(@RequestParam Integer id, Model model) {
-        Industry industryFind = industryList.get(id-1);
+        Industry industryFind2 = industryList.get(id - 1);
         amerykaSpolkiStretegie = (List<AmerykaSpolkaStrategia>) amSpStrategyRepository.findAll();
         amerykaSpolkiStretegie = amerykaSpolkiStretegie
                 .stream()
-                .filter(amerykaSpolkaStrategia -> amerykaSpolkaStrategia.getIndustry().equals(industryFind.getName()))
+                .filter(amerykaSpolkaStrategia -> amerykaSpolkaStrategia.getIndustry().equals(industryFind2.getName()))
                 .collect(Collectors.toList());
-        log.info(ANSI_BLUE + "Spółki z branży: " + industryFind.getName() + ANSI_RESET);
+        log.info(ANSI_BLUE + "Spółki z branży: " + industryFind2.getName() + ANSI_RESET);
         log.info(ANSI_BLUE + "Jest ich aż: " + amerykaSpolkiStretegie.size() + ANSI_RESET);
-        log.info(ANSI_BLUE + "Są to: " + amerykaSpolkiStretegie + ANSI_RESET);
+//        log.info(ANSI_BLUE + "Są to: " + amerykaSpolkiStretegie + ANSI_RESET);
 //        model.addAttribute("industryList", industryList);
 //        model.addAttribute("sectorList", sectorList);
         model.addAttribute("amerykaSpolkiStrategie", amerykaSpolkiStretegie);
@@ -71,17 +75,17 @@ public class AmSpStrategyController {
     }
 
     @GetMapping("/amerykastrategie/sector/{id}")
-    public String getSecctorStrategy(@PathVariable Integer id, Model model) {
+    public String getSectorStrategy(@PathVariable Integer id, Model model) {
 //    public String getIndustryStrategy(@RequestParam Integer id, Model model) {
-        Sector sectorFind = sectorList.get(id-1);
+        Sector sectorFind2 = sectorList.get(id - 1);
         amerykaSpolkiStretegie = (List<AmerykaSpolkaStrategia>) amSpStrategyRepository.findAll();
         amerykaSpolkiStretegie = amerykaSpolkiStretegie
                 .stream()
-                .filter(amerykaSpolkaStrategia -> amerykaSpolkaStrategia.getIndustry().equals(sectorFind.getName()))
+                .filter(amerykaSpolkaStrategia -> amerykaSpolkaStrategia.getSector().equals(sectorFind2.getName()))
                 .collect(Collectors.toList());
-        log.info(ANSI_BLUE + "Spółki z sektora: " + sectorFind.getName() + ANSI_RESET);
-        log.info(ANSI_BLUE + "Jest ich aż: " + amerykaSpolkiStretegie.size() + ANSI_RESET);
-        log.info(ANSI_BLUE + "Są to: " + amerykaSpolkiStretegie + ANSI_RESET);
+        log.info(ANSI_YELLOW + "Spółki z sektora: " + sectorFind2.getName() + ", jest ich aż: " + amerykaSpolkiStretegie.size() + ANSI_RESET);
+//        log.info(ANSI_BLUE + "Jest ich aż: " + amerykaSpolkiStretegie.size() + ANSI_RESET);
+//        log.info(ANSI_BLUE + "Są to: " + amerykaSpolkiStretegie + ANSI_RESET);
 //        model.addAttribute("industryList", industryList);
 //        model.addAttribute("sectorList", sectorList);
         model.addAttribute("amerykaSpolkiStrategie", amerykaSpolkiStretegie);
@@ -91,6 +95,71 @@ public class AmSpStrategyController {
         return "amerykastrategie::#mojeZmiany";
     }
 
+    @GetMapping("/amerykastrategie/find/{id}&{name}")
+    public String getSectorStrategy(@PathVariable Integer id, @PathVariable String name, Model model) {
+        dodajDoWyszukiwania(id, name);
+        amerykaSpolkiStretegie = (List<AmerykaSpolkaStrategia>) amSpStrategyRepository.findAll();
+        amerykaSpolkiStretegie = amerykaSpolkiStretegie
+                .stream()
+//                .filter(amerykaSpolkaStrategia -> amerykaSpolkaStrategia.getSector().equals(sectorFind3.getName()))
+                .filter(new Predicate<AmerykaSpolkaStrategia>() {
+                    @Override
+                    public boolean test(AmerykaSpolkaStrategia amerykaSpolkaStrategia) {
+                        boolean flaga = false;
+                        for (Szukana szukana : szukane) {
+                            switch (szukana.getRodzajSzukanej()) {
+                                case "market": {
+                                    if (amerykaSpolkaStrategia.getMarket().trim().equals(szukana.getSzukanaWartosc()))
+                                        flaga = true;
+                                    break;
+                                }
+                                case "sector": {
+                                    if (amerykaSpolkaStrategia.getSector().trim().equals(szukana.getSzukanaWartosc()))
+                                        flaga = true;
+                                    break;
+                                }
+                                case "industry": {
+                                    if (amerykaSpolkaStrategia.getIndustry().trim().equals(szukana.getSzukanaWartosc()))
+                                        flaga = true;
+                                    break;
+                                }
+                            }
+                        }
+                        return flaga;
+                    }
+                })
+                .collect(Collectors.toList());
+        log.info(ANSI_RED + "Ilość zmalezionych: " + amerykaSpolkiStretegie.size() + ANSI_RESET);
+//        log.info(ANSI_BLUE + "Jest ich aż: " + amerykaSpolkiStretegie.size() + ANSI_RESET);
+//        log.info(ANSI_BLUE + "Są to: " + amerykaSpolkiStretegie + ANSI_RESET);
+//        model.addAttribute("industryList", industryList);
+//        model.addAttribute("sectorList", sectorList);
+        model.addAttribute("amerykaSpolkiStrategie", amerykaSpolkiStretegie);
+//        model.addAttribute("amerykaSpolkaNew", new AmerykaSpolka());
+//        model.addAttribute("amerykaSpolkaFind", new AmerykaSpolka());
+//        return "redirect:/amerykastrategie";
+        return "amerykastrategie::#mojeZmiany";
+    }
+
+    private void dodajDoWyszukiwania(@PathVariable Integer id, @PathVariable String name) {
+        //        Sector sectorFind = new Sector();
+//        Industry industryFind = new Industry();
+        SzukanyModel modelSzukana = new SzukanyModel();
+        if (name.equals("market")) modelSzukana = marketList.get(id - 1);
+//        if (name.equals("sector")) sectorFind = sectorList.get(id - 1);
+        if (name.equals("sector")) modelSzukana = sectorList.get(id - 1);
+//        if (name.equals("industry")) industryFind = industryList.get(id - 1);
+        if (name.equals("industry")) modelSzukana = industryList.get(id - 1);
+//        Szukana szukana = new Szukana(name, sectorFind.getName());
+        Szukana szukana = new Szukana(name, modelSzukana.getName());
+        Szukana szukanaYes;
+        if (szukane.stream().filter(szu -> szu.getSzukanaWartosc().equals(szukana.getSzukanaWartosc())).findFirst().isPresent()) {
+            szukanaYes = szukane.stream().filter(szu -> szu.getSzukanaWartosc().equals(szukana.getSzukanaWartosc())).findFirst().get();
+            szukane.remove(szukanaYes);
+        } else szukane.add(szukana);
+        log.info("Dodano / usunięto do wyszukiwania: " + name + " / " + szukana.getSzukanaWartosc());
+        log.info("Ilość szukanych parametrów: " + szukane.size());
+    }
 
 //    @PutMapping
 //    public String modificationList(@RequestBody Industry industry, Model model) {
