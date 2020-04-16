@@ -1,20 +1,3 @@
-// let productsContainer = document.querySelector('.products-container ul');
-// let categoriesContainer = document.querySelector('.family-container ul');
-// let saveListProductsForm = document.querySelector('.save-new-product-container form');
-// let makeListProductsForm = document.querySelector('.make-new-product-container form');
-// let newProductForm = document.querySelector('#addProduct form');
-// let newCategoryForm = document.querySelector('#addCategory form');
-// let upOptionAll = document.querySelectorAll('.up button');
-// let divUp = document.querySelector('.up');
-// let downOptionAll = document.querySelectorAll('.down button');
-// let divDown = document.querySelector('.down');
-// let headerStyle = document.querySelector('header');
-// let settingStyle = document.querySelector('.setting');
-// let h2 = document.querySelector('h2');
-// let textH2 = 'Lista towarów, kategoria: ';
-// let swapAll = document.querySelectorAll('.btn--swap');
-// let cleanList = document.querySelector('#cleanList');
-// let cleanAll = document.querySelector('#cleanAll');
 let sectorsList = document.querySelectorAll('.mySector');
 let sectorsLabelList = document.querySelectorAll('.mySectorLabel');
 let marketsList = document.querySelectorAll('.myMarket');
@@ -38,7 +21,6 @@ document.addEventListener('DOMContentLoaded', function () {
         marketElement.addEventListener('click', function (event) {
             let index = 1;
             index = this.getAttribute('value');
-            // console.log(index);
             $("#mojeZmiany").load('/amerykastrategie/find/' + index + '&' + 'market');
         })
     });
@@ -47,44 +29,17 @@ document.addEventListener('DOMContentLoaded', function () {
         sectorElement.addEventListener('click', function (event) {
             let index = 1;
             index = this.getAttribute('value');
-            console.log(index);
             $("#mojeZmiany").load('/amerykastrategie/find/' + index + '&' + 'sector');
         })
     });
 
     [].forEach.call(industryLabelList, function (industryElement) {
         industryElement.addEventListener('click', function (event) {
-            // sendIndustry2(17);
-            // loadData(17);
-            // loca/tion.href="/amerykastrategie/17";
-            // document.getElementById("mojeZmiany").innerHTML=
-            //     updateEventCount(17);
             let index = 1;
-            // console.log(this.getAttribute('value'));
-            // console.log(event.value);
-            // console.log(event);
-            // console.log(industryElement.value());
             index = this.getAttribute('value');
-            // console.log(index);
-            // let url = '/amerykastrategie/id?id='+index;
-            // url = url + '/' + $('#mojeZmiany').val();
-            // $("#mojeZmiany").load(url);
-            // $("#mojeZmiany").load('/amerykastrategie/id?id=' + index);
             $("#mojeZmiany").load('/amerykastrategie/find/' + index + '&' + 'industry');
-            // retrieveGuests(17);
         })
     });
-
-    // [].forEach.call(sectorButton, function(swap) {
-    //     swap.addEventListener('mouseover', () => {
-    //         // selectSectorsListAuto();
-    //         console.log("no i co?");
-    //         // swap.disabled = true;
-    //         // setTimeout( () => {
-    //         //     swap.disabled = false;
-    //         // }, 2500 );
-    //     });
-    // });
 
 })
 

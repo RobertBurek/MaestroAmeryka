@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" th:href="@{/img/Logo_Icon.png}">
+    <link rel="shortcut icon" th:href="@{/img/LogoIcon.png}">
     <title>Maestro Finansów</title>
     <link rel="stylesheet" th:href="@{/css/normalize.css}">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,700,700i&amp;subset=latin-ext" rel="stylesheet">
@@ -245,62 +245,6 @@
             </section>
         </article>
 
-
-        <!--        <article style="height: 600px;">-->
-        <!--            <h3 th:text="'Znalezione spółki: ' + ${amerykaSpolkaNew.ticker}">Daty przypisane do tego imienia: </h3>-->
-        <!--            <p></p>-->
-        <!--            <div style="height: 95%; overflow: auto;">-->
-        <!--                <table class="table table-hover bg-light">-->
-        <!--                    <thead>-->
-        <!--                    <tr>-->
-        <!--                        <th>Ticker</th>-->
-        <!--                        <th class="tableWidth">Name</th>-->
-        <!--                        <th>Stock</th>-->
-        <!--                        <th>Market</th>-->
-        <!--                        <th class="textCenter">Edit</th>-->
-        <!--                        <th class="textCenter">Delete</th>-->
-        <!--                    </tr>-->
-        <!--                    </thead>-->
-        <!--                    <tbody>-->
-        <!--                    <tr th:each="amerykaSpolka: ${amerykaSpolki}">-->
-        <!--                        <td th:text="${amerykaSpolka.ticker}"/>-->
-        <!--                        <td class="tableWidth" th:text="${amerykaSpolka.name}"/>-->
-        <!--                        <td th:text="${amerykaSpolka.day0320}"/>-->
-        <!--                        <td th:text="${amerykaSpolka.market}"/>-->
-        <!--                        &lt;!&ndash;                        <td><a th:href="@{/amerykaSpolka/edit(index=${amerykaSpolka.ticker})}"><i class="fa fa-edit"></i></a></td>&ndash;&gt;-->
-        <!--                        <td class="textCenter"><a href="#"><i class="fa fa-edit"></i></a></td>-->
-        <!--                        &lt;!&ndash;                        <td><a th:href="@{/amerykaSpolka/del(index=${amerykaSpolka.ticker})}"><i class="fa fa-trash"></i></a></td>&ndash;&gt;-->
-        <!--                        <td class="textCenter"><a href="#"><i class="fa fa-trash"></i></a></td>-->
-        <!--                    </tr>-->
-        <!--                    </tbody>-->
-
-        <!--                </table>-->
-
-
-        <!--                <table class="table table-hover bg-light">-->
-        <!--                    <thead>-->
-        <!--                    <tr>-->
-        <!--                        &lt;!&ndash;<th>Id</th>&ndash;&gt;-->
-        <!--                        <th>Imie</th>-->
-        <!--                        <th>Dzień imienin</th>-->
-        <!--                        <th>Edycja</th>-->
-        <!--                        &lt;!&ndash;                        <th>Usuwanie</th>&ndash;&gt;-->
-        <!--                    </tr>-->
-        <!--                    </thead>-->
-        <!--                    <tbody>-->
-        <!--                    <tr th:each="nameDay: ${nameDays}">-->
-        <!--                        &lt;!&ndash;<td th:text="${nameDay.id}"/>&ndash;&gt;-->
-        <!--                        <td th:text="${nameDay.name}"/>-->
-        <!--                        <td th:text="${nameDay.dayMonth}"/>-->
-        <!--                        <td><a th:href="@{/nameDay/edit(index=${nameDay.id})}"><i class="fa fa-edit"></i></a></td>-->
-        <!--                        &lt;!&ndash;                        <td><a href="#">Edytuj</a></td>&ndash;&gt;-->
-        <!--                        &lt;!&ndash;                        <td><a th:href="@{/nameDay/del(index=${nameDay.id})}">Usuń</a></td>&ndash;&gt;-->
-        <!--                        &lt;!&ndash;                        <td><a href="#">Usuń</a></td>&ndash;&gt;-->
-        <!--                    </tr>-->
-        <!--                    </tbody>-->
-        <!--                </table>-->
-        <!--            </div>-->
-        <!--        </article>-->
         <aside>
             <section class="widget">
                 <h3>O projekcie</h3>
@@ -337,30 +281,6 @@
             </section>
         </aside>
 
-        <!--        <aside>-->
-        <!--            <section class="widget">-->
-        <!--                </br></br></br>-->
-        <!--                <h5>Zmodyfikuj dane:</h5>-->
-        <!--&lt;!&ndash;                action="/nameDay/save/edit"&ndash;&gt;-->
-        <!--                <form method="POST" th:action="@{/amerykaSpolka/save/edit}"  th:object="${amerykaSpolkaNew}">-->
-        <!--                    <input th:field="*{id}" class="form-control" id="id" type="hidden">-->
-        <!--                    <div class="form-group">-->
-        <!--                        <label for="ticker">Ticker:</label>-->
-        <!--                        <input th:field="*{ticker}" type="text" class="form-control"  name="ticker" disabled>-->
-        <!--                        <input th:field="*{ticker}" class="form-control" id="ticker" type="hidden">-->
-        <!--                    </div>-->
-        <!--                    <div class="form-group">-->
-        <!--                        <label for="nameSpolka">Name:</label>-->
-        <!--                        <input th:field="*{name}" type="text" class="form-control" id="nameSpolka" name="nameSpolka"-->
-        <!--                               placeholder="Name">-->
-        <!--                    </div>-->
-        <!--                    <button type="submit" class="btn btn-outline-success">Modyfikuj</button>-->
-
-        <!--                </form>-->
-        <!--                <a class="btn btn-outline-success" href="/">Powrót</a>-->
-        <!--            </section>-->
-
-        <!--        </aside>-->
     </main>
     <footer>
         <p>Copyright &copy; 2020 - <a href="http://robertburek.pl" target="_blank">Robert Burek</a></p>
