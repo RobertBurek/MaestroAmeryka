@@ -57,16 +57,16 @@ public class AmSpControllerRest {
         return amSpRepository.findAll();
     }
 
-    @GetMapping("/tworzenietabelistrategia") //na podstawie tabeli ameryka_spolka tworzy tabelę strategie
-    public String createTableStrategy() {
-        amerykaSpolkiStretegie = ((List<AmerykaSpolka>) amSpRepository.findAll())
-                .stream()
-                .map(amerykaSpolka -> getAmerykaSpolkaStrategia(amerykaSpolka)
-                ).collect(Collectors.toList());
-        amSpStrategyRepository.saveAll(amerykaSpolkiStretegie);
-        log.info(ANSI_BLUE + " Zrobiłem !!! Mapowanie tabeli notowań na tabelę Strategie !!!");
-        return "Tabela Strategia zrobiona !!!";
-    }
+//    @GetMapping("/tworzenietabelistrategia") //na podstawie tabeli ameryka_spolka tworzy tabelę strategie
+//    public String createTableStrategy() {
+//        amerykaSpolkiStretegie = ((List<AmerykaSpolka>) amSpRepository.findAll())
+//                .stream()
+//                .map(amerykaSpolka -> getAmerykaSpolkaStrategia(amerykaSpolka)
+//                ).collect(Collectors.toList());
+//        amSpStrategyRepository.saveAll(amerykaSpolkiStretegie);
+//        log.info(ANSI_BLUE + " Zrobiłem !!! Mapowanie tabeli notowań na tabelę Strategie !!!");
+//        return "Tabela Strategia zrobiona !!!";
+//    }
 
 
 //    @GetMapping("/")

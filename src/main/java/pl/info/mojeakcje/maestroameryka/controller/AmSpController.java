@@ -54,7 +54,7 @@ public class AmSpController {
 
     @GetMapping("/")
     public String getAll(Model model) {
-        amerykaSpolkiStretegie = (List<AmerykaSpolkaStrategia>) amSpStrategyRepository.findAll();
+//        amerykaSpolkiStretegie = (List<AmerykaSpolkaStrategia>) amSpStrategyRepository.findAll();
         amerykaSpolki = (List<AmerykaSpolka>) amSpRepository.findAll();
 //        amerykaSpolki.stream().map(amerykaSpolka -> Double.parseDouble(amerykaSpolka.getDay0119()))
         log.info(ANSI_BLUE + "Odczyt wszystkich danych z bazy ..." + ANSI_RESET);

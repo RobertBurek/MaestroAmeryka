@@ -43,7 +43,7 @@
 <body>
 <div class="container">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark myBorder">
-        <a class="navbar-brand" href="/"><img th:src="@{/img/MAESTRO5Z.png}" alt=""></a>
+        <a class="navbar-brand" href="/"><img th:src="@{/img/LogoZ.png}" alt=""></a>
         <img style=" width: 450px;" th:src="@{/img/slang13.png}" alt="">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
                 aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
@@ -144,7 +144,7 @@
                     </div>
                 </div>
 
-
+<!--                WYSZUKIWANIE                         -->
                 <div class="custom-control custom-switch myPokaz">
                     <input type="checkbox" class="custom-control-input" id="customSwitch4">
                     <label class="custom-control-label" for="customSwitch4">YTD dodatnia</label>
@@ -250,15 +250,15 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="amerykaSpolkaStrategia: ${amerykaSpolkiStrategie}">
+                    <tr th:each="amerykaSpolka: ${amerykaSpolki}">
                         <td>
                             <table class="myTable ">
                                 <tr>
                                     <td class="tableWidth"
-                                        th:text="${amerykaSpolkaStrategia.name}"/>
+                                        th:text="${amerykaSpolka.name}"/>
                                 </tr>
                                 <tr>
-                                    <td th:text="${amerykaSpolkaStrategia.ticker}"/>
+                                    <td th:text="${amerykaSpolka.ticker}"/>
                                 </tr>
                             </table>
                         </td>
@@ -266,25 +266,25 @@
                             <table class="myTable">
                                 <tr>
                                     <td class="tableWidthSector"
-                                        th:text="${amerykaSpolkaStrategia.sector}"/>
+                                        th:text="${amerykaSpolka.sector}"/>
                                 </tr>
                                 <tr>
-                                    <td th:text="${amerykaSpolkaStrategia.industry}"/>
+                                    <td th:text="${amerykaSpolka.industry}"/>
                                 </tr>
                             </table>
                         </td>
                         <!--                        <td th:text="${amerykaSpolkaStrategia.sector}"/>-->
 <!--                        <td class="textCenter" style="vertical-align:middle;" th:text="${amerykaSpolkaStrategia.yTD}"-->
-                        <td style="vertical-align:middle; padding: 0px;" th:text="${amerykaSpolkaStrategia.yTD + ' %'}"
-                            th:class="${amerykaSpolkaStrategia.yTD.startsWith('-')} ? 'textCenter negative' : 'textCenter positive'"/>
-                        <td style="vertical-align:middle; padding: 0px;" th:text="${amerykaSpolkaStrategia.m1TD + ' %'}"
-                            th:class="${amerykaSpolkaStrategia.m1TD.startsWith('-')} ? 'textCenter negative' : 'textCenter positive'"/>
-                        <td style="vertical-align:middle; padding: 0px;" th:text="${amerykaSpolkaStrategia.m2TD + ' %'}"
-                            th:class="${amerykaSpolkaStrategia.m2TD.startsWith('-')} ? 'textCenter negative' : 'textCenter positive'"/>
+                        <td style="vertical-align:middle; padding: 0px;" th:text="${amerykaSpolka.yTD}"
+                            th:class="${amerykaSpolka.yTD.startsWith('-')} ? 'textCenter negative' : 'textCenter positive'"/>
+                        <td style="vertical-align:middle; padding: 0px;" th:text="${amerykaSpolka.m1TD}"
+                            th:class="${amerykaSpolka.m1TD.startsWith('-')} ? 'textCenter negative' : 'textCenter positive'"/>
+                        <td style="vertical-align:middle; padding: 0px;" th:text="${amerykaSpolka.m2TD}"
+                            th:class="${amerykaSpolka.m2TD.startsWith('-')} ? 'textCenter negative' : 'textCenter positive'"/>
                         <td class="textCenter" style="vertical-align:middle;">
-                            <a th:href="@{/amerykaspolka/edit(index=${amerykaSpolkaStrategia.id})}">
-                            <i th:title="${amerykaSpolkaStrategia.note}"
-                               th:class="${amerykaSpolkaStrategia.note.length()>0} ? 'far fa-comment-dots isNote' : 'far fa-comment'"
+                            <a th:href="@{/amerykaspolka/edit(index=${amerykaSpolka.id})}">
+                            <i th:title="${amerykaSpolka.note}"
+                               th:class="${amerykaSpolka.note.length()>0} ? 'far fa-comment-dots isNote' : 'far fa-comment'"
                                ></i></a>
                         </td>
                         <!--                        <td class="textCenter"><a href="#"><i class="fa fa-edit"></i></a></td>-->

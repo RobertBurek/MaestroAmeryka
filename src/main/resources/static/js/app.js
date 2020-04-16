@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function () {
         sectorElement.addEventListener('click', function (event) {
             let index = 1;
             index = this.getAttribute('value');
-            // console.log(index);
+            console.log(index);
             $("#mojeZmiany").load('/amerykastrategie/find/' + index + '&' + 'sector');
         })
     });

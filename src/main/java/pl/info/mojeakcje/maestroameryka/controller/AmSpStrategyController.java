@@ -31,11 +31,12 @@ public class AmSpStrategyController {
     protected final org.slf4j.Logger log = LoggerFactory.getLogger(getClass());
 
     AmSpRepository amSpRepository;
-    AmSpStrategyRepository amSpStrategyRepository;
+//    AmSpStrategyRepository amSpStrategyRepository;
 
-    public AmSpStrategyController(AmSpRepository amSpRepository,
-                                  AmSpStrategyRepository amSpStrategyRepository) {
-        this.amSpStrategyRepository = amSpStrategyRepository;
+    public AmSpStrategyController(AmSpRepository amSpRepository
+//                                 , AmSpStrategyRepository amSpStrategyRepository
+    ) {
+//        this.amSpStrategyRepository = amSpStrategyRepository;
         this.amSpRepository = amSpRepository;
     }
 
@@ -47,7 +48,7 @@ public class AmSpStrategyController {
         model.addAttribute("industryList", industryList);
         model.addAttribute("sectorList", sectorList);
         model.addAttribute("marketList", marketList);
-        model.addAttribute("amerykaSpolkiStrategie", amerykaSpolkiStretegie);
+        model.addAttribute("amerykaSpolki", amerykaSpolki);
         model.addAttribute("amerykaSpolkaNew", new AmerykaSpolka());
         model.addAttribute("amerykaSpolkaFind", new AmerykaSpolka());
         return "amerykastrategie";
@@ -57,17 +58,17 @@ public class AmSpStrategyController {
 //    public String getIndustryStrategy(@PathVariable Integer id, Model model) {
     public String getIndustryStrategy(@RequestParam Integer id, Model model) {
         Industry industryFind2 = industryList.get(id - 1);
-        amerykaSpolkiStretegie = (List<AmerykaSpolkaStrategia>) amSpStrategyRepository.findAll();
-        amerykaSpolkiStretegie = amerykaSpolkiStretegie
+        amerykaSpolki = (List<AmerykaSpolka>) amSpRepository.findAll();
+        amerykaSpolki = amerykaSpolki
                 .stream()
-                .filter(amerykaSpolkaStrategia -> amerykaSpolkaStrategia.getIndustry().equals(industryFind2.getName()))
+                .filter(amerykaSpolka -> amerykaSpolka.getIndustry().equals(industryFind2.getName()))
                 .collect(Collectors.toList());
         log.info(ANSI_BLUE + "Spółki z branży: " + industryFind2.getName() + ANSI_RESET);
-        log.info(ANSI_BLUE + "Jest ich aż: " + amerykaSpolkiStretegie.size() + ANSI_RESET);
+        log.info(ANSI_BLUE + "Jest ich aż: " + amerykaSpolki.size() + ANSI_RESET);
 //        log.info(ANSI_BLUE + "Są to: " + amerykaSpolkiStretegie + ANSI_RESET);
 //        model.addAttribute("industryList", industryList);
 //        model.addAttribute("sectorList", sectorList);
-        model.addAttribute("amerykaSpolkiStrategie", amerykaSpolkiStretegie);
+        model.addAttribute("amerykaSpolki", amerykaSpolki);
 //        model.addAttribute("amerykaSpolkaNew", new AmerykaSpolka());
 //        model.addAttribute("amerykaSpolkaFind", new AmerykaSpolka());
 //        return "redirect:/amerykastrategie";
@@ -78,17 +79,17 @@ public class AmSpStrategyController {
     public String getSectorStrategy(@PathVariable Integer id, Model model) {
 //    public String getIndustryStrategy(@RequestParam Integer id, Model model) {
         Sector sectorFind2 = sectorList.get(id - 1);
-        amerykaSpolkiStretegie = (List<AmerykaSpolkaStrategia>) amSpStrategyRepository.findAll();
-        amerykaSpolkiStretegie = amerykaSpolkiStretegie
+        amerykaSpolki = (List<AmerykaSpolka>) amSpRepository.findAll();
+        amerykaSpolki = amerykaSpolki
                 .stream()
                 .filter(amerykaSpolkaStrategia -> amerykaSpolkaStrategia.getSector().equals(sectorFind2.getName()))
                 .collect(Collectors.toList());
-        log.info(ANSI_YELLOW + "Spółki z sektora: " + sectorFind2.getName() + ", jest ich aż: " + amerykaSpolkiStretegie.size() + ANSI_RESET);
+        log.info(ANSI_YELLOW + "Spółki z sektora: " + sectorFind2.getName() + ", jest ich aż: " + amerykaSpolki.size() + ANSI_RESET);
 //        log.info(ANSI_BLUE + "Jest ich aż: " + amerykaSpolkiStretegie.size() + ANSI_RESET);
 //        log.info(ANSI_BLUE + "Są to: " + amerykaSpolkiStretegie + ANSI_RESET);
 //        model.addAttribute("industryList", industryList);
 //        model.addAttribute("sectorList", sectorList);
-        model.addAttribute("amerykaSpolkiStrategie", amerykaSpolkiStretegie);
+        model.addAttribute("amerykaSpolkiStrategie", amerykaSpolki);
 //        model.addAttribute("amerykaSpolkaNew", new AmerykaSpolka());
 //        model.addAttribute("amerykaSpolkaFind", new AmerykaSpolka());
 //        return "redirect:/amerykastrategie";
@@ -98,28 +99,28 @@ public class AmSpStrategyController {
     @GetMapping("/amerykastrategie/find/{id}&{name}")
     public String getSectorStrategy(@PathVariable Integer id, @PathVariable String name, Model model) {
         dodajDoWyszukiwania(id, name);
-        amerykaSpolkiStretegie = (List<AmerykaSpolkaStrategia>) amSpStrategyRepository.findAll();
-        amerykaSpolkiStretegie = amerykaSpolkiStretegie
+        amerykaSpolki = (List<AmerykaSpolka>) amSpRepository.findAll();
+        amerykaSpolki = amerykaSpolki
                 .stream()
 //                .filter(amerykaSpolkaStrategia -> amerykaSpolkaStrategia.getSector().equals(sectorFind3.getName()))
-                .filter(new Predicate<AmerykaSpolkaStrategia>() {
+                .filter(new Predicate<AmerykaSpolka>() {
                     @Override
-                    public boolean test(AmerykaSpolkaStrategia amerykaSpolkaStrategia) {
+                    public boolean test(AmerykaSpolka amerykaSpolka) {
                         boolean flaga = false;
                         for (Szukana szukana : szukane) {
                             switch (szukana.getRodzajSzukanej()) {
                                 case "market": {
-                                    if (amerykaSpolkaStrategia.getMarket().trim().equals(szukana.getSzukanaWartosc()))
+                                    if (amerykaSpolka.getMarket().trim().equals(szukana.getSzukanaWartosc()))
                                         flaga = true;
                                     break;
                                 }
                                 case "sector": {
-                                    if (amerykaSpolkaStrategia.getSector().trim().equals(szukana.getSzukanaWartosc()))
+                                    if (amerykaSpolka.getSector().trim().equals(szukana.getSzukanaWartosc()))
                                         flaga = true;
                                     break;
                                 }
                                 case "industry": {
-                                    if (amerykaSpolkaStrategia.getIndustry().trim().equals(szukana.getSzukanaWartosc()))
+                                    if (amerykaSpolka.getIndustry().trim().equals(szukana.getSzukanaWartosc()))
                                         flaga = true;
                                     break;
                                 }
@@ -129,12 +130,12 @@ public class AmSpStrategyController {
                     }
                 })
                 .collect(Collectors.toList());
-        log.info(ANSI_RED + "Ilość zmalezionych: " + amerykaSpolkiStretegie.size() + ANSI_RESET);
+        log.info(ANSI_RED + "Ilość zmalezionych: " + amerykaSpolki.size() + ANSI_RESET);
 //        log.info(ANSI_BLUE + "Jest ich aż: " + amerykaSpolkiStretegie.size() + ANSI_RESET);
 //        log.info(ANSI_BLUE + "Są to: " + amerykaSpolkiStretegie + ANSI_RESET);
 //        model.addAttribute("industryList", industryList);
 //        model.addAttribute("sectorList", sectorList);
-        model.addAttribute("amerykaSpolkiStrategie", amerykaSpolkiStretegie);
+        model.addAttribute("amerykaSpolki", amerykaSpolki);
 //        model.addAttribute("amerykaSpolkaNew", new AmerykaSpolka());
 //        model.addAttribute("amerykaSpolkaFind", new AmerykaSpolka());
 //        return "redirect:/amerykastrategie";
