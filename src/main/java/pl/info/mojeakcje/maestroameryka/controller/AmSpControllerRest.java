@@ -14,7 +14,6 @@ import pl.info.mojeakcje.maestroameryka.repository.AmSpRepository;
 import pl.info.mojeakcje.maestroameryka.repository.AmSpStrategyRepository;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static pl.info.mojeakcje.maestroameryka.MaestroamerykaApplication.*;
 

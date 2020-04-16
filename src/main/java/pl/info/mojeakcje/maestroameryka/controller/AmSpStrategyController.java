@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.info.mojeakcje.maestroameryka.model.*;
 import pl.info.mojeakcje.maestroameryka.repository.AmSpRepository;
-import pl.info.mojeakcje.maestroameryka.repository.AmSpStrategyRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,12 +30,8 @@ public class AmSpStrategyController {
     protected final org.slf4j.Logger log = LoggerFactory.getLogger(getClass());
 
     AmSpRepository amSpRepository;
-//    AmSpStrategyRepository amSpStrategyRepository;
 
-    public AmSpStrategyController(AmSpRepository amSpRepository
-//                                 , AmSpStrategyRepository amSpStrategyRepository
-    ) {
-//        this.amSpStrategyRepository = amSpStrategyRepository;
+    public AmSpStrategyController(AmSpRepository amSpRepository) {
         this.amSpRepository = amSpRepository;
     }
 
@@ -55,7 +50,6 @@ public class AmSpStrategyController {
     }
 
     @GetMapping("/amerykastrategie/id")
-//    public String getIndustryStrategy(@PathVariable Integer id, Model model) {
     public String getIndustryStrategy(@RequestParam Integer id, Model model) {
         Industry industryFind2 = industryList.get(id - 1);
         amerykaSpolki = (List<AmerykaSpolka>) amSpRepository.findAll();
@@ -65,19 +59,13 @@ public class AmSpStrategyController {
                 .collect(Collectors.toList());
         log.info(ANSI_BLUE + "Spółki z branży: " + industryFind2.getName() + ANSI_RESET);
         log.info(ANSI_BLUE + "Jest ich aż: " + amerykaSpolki.size() + ANSI_RESET);
-//        log.info(ANSI_BLUE + "Są to: " + amerykaSpolkiStretegie + ANSI_RESET);
-//        model.addAttribute("industryList", industryList);
-//        model.addAttribute("sectorList", sectorList);
         model.addAttribute("amerykaSpolki", amerykaSpolki);
-//        model.addAttribute("amerykaSpolkaNew", new AmerykaSpolka());
-//        model.addAttribute("amerykaSpolkaFind", new AmerykaSpolka());
-//        return "redirect:/amerykastrategie";
+
         return "amerykastrategie::#mojeZmiany";
     }
 
     @GetMapping("/amerykastrategie/sector/{id}")
     public String getSectorStrategy(@PathVariable Integer id, Model model) {
-//    public String getIndustryStrategy(@RequestParam Integer id, Model model) {
         Sector sectorFind2 = sectorList.get(id - 1);
         amerykaSpolki = (List<AmerykaSpolka>) amSpRepository.findAll();
         amerykaSpolki = amerykaSpolki
@@ -85,14 +73,7 @@ public class AmSpStrategyController {
                 .filter(amerykaSpolkaStrategia -> amerykaSpolkaStrategia.getSector().equals(sectorFind2.getName()))
                 .collect(Collectors.toList());
         log.info(ANSI_YELLOW + "Spółki z sektora: " + sectorFind2.getName() + ", jest ich aż: " + amerykaSpolki.size() + ANSI_RESET);
-//        log.info(ANSI_BLUE + "Jest ich aż: " + amerykaSpolkiStretegie.size() + ANSI_RESET);
-//        log.info(ANSI_BLUE + "Są to: " + amerykaSpolkiStretegie + ANSI_RESET);
-//        model.addAttribute("industryList", industryList);
-//        model.addAttribute("sectorList", sectorList);
         model.addAttribute("amerykaSpolkiStrategie", amerykaSpolki);
-//        model.addAttribute("amerykaSpolkaNew", new AmerykaSpolka());
-//        model.addAttribute("amerykaSpolkaFind", new AmerykaSpolka());
-//        return "redirect:/amerykastrategie";
         return "amerykastrategie::#mojeZmiany";
     }
 
@@ -102,7 +83,6 @@ public class AmSpStrategyController {
         amerykaSpolki = (List<AmerykaSpolka>) amSpRepository.findAll();
         amerykaSpolki = amerykaSpolki
                 .stream()
-//                .filter(amerykaSpolkaStrategia -> amerykaSpolkaStrategia.getSector().equals(sectorFind3.getName()))
                 .filter(new Predicate<AmerykaSpolka>() {
                     @Override
                     public boolean test(AmerykaSpolka amerykaSpolka) {
@@ -131,27 +111,15 @@ public class AmSpStrategyController {
                 })
                 .collect(Collectors.toList());
         log.info(ANSI_RED + "Ilość zmalezionych: " + amerykaSpolki.size() + ANSI_RESET);
-//        log.info(ANSI_BLUE + "Jest ich aż: " + amerykaSpolkiStretegie.size() + ANSI_RESET);
-//        log.info(ANSI_BLUE + "Są to: " + amerykaSpolkiStretegie + ANSI_RESET);
-//        model.addAttribute("industryList", industryList);
-//        model.addAttribute("sectorList", sectorList);
         model.addAttribute("amerykaSpolki", amerykaSpolki);
-//        model.addAttribute("amerykaSpolkaNew", new AmerykaSpolka());
-//        model.addAttribute("amerykaSpolkaFind", new AmerykaSpolka());
-//        return "redirect:/amerykastrategie";
         return "amerykastrategie::#mojeZmiany";
     }
 
     private void dodajDoWyszukiwania(@PathVariable Integer id, @PathVariable String name) {
-        //        Sector sectorFind = new Sector();
-//        Industry industryFind = new Industry();
         SzukanyModel modelSzukana = new SzukanyModel();
         if (name.equals("market")) modelSzukana = marketList.get(id - 1);
-//        if (name.equals("sector")) sectorFind = sectorList.get(id - 1);
         if (name.equals("sector")) modelSzukana = sectorList.get(id - 1);
-//        if (name.equals("industry")) industryFind = industryList.get(id - 1);
         if (name.equals("industry")) modelSzukana = industryList.get(id - 1);
-//        Szukana szukana = new Szukana(name, sectorFind.getName());
         Szukana szukana = new Szukana(name, modelSzukana.getName());
         Szukana szukanaYes;
         if (szukane.stream().filter(szu -> szu.getSzukanaWartosc().equals(szukana.getSzukanaWartosc())).findFirst().isPresent()) {
