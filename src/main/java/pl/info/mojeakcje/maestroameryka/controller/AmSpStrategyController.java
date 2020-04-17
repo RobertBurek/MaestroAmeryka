@@ -12,6 +12,7 @@ import pl.info.mojeakcje.maestroameryka.model.*;
 import pl.info.mojeakcje.maestroameryka.repository.AmSpRepository;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -44,6 +45,7 @@ public class AmSpStrategyController {
     public String getAllStrategy(Model model) {
         szukane.clear();
         amerykaSpolki.clear();
+        filtrowane.clear();
         model.addAttribute("industryList", industryList);
         model.addAttribute("sectorList", sectorList);
         model.addAttribute("marketList", marketList);
@@ -105,6 +107,10 @@ public class AmSpStrategyController {
                 filtry += filtr + ",  ";
             }
         }
+        amerykaSpolki = amerykaSpolki
+                .stream()
+                .sorted(Comparator.comparing(AmerykaSpolka::getName))
+                .collect(Collectors.toList());
         model.addAttribute("amerykaSpolki", amerykaSpolki);
         model.addAttribute("wynikWyszukiwania", amerykaSpolki.size());
         model.addAttribute("filtry", filtry);

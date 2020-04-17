@@ -149,61 +149,70 @@
                 <p>
                 <div class="form-group">
                     <div class="custom-control custom-radio">
-                        <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
-                        <label class="custom-control-label" for="customRadio1">Name rosnąco</label>
+                        <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" checked>
+                        <label class="custom-control-label mySortowanieLabel" value="NameRosnaco" for="customRadio1">Name
+                            rosnąco</label>
                     </div>
                     <div class="custom-control custom-radio">
                         <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
-                        <label class="custom-control-label" for="customRadio2">Name malejąco</label>
+                        <label class="custom-control-label mySortowanieLabel" value="NameMalejaco" for="customRadio2">Name
+                            malejąco</label>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="custom-control custom-radio">
                         <input type="radio" id="customRadio3" name="customRadio" class="custom-control-input">
-                        <label class="custom-control-label" for="customRadio3">Sector rosnąco</label>
+                        <label class="custom-control-label mySortowanieLabel" value="SectorRosnaco" for="customRadio3">Sector
+                            rosnąco</label>
                     </div>
                     <div class="custom-control custom-radio">
                         <input type="radio" id="customRadio4" name="customRadio" class="custom-control-input">
-                        <label class="custom-control-label" for="customRadio4">Sector malejąco</label>
+                        <label class="custom-control-label mySortowanieLabel" value="SectorMalejaco" for="customRadio4">Sector
+                            malejąco</label>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="custom-control custom-radio">
                         <input type="radio" id="customRadio5" name="customRadio" class="custom-control-input">
-                        <label class="custom-control-label" for="customRadio5">YTD rosnąco</label>
+                        <label class="custom-control-label mySortowanieLabel" value="YTDRosnaco" for="customRadio5">YTD
+                            rosnąco</label>
                     </div>
                     <div class="custom-control custom-radio">
                         <input type="radio" id="customRadio6" name="customRadio" class="custom-control-input">
-                        <label class="custom-control-label" for="customRadio6">YTD malejąco</label>
+                        <label class="custom-control-label mySortowanieLabel" value="YTDMalejaco" for="customRadio6">YTD
+                            malejąco</label>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="custom-control custom-radio">
                         <input type="radio" id="customRadio7" name="customRadio" class="custom-control-input">
-                        <label class="custom-control-label" for="customRadio7">1MTD rosnąco</label>
+                        <label class="custom-control-label mySortowanieLabel" value="1MTDRosnaco" for="customRadio7">1MTD
+                            rosnąco</label>
                     </div>
                     <div class="custom-control custom-radio">
                         <input type="radio" id="customRadio8" name="customRadio" class="custom-control-input">
-                        <label class="custom-control-label" for="customRadio8">1MTD malejąco</label>
+                        <label class="custom-control-label mySortowanieLabel" value="1MTDMalejaco" for="customRadio8">1MTD
+                            malejąco</label>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="custom-control custom-radio">
                         <input type="radio" id="customRadio9" name="customRadio" class="custom-control-input">
-                        <label class="custom-control-label" for="customRadio9">2MTD rosnąco</label>
+                        <label class="custom-control-label mySortowanieLabel" value="2MTDRosnaco" for="customRadio9">2MTD
+                            rosnąco</label>
                     </div>
                     <div class="custom-control custom-radio">
                         <input type="radio" id="customRadio10" name="customRadio" class="custom-control-input">
-                        <label class="custom-control-label" for="customRadio10">2MTD malejąco</label>
+                        <label class="custom-control-label mySortowanieLabel" value="2MTDMalejaco" for="customRadio10">2MTD
+                            malejąco</label>
                     </div>
                 </div>
                 </p>
             </section>
         </aside>
 
-
         <article style="width: 78%; padding: 15px;">
-            <div id="mojeZmiany">
+            <div id="mojeZmiany" style="height: 97%">
                 <p></p>
                 <h4 th:text="'Wynik wyszukiwania: (' + ${wynikWyszukiwania} + ')'">Wyniki wyszukiwania:</h4>
                 <p th:text="'Filtrowanie w kolejności:  '+ ${filtry}"></p>
