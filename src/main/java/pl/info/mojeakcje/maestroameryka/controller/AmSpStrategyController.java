@@ -44,8 +44,6 @@ public class AmSpStrategyController {
     public String getAllStrategy(Model model) {
         szukane.clear();
         amerykaSpolki.clear();
-//        amerykaSpolkiStretegie = (List<AmerykaSpolkaStrategia>) amSpStrategyRepository.findAll();
-//        log.info(ANSI_BLUE + "Odczyt wszystkich danych z bazy ..." + ANSI_RESET);
         model.addAttribute("industryList", industryList);
         model.addAttribute("sectorList", sectorList);
         model.addAttribute("marketList", marketList);
@@ -68,7 +66,6 @@ public class AmSpStrategyController {
         log.info(ANSI_BLUE + "Spółki z branży: " + industryFind2.getName() + ANSI_RESET);
         log.info(ANSI_BLUE + "Jest ich aż: " + amerykaSpolki.size() + ANSI_RESET);
         model.addAttribute("amerykaSpolki", amerykaSpolki);
-
         return "amerykastrategie::#mojeZmiany";
     }
 
@@ -104,7 +101,7 @@ public class AmSpStrategyController {
                         .stream()
                         .filter(wyszukajPredicate(filtr))
                         .collect(Collectors.toList());
-                log.info(ANSI_RED + "Ilość filtrowana: " + amerykaSpolki.size() + ANSI_RESET);
+                log.info(ANSI_FIOLET + "Ilość po filtrowaniu: " + amerykaSpolki.size() + ANSI_RESET);
                 filtry += filtr + ",  ";
             }
         }
@@ -120,7 +117,6 @@ public class AmSpStrategyController {
             @Override
             public boolean test(AmerykaSpolka amerykaSpolka) {
                 boolean flaga = false;
-//                for (String wyszzukiwana : wyszukiwane) {
                 switch (val) {
                     case "dodatniaYTD": {
                         if (!amerykaSpolka.getyTD().trim().equals("brak")) {
@@ -165,7 +161,6 @@ public class AmSpStrategyController {
                         break;
                     }
                 }
-//                }
                 return flaga;
             }
         };
@@ -213,38 +208,16 @@ public class AmSpStrategyController {
                 szukanaYes = szukane.stream().filter(szu -> szu.getSzukanaWartosc().equals(szukana.getSzukanaWartosc())).findFirst().get();
                 szukane.remove(szukanaYes);
             } else szukane.add(szukana);
-            log.info("Dodano / usunięto do pokazania: " + name + " / " + szukana.getSzukanaWartosc());
-            log.info("Ilość warunków: " + szukane.size());
-            log.info(ANSI_YELLOW + "Lista warunków: " + szukane + ANSI_RESET);
+            log.info(ANSI_GREEN_ + "Dodano/Usunięto do pokazania: " + name + " / " + szukana.getSzukanaWartosc() + ANSI_RESET);
+            log.info(ANSI_GREEN_ + "Ilość warunków: " + szukane.size() + ANSI_RESET);
+            log.info(ANSI_GREEN_ + "Lista warunków: " + szukane + ANSI_RESET);
         }
         if (id == -1) {
             if (!filtrowane.remove(name)) filtrowane.add(name);
-            log.info("Dodano / usunięto do wyszukiwania: " + name);
-            log.info("Ilość wyszukiwanych: " + szukane.size());
-            log.info(ANSI_YELLOW + "Lista wyszukiwanych: " + szukane + ANSI_RESET);
+            log.info(ANSI_YELLOW + "Dodano/Usunięto filtr: " + name + ANSI_RESET);
+            log.info(ANSI_YELLOW + "Ilość filtrów: " + szukane.size() + ANSI_RESET);
+            log.info(ANSI_YELLOW + "Lista filtrów: " + filtrowane + ANSI_RESET);
         }
     }
-
-//    @PutMapping
-//    public String modificationList(@RequestBody Industry industry, Model model) {
-////        int index=0;
-//        log.info("Wysłałem : " + industry);
-////        for (Industry ind :industryList) {
-////            if (ind.getId()==industry.getId()) break;
-////            else index++;
-////        }
-//        amerykaSpolkiStretegie = (List<AmerykaSpolkaStrategia>) amSpStrategyRepository.findAll();
-//        amerykaSpolkiStretegie = amerykaSpolkiStretegie
-//                .stream()
-//                .filter(amerykaSpolkaStrategia -> amerykaSpolkaStrategia.getIndustry().equals(industry.getName()))
-//                .collect(Collectors.toList());
-////        return "redirect:/strategie";
-//        model.addAttribute("industryList", industryList);
-//        model.addAttribute("sectorList", sectorList);
-//        model.addAttribute("amerykaSpolkiStrategie", amerykaSpolkiStretegie);
-//        model.addAttribute("amerykaSpolkaNew", new AmerykaSpolka());
-//        model.addAttribute("amerykaSpolkaFind", new AmerykaSpolka());
-//        return "redirect:/amerykastrategie";
-//    }
 
 }

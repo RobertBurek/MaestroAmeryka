@@ -206,7 +206,7 @@
             <div id="mojeZmiany">
                 <p></p>
                 <h4 th:text="'Wynik wyszukiwania: (' + ${wynikWyszukiwania} + ')'">Wyniki wyszukiwania:</h4>
-                <p th:text="'Filtrowanie w kolejności:  '+ ${filtry}" ></p>
+                <p th:text="'Filtrowanie w kolejności:  '+ ${filtry}"></p>
                 <div class="listSpolka" id="position">
                     <table class="table table-hover bg-light">
                         <thead>
@@ -249,8 +249,6 @@
                                     </tr>
                                 </table>
                             </td>
-                            <!--                        <td th:text="${amerykaSpolkaStrategia.sector}"/>-->
-                            <!--                        <td class="textCenter" style="vertical-align:middle;" th:text="${amerykaSpolkaStrategia.yTD}"-->
                             <td style="vertical-align:middle; padding: 0px;" th:text="${amerykaSpolka.yTD}"
                                 th:class="${amerykaSpolka.yTD.startsWith('-')} ? 'textCenter negative' : 'textCenter positive'"/>
                             <td style="vertical-align:middle; padding: 0px;" th:text="${amerykaSpolka.m1TD}"

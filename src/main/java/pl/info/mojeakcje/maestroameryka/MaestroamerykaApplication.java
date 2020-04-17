@@ -11,7 +11,6 @@ import java.util.List;
 public class MaestroamerykaApplication {
 
     public static List<AmerykaSpolka> amerykaSpolki;
-//    public static List<AmerykaSpolkaStrategia> amerykaSpolkiStretegie;
     public static List<Industry> industryList = new ArrayList<>();
     public static List<Sector> sectorList = new ArrayList<>();
     public static List<Market> marketList = new ArrayList<>();
@@ -19,7 +18,7 @@ public class MaestroamerykaApplication {
     public static final String ANSI_RED = "\u001B[31m";
     public static final String ANSI_HIGHGREEN = "\u001B[92m";
     public static final String ANSI_GREEN_ = "\u001B[32;4m";
-    public static final String ANSI_VIOLET = "\u001B[35m";
+    public static final String ANSI_FIOLET = "\u001B[35m";
     public static final String ANSI_BLUE = "\u001B[94m";
     public static final String ANSI_YELLOW = "\u001B[33;1m";
     public static final String ANSI_RESET = "\u001B[0m";

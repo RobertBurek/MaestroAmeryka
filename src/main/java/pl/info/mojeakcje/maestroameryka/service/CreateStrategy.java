@@ -1,17 +1,6 @@
 package pl.info.mojeakcje.maestroameryka.service;
 
 import lombok.extern.log4j.Log4j2;
-import org.slf4j.LoggerFactory;
-import pl.info.mojeakcje.maestroameryka.model.AmerykaSpolka;
-import pl.info.mojeakcje.maestroameryka.model.AmerykaSpolkaStrategia;
-import pl.info.mojeakcje.maestroameryka.repository.AmSpRepository;
-import pl.info.mojeakcje.maestroameryka.repository.AmSpStrategyRepository;
-
-import java.util.List;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-
-import static pl.info.mojeakcje.maestroameryka.MaestroamerykaApplication.*;
 
 @Log4j2
 

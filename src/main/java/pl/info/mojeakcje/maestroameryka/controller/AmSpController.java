@@ -12,9 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 import pl.info.mojeakcje.maestroameryka.model.AmerykaSpolka;
-import pl.info.mojeakcje.maestroameryka.model.AmerykaSpolkaStrategia;
 import pl.info.mojeakcje.maestroameryka.repository.AmSpRepository;
-import pl.info.mojeakcje.maestroameryka.repository.AmSpStrategyRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,19 +30,15 @@ public class AmSpController {
     protected final org.slf4j.Logger log = LoggerFactory.getLogger(getClass());
 
     AmSpRepository amSpRepository;
-    AmSpStrategyRepository amSpStrategyRepository;
+
 //    CreateStrategy createStrategy;
 
 //    public AmSpController(CreateStrategy createStrategy) {
 //        this.createStrategy = createStrategy;
 //    }
 
-    public AmSpController(AmSpRepository amSpRepository,
-//                              CreateStrategy createStrategy,
-                          AmSpStrategyRepository amSpStrategyRepository) {
-        this.amSpStrategyRepository = amSpStrategyRepository;
+    public AmSpController(AmSpRepository amSpRepository) {
         this.amSpRepository = amSpRepository;
-//        this.createStrategy = createStrategy;
     }
 
 //    public AmSpController(AmSpRepository amSpRepository) {
@@ -75,7 +69,7 @@ public class AmSpController {
 
     @PostMapping("/amerykaspolka")
     public String postFindAmerykaSpolka(@ModelAttribute AmerykaSpolka amerykaSpolkaFind) {
-        log.info("Szukać będziemy: " + ANSI_VIOLET + amerykaSpolkaFind.getTicker().toUpperCase() + ANSI_RESET);
+        log.info("Szukać będziemy: " + ANSI_FIOLET + amerykaSpolkaFind.getTicker().toUpperCase() + ANSI_RESET);
         amerykaSpolki = (List<AmerykaSpolka>) amSpRepository.findAll();
         if (!amerykaSpolkaFind.getTicker().equals("")) {
             amerykaSpolki = amerykaSpolki.stream()
