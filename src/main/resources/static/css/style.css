@@ -98,6 +98,7 @@ img {
 .myDisplayFlex{
     display: flex;
     height: 22px;
+    margin-bottom: 10px;
 }
 
 .label-course{

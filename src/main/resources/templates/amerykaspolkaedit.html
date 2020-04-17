@@ -48,7 +48,8 @@
                 <!--                    <a class="nav-link" href="http://robertburek.pl" target="_blank">Autor</a>-->
                 <!--                </li>-->
             </ul>
-            <form class="form-inline my-2 my-lg-0" method="POST" action="/amerykaspolka" th:object="${amerykaSpolkaFind}">
+            <form class="form-inline my-2 my-lg-0" method="POST" action="/amerykaspolka"
+                  th:object="${amerykaSpolkaFind}">
                 <input class="form-control mr-sm-2" type="search" placeholder="Ticker" th:field="*{ticker}">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Szukaj</button>
             </form>
@@ -103,10 +104,34 @@
                                 <label for="note">Note :
                                     <textarea th:field="*{note}" type="textArea" class="form-control" id="note"
                                               name="note"
-                                              rows="9" cols="50" placeholder="Your note ...">
+                                              rows="8" cols="50" placeholder="Your note ...">
                             </textarea>
                                 </label>
                             </div>
+
+                                Rates of return :
+                                <div class="form-group myDisplayFlex">
+                                    <label for="YTD" class="label-course">YTD :</label>
+                                    <input th:field="*{yTD}" type="text" class="form-control input-course"
+                                           id="YTD"
+                                           name="YTD"
+                                           placeholder="rates">
+                                </div>
+                                <div class="form-group myDisplayFlex">
+                                    <label for="M1TD" class="label-course">1MTD :</label>
+                                    <input th:field="*{m1TD}" type="text" class="form-control input-course"
+                                           id="M1TD"
+                                           name="M1TD"
+                                           placeholder="rates">
+                                </div>
+                                <div class="form-group myDisplayFlex">
+                                    <label for="M2TD" class="label-course">2MTD :</label>
+                                    <input th:field="*{m2TD}" type="text" class="form-control input-course"
+                                           id="M2TD"
+                                           name="M2TD"
+                                           placeholder="rates">
+                                </div>
+
                             <!--                    <div style="display: flex; margin: 0 20px 0 15px;">-->
                             <!--                    <button type="submit" class="btn btn-outline-success">Modyfikuj</button>-->
                             <!--                    <a class="btn btn-outline-success" href="/">Powrót</a>-->
@@ -114,6 +139,36 @@
                         </div>
                         <div class="myColumn">
                             Historical stock :
+                            <div class="form-group myDisplayFlex">
+                                <label for="day1220" class="label-course">12-2020 :</label>
+                                <input th:field="*{day1220}" type="text" class="form-control input-course" id="day1220"
+                                       name="day1220"
+                                       placeholder="course">
+                            </div>
+                            <div class="form-group myDisplayFlex">
+                                <label for="day1120" class="label-course">11-2020 :</label>
+                                <input th:field="*{day1120}" type="text" class="form-control input-course" id="day1120"
+                                       name="day1120"
+                                       placeholder="course">
+                            </div>
+                            <div class="form-group myDisplayFlex">
+                                <label for="day1020" class="label-course">10-2020 :</label>
+                                <input th:field="*{day1020}" type="text" class="form-control input-course" id="day1020"
+                                       name="day1020"
+                                       placeholder="course">
+                            </div>
+                            <div class="form-group myDisplayFlex">
+                                <label for="day0920" class="label-course">09-2020 :</label>
+                                <input th:field="*{day0920}" type="text" class="form-control input-course" id="day0920"
+                                       name="day0920"
+                                       placeholder="course">
+                            </div>
+                            <div class="form-group myDisplayFlex">
+                                <label for="day0820" class="label-course">08-2020 :</label>
+                                <input th:field="*{day0820}" type="text" class="form-control input-course" id="day0820"
+                                       name="day0820"
+                                       placeholder="course">
+                            </div>
                             <div class="form-group myDisplayFlex">
                                 <label for="day0720" class="label-course">07-2020 :</label>
                                 <input th:field="*{day0720}" type="text" class="form-control input-course" id="day0720"
