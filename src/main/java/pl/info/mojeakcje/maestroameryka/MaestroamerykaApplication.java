@@ -158,7 +158,7 @@ public class MaestroamerykaApplication {
         industryList.add(new Industry(124,"Utilities - Regulated Water"));
         industryList.add(new Industry(125,"Utilities - Renewable"));
         industryList.add(new Industry(126,"Waste Management"));
-        industryList.add(new Industry(127,"Brak"));
+        industryList.add(new Industry(127,"Brak Industry"));
 
         sectorList.add(new Sector( 1,"Basic Materials"));
         sectorList.add(new Sector( 2,"Communication Services"));
@@ -172,7 +172,7 @@ public class MaestroamerykaApplication {
         sectorList.add(new Sector(10,"Real Estate"));
         sectorList.add(new Sector(11,"Technology"));
         sectorList.add(new Sector(12,"Utilities"));
-        sectorList.add(new Sector(13, "Brak"));
+        sectorList.add(new Sector(13, "Brak Secktor"));
 
         marketList.add(new Market(1, "NYSE"));
         marketList.add(new Market(2, "NasdaqGS"));
@@ -180,6 +180,6 @@ public class MaestroamerykaApplication {
         marketList.add(new Market(4, "NasdaqCM"));
         marketList.add(new Market(5, "BATS"));
         marketList.add(new Market(6, "Other OTC"));
-        marketList.add(new Market(7, "Brak"));
+        marketList.add(new Market(7, "Brak Market"));
     }
 }

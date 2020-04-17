@@ -51,7 +51,8 @@
                 <!--                    <a class="nav-link" href="http://robertburek.pl" target="_blank">Autor</a>-->
                 <!--                </li>-->
             </ul>
-            <form class="form-inline my-2 my-lg-0" method="POST" action="/amerykaspolka" th:object="${amerykaSpolkaFind}">
+            <form class="form-inline my-2 my-lg-0" method="POST" action="/amerykaspolka"
+                  th:object="${amerykaSpolkaFind}">
                 <input class="form-control mr-sm-2" type="search" placeholder="Ticker" th:field="*{ticker}">
                 <button class="btn btn-outline-success my-2 my-sm-0 myColor" type="submit">Szukaj</button>
             </form>
@@ -59,77 +60,90 @@
     </nav>
     <main>
         <aside style="width: 22%;">
+            <p></p>
             <section class="widget">
-                <p></p>
-                <h5>Pokaż spółki według:</h5>
+                <h5>Pokaż spółki:</h5>
                 <p>
-
-<!--                MARKET                         -->
+                    <!--                MARKET                         -->
                 <div class="custom-control custom-switch myPokaz">
                     <input type="checkbox" class="custom-control-input" id="customSwitchMarket">
                     <label class="custom-control-label" for="customSwitchMarket" id="marketButton">Market</label>
                 </div>
                 <div class="listMarket">
                     <div th:each="market : ${marketList}" class="custom-control custom-switch myMarket" hidden>
-                        <input type="checkbox" class="custom-control-input" th:id="'market'+${market.id}">
-                        <label th:text="${market.name}" class="custom-control-label myLabelStrategy myMarketLabel" th:value="${market.id}"
+                        <input type="checkbox" class="custom-control-input" th:id="'market' + ${market.id}">
+                        <label th:text="${market.name}" class="custom-control-label myLabelStrategy myMarketLabel"
+                               th:value="${market.id}"
                                th:for="'market'+${market.id}">NameMarket</label>
                     </div>
                 </div>
-
-<!--                SECTOR                         -->
+                <!--                SECTOR                         -->
                 <div class="custom-control custom-switch myPokaz">
                     <input type="checkbox" class="custom-control-input" id="customSwitchSector">
                     <label class="custom-control-label" for="customSwitchSector" id="sectorButton">Sector</label>
                 </div>
-                <div  class="listSector">
+                <div class="listSector">
                     <div th:each="sector : ${sectorList}" class="custom-control custom-switch mySector" hidden>
-                        <input type="checkbox" class="custom-control-input" th:id="'sector'+${sector.id}">
-                        <label th:text="${sector.name}" class="custom-control-label myLabelStrategy mySectorLabel" th:value="${sector.id}"
+                        <input type="checkbox" class="custom-control-input" th:id="'sector' + ${sector.id}">
+                        <label th:text="${sector.name}" class="custom-control-label myLabelStrategy mySectorLabel"
+                               th:value="${sector.id}"
                                th:for="'sector'+${sector.id}">NameSector</label>
                     </div>
                 </div>
-
-<!--                INDUSTRY                         -->
+                <!--                INDUSTRY                         -->
                 <div class="custom-control custom-switch myPokaz">
                     <input type="checkbox" class="custom-control-input" id="customSwitchIndustry">
                     <label class="custom-control-label" for="customSwitchIndustry" id="industryButton">Industry</label>
                 </div>
                 <div class="listIndustry">
                     <div th:each="industry : ${industryList}" class="custom-control custom-switch myIndustry" hidden>
-                        <input type="checkbox" class="custom-control-input" th:id="'industry'+${industry.id}">
-                        <label th:text="${industry.name}" class="custom-control-label myLabelStrategy myIndustryLabel" th:value="${industry.id}"
+                        <input type="checkbox" class="custom-control-input" th:id="'industry' + ${industry.id}">
+                        <label th:text="${industry.name}" class="custom-control-label myLabelStrategy myIndustryLabel"
+                               th:value="${industry.id}"
                                th:for="'industry'+${industry.id}">NameIndustry</label>
                     </div>
                 </div>
 
-<!--                WYSZUKIWANIE                         -->
+                </p>
+            </section>
+
+            <section class="widget">
+                <h5>Filtrowanie:</h5>
+                <p>
+                    <!--                FILTROWANIE                         -->
                 <div class="custom-control custom-switch myPokaz">
                     <input type="checkbox" class="custom-control-input" id="customSwitch4">
-                    <label class="custom-control-label" for="customSwitch4">YTD dodatnia</label>
+                    <label class="custom-control-label myWyszukiwanieLabel" th:value="dodYTD" for="customSwitch4">YTD
+                        dodatnia</label>
                 </div>
                 <div class="custom-control custom-switch myPokaz">
                     <input type="checkbox" class="custom-control-input" id="customSwitch5">
-                    <label class="custom-control-label" for="customSwitch5">YTD ujemna</label>
+                    <label class="custom-control-label myWyszukiwanieLabel" th:value="ujeYTD" for="customSwitch5">YTD
+                        ujemna</label>
                 </div>
                 <div class="custom-control custom-switch myPokaz">
                     <input type="checkbox" class="custom-control-input" id="customSwitch6">
-                    <label class="custom-control-label" for="customSwitch6">1MTD dodatnia</label>
+                    <label class="custom-control-label myWyszukiwanieLabel" th:value="dod1MTD" for="customSwitch6">1MTD
+                        dodatnia</label>
                 </div>
                 <div class="custom-control custom-switch myPokaz">
                     <input type="checkbox" class="custom-control-input" id="customSwitch7">
-                    <label class="custom-control-label" for="customSwitch7">1MTD ujemna</label>
+                    <label class="custom-control-label myWyszukiwanieLabel" th:value="uje1MTD" for="customSwitch7">1MTD
+                        ujemna</label>
                 </div>
                 <div class="custom-control custom-switch myPokaz">
                     <input type="checkbox" class="custom-control-input" id="customSwitch8">
-                    <label class="custom-control-label" for="customSwitch8">2MTD dodatnia</label>
+                    <label class="custom-control-label myWyszukiwanieLabel" th:value="dod2MTD" for="customSwitch8">2MTD
+                        dodatnia</label>
                 </div>
                 <div class="custom-control custom-switch myPokaz">
                     <input type="checkbox" class="custom-control-input" id="customSwitch9">
-                    <label class="custom-control-label" for="customSwitch9">2MTD ujemna</label>
+                    <label class="custom-control-label myWyszukiwanieLabel" th:value="uje2MTD" for="customSwitch9">2MTD
+                        ujemna</label>
                 </div>
                 </p>
             </section>
+
             <section class="widget">
                 <h5>Sortowanie według:</h5>
                 <p>
@@ -184,77 +198,82 @@
                     </div>
                 </div>
                 </p>
-                <p>
-                </p>
             </section>
         </aside>
-        <article style="width: 78%; padding: 15px;">
-            <h4>Wyniki wyszukiwania:</h4>
-            <p></p>
-            <div class="listSpolka" id="position">
-                <table id="mojeZmiany" class="table table-hover bg-light">
-                    <thead>
-                    <tr>
-                        <th class="tableWidth">
-                            Name <br>
-                            Ticker</th>
-                        <th class="tableWidthSector">
-                            Sector<br>
-                            Indrusty</th>
-                        <th class="textCenter">YTD</th>
-                        <th class="textCenter">1MTD</th>
-                        <th class="textCenter">2MTD</th>
-                        <th class="textCenter">Note</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="amerykaSpolka: ${amerykaSpolki}">
-                        <td>
-                            <table class="myTable ">
-                                <tr>
-                                    <td class="tableWidth"
-                                        th:text="${amerykaSpolka.name}"/>
-                                </tr>
-                                <tr>
-                                    <td th:text="${amerykaSpolka.ticker}"/>
-                                </tr>
-                            </table>
-                        </td>
-                        <td>
-                            <table class="myTable">
-                                <tr>
-                                    <td class="tableWidthSector"
-                                        th:text="${amerykaSpolka.sector}"/>
-                                </tr>
-                                <tr>
-                                    <td th:text="${amerykaSpolka.industry}"/>
-                                </tr>
-                            </table>
-                        </td>
-                        <!--                        <td th:text="${amerykaSpolkaStrategia.sector}"/>-->
-<!--                        <td class="textCenter" style="vertical-align:middle;" th:text="${amerykaSpolkaStrategia.yTD}"-->
-                        <td style="vertical-align:middle; padding: 0px;" th:text="${amerykaSpolka.yTD}"
-                            th:class="${amerykaSpolka.yTD.startsWith('-')} ? 'textCenter negative' : 'textCenter positive'"/>
-                        <td style="vertical-align:middle; padding: 0px;" th:text="${amerykaSpolka.m1TD}"
-                            th:class="${amerykaSpolka.m1TD.startsWith('-')} ? 'textCenter negative' : 'textCenter positive'"/>
-                        <td style="vertical-align:middle; padding: 0px;" th:text="${amerykaSpolka.m2TD}"
-                            th:class="${amerykaSpolka.m2TD.startsWith('-')} ? 'textCenter negative' : 'textCenter positive'"/>
-                        <td class="textCenter" style="vertical-align:middle;">
-                            <a th:href="@{/amerykaspolka/edit(index=${amerykaSpolka.id})}">
-                            <i th:title="${amerykaSpolka.note}"
-                               th:class="${amerykaSpolka.note.length()>0} ? 'far fa-comment-dots isNote' : 'far fa-comment'"
-                               ></i></a>
-                        </td>
-                        <!--                        <td class="textCenter"><a href="#"><i class="fa fa-edit"></i></a></td>-->
-                        <!--                        <td><a th:href="@{/amerykaSpolkaStrategia/del(index=${amerykaSpolkaStrategia.ticker})}"><i class="fa fa-trash"></i></a></td>-->
-<!--                        <td class="textCenter"><a href="#"><i class="fa fa-trash"></i></a></td>-->
-                    </tr>
-                    </tbody>
 
-                </table>
-            </div>
+
+        <article style="width: 78%; padding: 15px;">
+            <div id="mojeZmiany">
+                <p></p>
+                <h4 th:text="'Wynik wyszukiwania: (' + ${wynikWyszukiwania} + ')'">Wyniki wyszukiwania:</h4>
+                <p th:text="'Filtrowanie w kolejności:  '+ ${filtry}" ></p>
+                <div class="listSpolka" id="position">
+                    <table class="table table-hover bg-light">
+                        <thead>
+                        <tr>
+                            <th class="tableWidth">
+                                Name <br>
+                                Ticker
+                            </th>
+                            <th class="tableWidthSector">
+                                Sector<br>
+                                Indrusty
+                            </th>
+                            <th class="textCenter">YTD</th>
+                            <th class="textCenter">1MTD</th>
+                            <th class="textCenter">2MTD</th>
+                            <th class="textCenter">Note</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="amerykaSpolka: ${amerykaSpolki}">
+                            <td>
+                                <table class="myTable ">
+                                    <tr>
+                                        <td class="tableWidth"
+                                            th:text="${amerykaSpolka.name}"/>
+                                    </tr>
+                                    <tr>
+                                        <td th:text="${amerykaSpolka.ticker}"/>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td>
+                                <table class="myTable">
+                                    <tr>
+                                        <td class="tableWidthSector"
+                                            th:text="${amerykaSpolka.sector}"/>
+                                    </tr>
+                                    <tr>
+                                        <td th:text="${amerykaSpolka.industry}"/>
+                                    </tr>
+                                </table>
+                            </td>
+                            <!--                        <td th:text="${amerykaSpolkaStrategia.sector}"/>-->
+                            <!--                        <td class="textCenter" style="vertical-align:middle;" th:text="${amerykaSpolkaStrategia.yTD}"-->
+                            <td style="vertical-align:middle; padding: 0px;" th:text="${amerykaSpolka.yTD}"
+                                th:class="${amerykaSpolka.yTD.startsWith('-')} ? 'textCenter negative' : 'textCenter positive'"/>
+                            <td style="vertical-align:middle; padding: 0px;" th:text="${amerykaSpolka.m1TD}"
+                                th:class="${amerykaSpolka.m1TD.startsWith('-')} ? 'textCenter negative' : 'textCenter positive'"/>
+                            <td style="vertical-align:middle; padding: 0px;" th:text="${amerykaSpolka.m2TD}"
+                                th:class="${amerykaSpolka.m2TD.startsWith('-')} ? 'textCenter negative' : 'textCenter positive'"/>
+                            <td class="textCenter" style="vertical-align:middle;">
+                                <a th:href="@{/amerykaspolka/edit(index=${amerykaSpolka.id})}">
+                                    <i th:title="${amerykaSpolka.note}"
+                                       th:class="${amerykaSpolka.note.length()>0} ? 'far fa-comment-dots isNote' : 'far fa-comment'"
+                                    ></i></a>
+                            </td>
+                            <!--                        <td class="textCenter"><a href="#"><i class="fa fa-edit"></i></a></td>-->
+                            <!--                        <td><a th:href="@{/amerykaSpolkaStrategia/del(index=${amerykaSpolkaStrategia.ticker})}"><i class="fa fa-trash"></i></a></td>-->
+                            <!--                        <td class="textCenter"><a href="#"><i class="fa fa-trash"></i></a></td>-->
+                        </tr>
+                        </tbody>
+
+                    </table>
+                </div>
             </div>
         </article>
+
 
     </main>
     <footer>

@@ -1,6 +1,7 @@
 package pl.info.mojeakcje.maestroameryka.controller;
 
 import lombok.extern.log4j.Log4j2;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +27,9 @@ import static pl.info.mojeakcje.maestroameryka.MaestroamerykaApplication.*;
 public class AmSpStrategyController {
 
     private static List<Szukana> szukane = new ArrayList<>();
+    private static List<String> filtrowane = new ArrayList<>();
+    private static Integer wynikWyszukiwania = 0;
+    private static String filtry = "";
 
     protected final org.slf4j.Logger log = LoggerFactory.getLogger(getClass());
 
@@ -38,6 +42,8 @@ public class AmSpStrategyController {
 
     @GetMapping("/amerykastrategie")
     public String getAllStrategy(Model model) {
+        szukane.clear();
+        amerykaSpolki.clear();
 //        amerykaSpolkiStretegie = (List<AmerykaSpolkaStrategia>) amSpStrategyRepository.findAll();
 //        log.info(ANSI_BLUE + "Odczyt wszystkich danych z bazy ..." + ANSI_RESET);
         model.addAttribute("industryList", industryList);
@@ -46,6 +52,8 @@ public class AmSpStrategyController {
         model.addAttribute("amerykaSpolki", amerykaSpolki);
         model.addAttribute("amerykaSpolkaNew", new AmerykaSpolka());
         model.addAttribute("amerykaSpolkaFind", new AmerykaSpolka());
+        model.addAttribute("wynikWyszukiwania", amerykaSpolki.size());
+        model.addAttribute("filtry", filtry);
         return "amerykastrategie";
     }
 
@@ -83,51 +91,138 @@ public class AmSpStrategyController {
         amerykaSpolki = (List<AmerykaSpolka>) amSpRepository.findAll();
         amerykaSpolki = amerykaSpolki
                 .stream()
-                .filter(new Predicate<AmerykaSpolka>() {
-                    @Override
-                    public boolean test(AmerykaSpolka amerykaSpolka) {
-                        boolean flaga = false;
-                        for (Szukana szukana : szukane) {
-                            switch (szukana.getRodzajSzukanej()) {
-                                case "market": {
-                                    if (amerykaSpolka.getMarket().trim().equals(szukana.getSzukanaWartosc()))
-                                        flaga = true;
-                                    break;
-                                }
-                                case "sector": {
-                                    if (amerykaSpolka.getSector().trim().equals(szukana.getSzukanaWartosc()))
-                                        flaga = true;
-                                    break;
-                                }
-                                case "industry": {
-                                    if (amerykaSpolka.getIndustry().trim().equals(szukana.getSzukanaWartosc()))
-                                        flaga = true;
-                                    break;
-                                }
-                            }
-                        }
-                        return flaga;
-                    }
-                })
+                .filter(szukanaPredicate())
                 .collect(Collectors.toList());
-        log.info(ANSI_RED + "Ilość zmalezionych: " + amerykaSpolki.size() + ANSI_RESET);
+        log.info(ANSI_RED + "Ilość pokazanych spółek: " + amerykaSpolki.size() + ANSI_RESET);
+        if (szukane.size() == 0)
+            amerykaSpolki = (List<AmerykaSpolka>) amSpRepository.findAll();
+        filtry = "";
+        if (filtrowane.size() > 0) {
+
+            for (String filtr : filtrowane) {
+                amerykaSpolki = amerykaSpolki
+                        .stream()
+                        .filter(wyszukajPredicate(filtr))
+                        .collect(Collectors.toList());
+                log.info(ANSI_RED + "Ilość filtrowana: " + amerykaSpolki.size() + ANSI_RESET);
+                filtry += filtr + ",  ";
+            }
+        }
         model.addAttribute("amerykaSpolki", amerykaSpolki);
+        model.addAttribute("wynikWyszukiwania", amerykaSpolki.size());
+        model.addAttribute("filtry", filtry);
         return "amerykastrategie::#mojeZmiany";
     }
 
+    @NotNull
+    private Predicate<AmerykaSpolka> wyszukajPredicate(String val) {
+        return new Predicate<AmerykaSpolka>() {
+            @Override
+            public boolean test(AmerykaSpolka amerykaSpolka) {
+                boolean flaga = false;
+//                for (String wyszzukiwana : wyszukiwane) {
+                switch (val) {
+                    case "dodYTD": {
+                        if (!amerykaSpolka.getyTD().trim().equals("brak")) {
+                            if (Double.parseDouble(amerykaSpolka.getyTD().trim().replace("%", "")) >= 0)
+                                flaga = true;
+                        }
+                        break;
+                    }
+                    case "ujeYTD": {
+                        if (!amerykaSpolka.getyTD().trim().equals("brak")) {
+                            if (Double.parseDouble(amerykaSpolka.getyTD().trim().replace("%", "")) < 0)
+                                flaga = true;
+                        }
+                        break;
+                    }
+                    case "dod1MTD": {
+                        if (!amerykaSpolka.getM1TD().trim().equals("brak")) {
+                            if (Double.parseDouble(amerykaSpolka.getM1TD().trim().replace("%", "")) >= 0)
+                                flaga = true;
+                        }
+                        break;
+                    }
+                    case "uje1MTD": {
+                        if (!amerykaSpolka.getM1TD().trim().equals("brak")) {
+                            if (Double.parseDouble(amerykaSpolka.getM1TD().trim().replace("%", "")) < 0)
+                                flaga = true;
+                        }
+                        break;
+                    }
+                    case "dod2MTD": {
+                        if (!amerykaSpolka.getM2TD().trim().equals("brak")) {
+                            if (Double.parseDouble(amerykaSpolka.getM2TD().trim().replace("%", "")) >= 0)
+                                flaga = true;
+                        }
+                        break;
+                    }
+                    case "uje2MTD": {
+                        if (!amerykaSpolka.getM2TD().trim().equals("brak")) {
+                            if (Double.parseDouble(amerykaSpolka.getM2TD().trim().replace("%", "")) < 0)
+                                flaga = true;
+                        }
+                        break;
+                    }
+                }
+//                }
+                return flaga;
+            }
+        };
+    }
+
+    @NotNull
+    private Predicate<AmerykaSpolka> szukanaPredicate() {
+        return new Predicate<AmerykaSpolka>() {
+            @Override
+            public boolean test(AmerykaSpolka amerykaSpolka) {
+                boolean flaga = false;
+                for (Szukana szukana : szukane) {
+                    switch (szukana.getRodzajSzukanej()) {
+                        case "market": {
+                            if (amerykaSpolka.getMarket().trim().equals(szukana.getSzukanaWartosc()))
+                                flaga = true;
+                            break;
+                        }
+                        case "sector": {
+                            if (amerykaSpolka.getSector().trim().equals(szukana.getSzukanaWartosc()))
+                                flaga = true;
+                            break;
+                        }
+                        case "industry": {
+                            if (amerykaSpolka.getIndustry().trim().equals(szukana.getSzukanaWartosc()))
+                                flaga = true;
+                            break;
+                        }
+                    }
+                }
+                return flaga;
+            }
+        };
+    }
+
     private void dodajDoWyszukiwania(@PathVariable Integer id, @PathVariable String name) {
-        SzukanyModel modelSzukana = new SzukanyModel();
-        if (name.equals("market")) modelSzukana = marketList.get(id - 1);
-        if (name.equals("sector")) modelSzukana = sectorList.get(id - 1);
-        if (name.equals("industry")) modelSzukana = industryList.get(id - 1);
-        Szukana szukana = new Szukana(name, modelSzukana.getName());
-        Szukana szukanaYes;
-        if (szukane.stream().filter(szu -> szu.getSzukanaWartosc().equals(szukana.getSzukanaWartosc())).findFirst().isPresent()) {
-            szukanaYes = szukane.stream().filter(szu -> szu.getSzukanaWartosc().equals(szukana.getSzukanaWartosc())).findFirst().get();
-            szukane.remove(szukanaYes);
-        } else szukane.add(szukana);
-        log.info("Dodano / usunięto do wyszukiwania: " + name + " / " + szukana.getSzukanaWartosc());
-        log.info("Ilość szukanych parametrów: " + szukane.size());
+        if (id >= 0) {
+            SzukanyModel modelSzukana = new SzukanyModel();
+            if (name.equals("market")) modelSzukana = marketList.get(id - 1);
+            if (name.equals("sector")) modelSzukana = sectorList.get(id - 1);
+            if (name.equals("industry")) modelSzukana = industryList.get(id - 1);
+            Szukana szukana = new Szukana(name, modelSzukana.getName());
+            Szukana szukanaYes;
+            if (szukane.stream().filter(szu -> szu.getSzukanaWartosc().equals(szukana.getSzukanaWartosc())).findFirst().isPresent()) {
+                szukanaYes = szukane.stream().filter(szu -> szu.getSzukanaWartosc().equals(szukana.getSzukanaWartosc())).findFirst().get();
+                szukane.remove(szukanaYes);
+            } else szukane.add(szukana);
+            log.info("Dodano / usunięto do pokazania: " + name + " / " + szukana.getSzukanaWartosc());
+            log.info("Ilość warunków: " + szukane.size());
+            log.info(ANSI_YELLOW + "Lista warunków: " + szukane + ANSI_RESET);
+        }
+        if (id == -1) {
+            if (!filtrowane.remove(name)) filtrowane.add(name);
+            log.info("Dodano / usunięto do wyszukiwania: " + name);
+            log.info("Ilość wyszukiwanych: " + szukane.size());
+            log.info(ANSI_YELLOW + "Lista wyszukiwanych: " + szukane + ANSI_RESET);
+        }
     }
 
 //    @PutMapping

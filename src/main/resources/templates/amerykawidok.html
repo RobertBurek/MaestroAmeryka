@@ -30,7 +30,7 @@
 <div class="container">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark myBorder">
         <a class="navbar-brand" href="/"><img th:src="@{/img/LogoZ.png}" alt=""></a>
-        <img style=" width: 450px;" th:src="@{/img/slang13.png}" alt="">
+<!--        <img class="myBaner" th:src="@{/img/slang13.png}" alt="">-->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
                 aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon myBackgrandButton"></span>
@@ -43,11 +43,13 @@
                 <!--&lt;!&ndash;                        <img th:src="@{/img/LogoChrome.png}" style="height: 19px; width: 19px;"/>&ndash;&gt;-->
                 <!--                        <span class="sr-only">(current)</span>-->
                 <!--                    </a>-->
-                <!--                </li>-->
-                <!--                <li class="nav-item">-->
-                <!--                    <a class="nav-link" href="http://robertburek.pl" target="_blank">Autor</a>-->
-                <!--                </li>-->
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link myBanerLink" style="color: #2580f1;" href="/amerykastrategie">Strategie</a>
+                                </li>
+<!--                <img style=" width: 450px;" th:src="@{/img/slang13.png}" alt="">-->
             </ul>
+            <img class="myBaner" th:src="@{/img/slang13.png}" alt="">
             <form class="form-inline my-2 my-lg-0" method="POST" action="/amerykaspolka" th:object="${amerykaSpolkaFind}">
                 <input class="form-control mr-sm-2" type="search" placeholder="Ticker" th:field="*{ticker}">
                 <button class="btn btn-outline-success my-2 my-sm-0 myColor" type="submit">Szukaj</button>

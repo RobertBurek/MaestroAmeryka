@@ -4,6 +4,7 @@ let marketsList = document.querySelectorAll('.myMarket');
 let myMarketLabel = document.querySelectorAll('.myMarketLabel');
 let industriesList = document.querySelectorAll('.myIndustry');
 let industryLabelList = document.querySelectorAll('.myIndustryLabel');
+let wyszukiwanieLabelList = document.querySelectorAll('.myWyszukiwanieLabel');
 let sectorButton = document.querySelector('#sectorButton');
 let marketButton = document.querySelector('#marketButton');
 let industryButton = document.querySelector('#industryButton');
@@ -21,7 +22,9 @@ document.addEventListener('DOMContentLoaded', function () {
         marketElement.addEventListener('click', function (event) {
             let index = 1;
             index = this.getAttribute('value');
+            console.log(index);
             $("#mojeZmiany").load('/amerykastrategie/find/' + index + '&' + 'market');
+            console.log("Wysłano zapytanie: " + '/amerykastrategie/find/' + index + '&' + 'market');
         })
     });
 
@@ -29,7 +32,9 @@ document.addEventListener('DOMContentLoaded', function () {
         sectorElement.addEventListener('click', function (event) {
             let index = 1;
             index = this.getAttribute('value');
+            // console.log(index);
             $("#mojeZmiany").load('/amerykastrategie/find/' + index + '&' + 'sector');
+            // console.log("Wysłano zapytanie: "+'/amerykastrategie/find/' + index + '&' + 'sector');
         })
     });
 
@@ -37,7 +42,19 @@ document.addEventListener('DOMContentLoaded', function () {
         industryElement.addEventListener('click', function (event) {
             let index = 1;
             index = this.getAttribute('value');
+            // console.log(index);
             $("#mojeZmiany").load('/amerykastrategie/find/' + index + '&' + 'industry');
+            // console.log("Wysłano zapytanie: "+'/amerykastrategie/find/' + index + '&' + 'industry');
+        })
+    });
+
+    [].forEach.call(wyszukiwanieLabelList, function (wyszukiwanieElement) {
+        wyszukiwanieElement.addEventListener('click', function (event) {
+            let val = "";
+            val = this.getAttribute('value');
+            console.log(val);
+            $("#mojeZmiany").load('/amerykastrategie/find/' + "-1" + '&' + val);
+            console.log("Wysłano zapytanie: " + '/amerykastrategie/find/' + "-1" + '&' + val);
         })
     });
 

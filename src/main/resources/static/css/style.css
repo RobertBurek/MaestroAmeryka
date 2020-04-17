@@ -28,6 +28,20 @@ img {
     max-width: 100%;
 }
 
+.myBanerLink{
+    font-size: 23px;
+    color: #2580f1;
+    margin-left: 20px;
+}
+
+.myBaner{
+    width: 450px;
+    /*position: relative;*/
+    position: fixed;
+    /*top: 120px;*/
+    left: 600px;
+}
+
 .myBackgrandButton {
     background-color: rgba(21,245,53,0.45);;
 }
