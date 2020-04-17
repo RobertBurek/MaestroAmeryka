@@ -122,42 +122,42 @@ public class AmSpStrategyController {
                 boolean flaga = false;
 //                for (String wyszzukiwana : wyszukiwane) {
                 switch (val) {
-                    case "dodYTD": {
+                    case "dodatniaYTD": {
                         if (!amerykaSpolka.getyTD().trim().equals("brak")) {
                             if (Double.parseDouble(amerykaSpolka.getyTD().trim().replace("%", "")) >= 0)
                                 flaga = true;
                         }
                         break;
                     }
-                    case "ujeYTD": {
+                    case "ujemnaYTD": {
                         if (!amerykaSpolka.getyTD().trim().equals("brak")) {
                             if (Double.parseDouble(amerykaSpolka.getyTD().trim().replace("%", "")) < 0)
                                 flaga = true;
                         }
                         break;
                     }
-                    case "dod1MTD": {
+                    case "dodatnia1MTD": {
                         if (!amerykaSpolka.getM1TD().trim().equals("brak")) {
                             if (Double.parseDouble(amerykaSpolka.getM1TD().trim().replace("%", "")) >= 0)
                                 flaga = true;
                         }
                         break;
                     }
-                    case "uje1MTD": {
+                    case "ujemna1MTD": {
                         if (!amerykaSpolka.getM1TD().trim().equals("brak")) {
                             if (Double.parseDouble(amerykaSpolka.getM1TD().trim().replace("%", "")) < 0)
                                 flaga = true;
                         }
                         break;
                     }
-                    case "dod2MTD": {
+                    case "dodatnia2MTD": {
                         if (!amerykaSpolka.getM2TD().trim().equals("brak")) {
                             if (Double.parseDouble(amerykaSpolka.getM2TD().trim().replace("%", "")) >= 0)
                                 flaga = true;
                         }
                         break;
                     }
-                    case "uje2MTD": {
+                    case "ujemna2MTD": {
                         if (!amerykaSpolka.getM2TD().trim().equals("brak")) {
                             if (Double.parseDouble(amerykaSpolka.getM2TD().trim().replace("%", "")) < 0)
                                 flaga = true;
