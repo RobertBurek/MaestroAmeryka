@@ -14,6 +14,7 @@ import pl.info.mojeakcje.maestroameryka.repository.AmSpRepository;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -31,6 +32,7 @@ public class AmSpStrategyController {
     private static List<String> filtrowane = new ArrayList<>();
     private static Integer wynikWyszukiwania = 0;
     private static String filtry = "";
+    private static String defaultSort = "NameRosnaco";
 
     protected final org.slf4j.Logger log = LoggerFactory.getLogger(getClass());
 
@@ -46,6 +48,7 @@ public class AmSpStrategyController {
         szukane.clear();
         amerykaSpolki.clear();
         filtrowane.clear();
+        defaultSort = "NameRosnaco";
         model.addAttribute("industryList", industryList);
         model.addAttribute("sectorList", sectorList);
         model.addAttribute("marketList", marketList);
@@ -97,7 +100,6 @@ public class AmSpStrategyController {
             amerykaSpolki = (List<AmerykaSpolka>) amSpRepository.findAll();
         filtry = "";
         if (filtrowane.size() > 0) {
-
             for (String filtr : filtrowane) {
                 amerykaSpolki = amerykaSpolki
                         .stream()
@@ -107,14 +109,86 @@ public class AmSpStrategyController {
                 filtry += filtr + ",  ";
             }
         }
+        if (id == -2) {
+            log.info(ANSI_BLUE + "Posortowałem: " + name + ANSI_RESET);
+            defaultSort=name;
+        }
         amerykaSpolki = amerykaSpolki
                 .stream()
-                .sorted(Comparator.comparing(AmerykaSpolka::getName))
+                .sorted(sortowanieComparator(defaultSort))
                 .collect(Collectors.toList());
         model.addAttribute("amerykaSpolki", amerykaSpolki);
         model.addAttribute("wynikWyszukiwania", amerykaSpolki.size());
         model.addAttribute("filtry", filtry);
         return "amerykastrategie::#mojeZmiany";
+    }
+
+    @NotNull
+    private Comparator<AmerykaSpolka> sortowanieComparator(String sort) {
+        return new Comparator<AmerykaSpolka>() {
+            @Override
+            public int compare(AmerykaSpolka o1, AmerykaSpolka o2) {
+                Double b1 = 0.0;
+                Double b2 = 0.0;
+                switch (sort) {
+                    case "NameDRosnaco": {
+                        return o1.getName().compareTo(o2.getName());
+                    }
+                    case "NameMalejaco": {
+                        return o2.getName().compareTo(o1.getName());
+                    }
+                    case "SectorDRosnaco": {
+                        return o1.getSector().compareTo(o2.getSector());
+                    }
+                    case "SectorMalejaco": {
+                        return o2.getSector().compareTo(o1.getSector());
+                    }
+                    case "YTDRosnaco": {
+                        if (!o1.getyTD().trim().equals("brak"))
+                            b1 = Double.parseDouble(o1.getyTD().trim().replace("%", ""));
+                        if (!o2.getyTD().trim().equals("brak"))
+                            b2 = Double.parseDouble(o2.getyTD().trim().replace("%", ""));
+                        return Double.compare(b1, b2);
+                    }
+                    case "YTDMalejaco": {
+                        if (!o1.getyTD().trim().equals("brak"))
+                            b1 = Double.parseDouble(o1.getyTD().trim().replace("%", ""));
+                        if (!o2.getyTD().trim().equals("brak"))
+                            b2 = Double.parseDouble(o2.getyTD().trim().replace("%", ""));
+                        return Double.compare(b2, b1);
+                    }
+                    case "1MTDRosnaco": {
+                        if (!o1.getM1TD().trim().equals("brak"))
+                            b1 = Double.parseDouble(o1.getM1TD().trim().replace("%", ""));
+                        if (!o2.getM1TD().trim().equals("brak"))
+                            b2 = Double.parseDouble(o2.getM1TD().trim().replace("%", ""));
+                        return Double.compare(b1, b2);
+                    }
+                    case "1MTDMalejaco": {
+                        if (!o1.getM1TD().trim().equals("brak"))
+                            b1 = Double.parseDouble(o1.getM1TD().trim().replace("%", ""));
+                        if (!o2.getM1TD().trim().equals("brak"))
+                            b2 = Double.parseDouble(o2.getM1TD().trim().replace("%", ""));
+                        return Double.compare(b2, b1);
+                    }
+                    case "2MTDRosnaco": {
+                        if (!o1.getM2TD().trim().equals("brak"))
+                            b1 = Double.parseDouble(o1.getM2TD().trim().replace("%", ""));
+                        if (!o2.getM2TD().trim().equals("brak"))
+                            b2 = Double.parseDouble(o2.getM2TD().trim().replace("%", ""));
+                        return Double.compare(b1, b2);
+                    }
+                    case "2MTDMalejaco": {
+                        if (!o1.getM2TD().trim().equals("brak"))
+                            b1 = Double.parseDouble(o1.getM2TD().trim().replace("%", ""));
+                        if (!o2.getM2TD().trim().equals("brak"))
+                            b2 = Double.parseDouble(o2.getM2TD().trim().replace("%", ""));
+                        return Double.compare(b2, b1);
+                    }
+                }
+                return 0;
+            }
+        };
     }
 
     @NotNull

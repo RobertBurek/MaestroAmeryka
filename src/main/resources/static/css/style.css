@@ -36,10 +36,10 @@ img {
 
 .myBaner{
     width: 450px;
-    /*position: relative;*/
-    position: fixed;
+    position: relative;
+    /*position: fixed;*/
     /*top: 120px;*/
-    left: 600px;
+    left: -150px;
 }
 
 .myBackgrandButton {
