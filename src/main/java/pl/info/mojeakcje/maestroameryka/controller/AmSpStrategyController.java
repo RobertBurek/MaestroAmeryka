@@ -131,13 +131,13 @@ public class AmSpStrategyController {
                 Double b1 = 0.0;
                 Double b2 = 0.0;
                 switch (sort) {
-                    case "NameDRosnaco": {
+                    case "NameRosnaco": {
                         return o1.getName().compareTo(o2.getName());
                     }
                     case "NameMalejaco": {
                         return o2.getName().compareTo(o1.getName());
                     }
-                    case "SectorDRosnaco": {
+                    case "SectorRosnaco": {
                         return o1.getSector().compareTo(o2.getSector());
                     }
                     case "SectorMalejaco": {
