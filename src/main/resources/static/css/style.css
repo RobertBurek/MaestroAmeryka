@@ -28,13 +28,13 @@ img {
     max-width: 100%;
 }
 
-.myBanerLink{
+.myBanerLink {
     font-size: 23px;
     color: #2580f1;
     margin-left: 20px;
 }
 
-.myBaner{
+.myBaner {
     width: 450px;
     position: relative;
     /*position: fixed;*/
@@ -43,22 +43,22 @@ img {
 }
 
 .myBackgrandButton {
-    background-color: rgba(21,245,53,0.45);;
+    background-color: rgba(21, 245, 53, 0.45);;
 }
 
-.mySector{
+.mySector {
     margin-left: 10px;
 }
 
-.myMarket{
+.myMarket {
     margin-left: 10px;
 }
 
-.myIndustry{
+.myIndustry {
     margin-left: 10px;
 }
 
-.myPokaz{
+.myPokaz {
     margin-top: 10px;
 }
 
@@ -72,74 +72,80 @@ img {
     font-weight: bold;
 }
 
-.isNote{
+.isNote {
     color: #0095ff;
 }
 
-.myLabelStrategy{
+.myLabelStrategy {
     font-size: 14px;
 }
 
-.myNaviButton{
+.myNaviButton {
     display: flex;
     margin-left: 40%;
 }
 
-.myColumn{
+.myColumn {
     width: 50%;
     margin: 20px 10px;
     padding-left: 50px;
 }
 
-.myForm{
+.myForm {
     display: flex;
 }
 
-.myDisplayFlex{
+.myDisplayFlex {
     display: flex;
     height: 22px;
     margin-bottom: 10px;
 }
 
-.label-course{
+.label-course {
     padding-top: 0px;
     width: 134px;
     text-align: center;
 }
 
-.input-course{
+.input-course {
     width: 110px;
     margin-right: 25%;
 }
 
 .bg-dark {
-    background-color: #dde5ec!important;
+    background-color: #dde5ec !important;
     border-radius: .35rem;
 }
 
-.myTable td{
+.myTable td {
     padding: 0px;
     border-top: 0px;
     vertical-align: middle;
 }
 
-.myBorder{
-border: 2px solid #61a5ea;
+.myBorder {
+    border: 2px solid #61a5ea;
 }
 
-.table thead th{
+.table thead th {
     vertical-align: middle;
 }
 
-.tableWidth{
-    width: 34%;
+.tableWidth {
+    width: 31%;
 }
 
-.tableWidthSector{
-    width: 30%;
+.tableWidthSector {
+    width: 26%;
 }
 
-.textCenter{
+.myTableMarketTh {
+    vertical-align: middle;
+    padding: 0px;
+    width: 10%;
+}
+
+.textCenter {
     text-align: center;
 }
 
@@ -149,23 +155,23 @@ border: 2px solid #61a5ea;
 
 }
 
-.listMarket{
+.listMarket {
     background-color: #f1f1f1;
 }
 
-.listIndustry{
+.listIndustry {
     max-height: 290px;
     overflow: auto;
     background-color: #f1f1f1;
 }
 
-.listSector{
+.listSector {
     max-height: 290px;
     overflow: auto;
     background-color: #f1f1f1;
 }
 
-.myColor{
+.myColor {
     color: #61a5ea;
     border-color: #61a5ea;
 }
@@ -189,7 +195,7 @@ border: 2px solid #61a5ea;
     border-color: #61a5ea;
 }
 
-.btn-outline-success:not(:disabled):not(.disabled).active, .btn-outline-success:not(:disabled):not(.disabled):active, .show>.btn-outline-success.dropdown-toggle {
+.btn-outline-success:not(:disabled):not(.disabled).active, .btn-outline-success:not(:disabled):not(.disabled):active, .show > .btn-outline-success.dropdown-toggle {
     color: #fff;
     background-color: #61a5ea;
     border-color: #61a5ea;
@@ -212,7 +218,7 @@ main {
     height: 1220px;
 }
 
-label{
+label {
     width: 90%;
 }
 
@@ -278,6 +284,7 @@ section p {
     .listSpolka {
         max-height: 95%;
     }
+
     main {
         height: 1350px;
     }
@@ -287,9 +294,11 @@ section p {
     .listSpolka {
         max-height: 95%;
     }
+
     main {
         height: 1700px;
     }
+
     .input-course {
         width: 100px;
         margin-right: 10%;
@@ -300,6 +309,7 @@ section p {
     .listSpolka {
         max-height: 95%;
     }
+
     main {
         height: 1750px;
     }
@@ -309,6 +319,7 @@ section p {
     .listSpolka {
         max-height: 97%;
     }
+
     main {
         height: 1800px;
     }
@@ -318,12 +329,15 @@ section p {
     .listSpolka {
         max-height: 97%;
     }
+
     main {
         height: 1840px;
     }
-    .myNaviButton{
+
+    .myNaviButton {
         margin-left: 30%;
     }
+
     article {
         padding: 0px;
     }
@@ -333,15 +347,18 @@ section p {
     .listSpolka {
         max-height: 97%;
     }
+
     main {
         height: 2250px;
     }
+
     .myColumn {
         width: 46%;
         margin: 10px 0px;
         padding-left: 5px;
     }
-    .myNaviButton{
+
+    .myNaviButton {
         margin-left: 20%;
     }
 }
@@ -350,6 +367,7 @@ section p {
     .listSpolka {
         max-height: 97%;
     }
+
     main {
         height: 2500px;
     }
@@ -359,6 +377,7 @@ section p {
     .listSpolka {
         max-height: 97%;
     }
+
     main {
         height: 25200px;
     }
@@ -368,9 +387,11 @@ section p {
     .listSpolka {
         max-height: 97%;
     }
+
     main {
         height: 1940px;
     }
+
     section p {
         font-size: 80%;
     }
@@ -380,17 +401,21 @@ section p {
     .listSpolka {
         max-height: 97%;
     }
+
     main {
         height: 2170px;
     }
+
     .myColumn {
         width: 50%;
         margin: 0px 0px;
         padding-left: 0px;
     }
+
     .btn-outline-success {
         font-size: 90%;
     }
+
     h3 {
         font-size: 1.3rem;
     }
@@ -400,23 +425,29 @@ section p {
     .listSpolka {
         max-height: 97%;
     }
+
     main {
         height: 2250px;
     }
-    .input-course{
+
+    .input-course {
         margin-right: 2px;
         font-size: 90%;
         width: 80px;
     }
-    .myForm{
+
+    .myForm {
         font-size: 80%;
     }
+
     .btn-outline-success {
         font-size: 80%;
     }
+
     section p {
         font-size: 74%;
     }
+
     h3 {
         font-size: 1.0rem;
     }
@@ -426,9 +457,11 @@ section p {
     .listSpolka {
         max-height: 97%;
     }
+
     main {
         height: 2500px;
     }
+
     .btn-outline-success {
         font-size: 60%;
     }
