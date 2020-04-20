@@ -3,6 +3,9 @@ package pl.info.mojeakcje.maestroameryka;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import pl.info.mojeakcje.maestroameryka.model.*;
+import pl.info.mojeakcje.maestroameryka.model.modeleStrategii.Industry;
+import pl.info.mojeakcje.maestroameryka.model.modeleStrategii.Market;
+import pl.info.mojeakcje.maestroameryka.model.modeleStrategii.Sector;
 
 import java.util.ArrayList;
 import java.util.List;

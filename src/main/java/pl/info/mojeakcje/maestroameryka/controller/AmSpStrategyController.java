@@ -9,12 +9,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.info.mojeakcje.maestroameryka.model.*;
+import pl.info.mojeakcje.maestroameryka.model.modeleStrategii.Industry;
+import pl.info.mojeakcje.maestroameryka.model.modeleStrategii.Sector;
+import pl.info.mojeakcje.maestroameryka.model.modeleStrategii.Szukana;
+import pl.info.mojeakcje.maestroameryka.model.modeleStrategii.SzukanyModel;
 import pl.info.mojeakcje.maestroameryka.repository.AmSpRepository;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 

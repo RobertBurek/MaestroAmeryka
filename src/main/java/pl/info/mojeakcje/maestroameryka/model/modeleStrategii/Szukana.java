@@ -1,4 +1,4 @@
-package pl.info.mojeakcje.maestroameryka.model;
+package pl.info.mojeakcje.maestroameryka.model.modeleStrategii;
 
 public class Szukana {
 

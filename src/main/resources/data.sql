@@ -1,5 +1,7 @@
--- INSERT INTO namedays(id, name, day_month) VALUES   (1, 'Mieczysława','01-01')
--- INSERT INTO namedays(id, name, day_month) VALUES   (2, 'Mieszka','01-01')
+INSERT INTO customer(id_customer, nick_customer, password_customer, role_customer, ip_customer) VALUES (1,'Robert','Robert','Admin', '168.125.21.1')
+INSERT INTO customer(id_customer, nick_customer, password_customer, role_customer, ip_customer) VALUES (2,'Maciej', 'Maciej','Admin','165.126.251.2')
+INSERT INTO customer(id_customer, nick_customer, password_customer, role_customer, ip_customer) VALUES (3,'Adam', 'Adam','User','165.126.251.3')
+
 
 -- INSERT INTO ameryka_spolka(
 --       id,
