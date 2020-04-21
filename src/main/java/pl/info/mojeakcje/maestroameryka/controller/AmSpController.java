@@ -45,9 +45,39 @@ public class AmSpController {
 //        this.amSpRepository = amSpRepository;
 //    }
 
+//    @GetMapping("/loginOpenID")
+//    public String getLoginOpenID() {
+//        return "redirect:/amerykawidok";
+//    }
+
+//    @GetMapping("/loginMaestro/error")
+//    public String loginError(@RequestParam String error, Model model) {
+//        log.info("Jestem w loginMaestro.html: " + ANSI_RED + error + ANSI_RESET);
+//        model.addAttribute("amerykaSpolkaFind", new AmerykaSpolka());
+//        return "loginMaestro";
+//    }
+
+    @GetMapping("/loginMaestro")
+    public String login(Model model) {
+        log.info(ANSI_RED + "Formularz logowania, loginMaestro.html" + ANSI_RESET);
+        model.addAttribute("amerykaSpolkaFind", new AmerykaSpolka());
+        return "loginMaestro";
+    }
 
     @GetMapping("/")
     public String getAll(Model model) {
+//        amerykaSpolkiStretegie = (List<AmerykaSpolkaStrategia>) amSpStrategyRepository.findAll();
+        amerykaSpolki = (List<AmerykaSpolka>) amSpRepository.findAll();
+//        amerykaSpolki.stream().map(amerykaSpolka -> Double.parseDouble(amerykaSpolka.getDay0119()))
+        log.info(ANSI_BLUE + "Odczyt wszystkich danych z bazy ..." + ANSI_RESET);
+        model.addAttribute("amerykaSpolki", amerykaSpolki);
+        model.addAttribute("amerykaSpolkaNew", new AmerykaSpolka());
+        model.addAttribute("amerykaSpolkaFind", new AmerykaSpolka());
+        return "amerykawidok";
+    }
+
+    @GetMapping("/amerykaspolka")
+    public String getStart(Model model) {
 //        amerykaSpolkiStretegie = (List<AmerykaSpolkaStrategia>) amSpStrategyRepository.findAll();
         amerykaSpolki = (List<AmerykaSpolka>) amSpRepository.findAll();
 //        amerykaSpolki.stream().map(amerykaSpolka -> Double.parseDouble(amerykaSpolka.getDay0119()))

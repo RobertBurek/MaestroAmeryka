@@ -33,24 +33,15 @@
                     <h5 class="card-title text-center">Zaloguj się</h5>
                     <form class="form-signin" method="POST" th:action="@{/loginMaestro}">
                         <div class="form-label-group">
-                            <input name="username"  type="text" id="nick" class="form-control" placeholder="Nick" required autofocus>
+                            <input name="username"  type="text" id="nick" class="form-control" style="padding: 12px;" placeholder="Nick" required autofocus>
                             <label for="nick"></label>
                         </div>
-
                         <div class="form-label-group">
-                            <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                            <input name="password" type="password" id="inputPassword" class="form-control myInput" style="padding: 12px;" placeholder="Password" required>
                             <label for="inputPassword"></label>
                         </div>
-<!--                        <div class="custom-control custom-checkbox mb-3">-->
-<!--                            <input type="checkbox" class="custom-control-input" id="customCheck1">-->
-<!--                            <label class="custom-control-label" for="customCheck1">Remember password</label>-->
-<!--                        </div>-->
-<!--                        <button class="btn btn-lg btn-primary btn-block btn-outline-success" style="background: forestgreen" type="submit">Sign in</button>-->
-                        <button class="btn btn-lg btn-primary btn-block text-uppercase" style="background: forestgreen;" type="submit">Zaloguj</button>
+                        <button class="btn btn-lg btn-primary btn-block text-uppercase" style="background: #61a5ea;" type="submit">Zaloguj</button>
                         <hr class="my-4">
-                        <a class="btn btn-lg btn-github btn-block btn-outline-success"
-                           href="https://github.com/login/oauth/authorize"
-                           type="submit"><i class="fab fa-github mr-2"></i> Poprzez konto GitHub</a>
                     </form>
                     <div style="color: red; text-align: center;" th:if="${param.error}">
                         Invalid nick or password.
