@@ -291,9 +291,9 @@ public class AmSpStrategyController {
                 szukanaYes = szukane.stream().filter(szu -> szu.getSzukanaWartosc().equals(szukana.getSzukanaWartosc())).findFirst().get();
                 szukane.remove(szukanaYes);
             } else szukane.add(szukana);
-            log.info(ANSI_GREEN_ + "Dodano/Usunięto do pokazania: " + name + " / " + szukana.getSzukanaWartosc() + ANSI_RESET);
+            log.info(ANSI_GREEN + "Dodano/Usunięto do pokazania: " + name + " / " + szukana.getSzukanaWartosc() + ANSI_RESET);
             log.info(ANSI_GREEN_ + "Ilość warunków: " + szukane.size() + ANSI_RESET);
-            log.info(ANSI_GREEN_ + "Lista warunków: " + szukane + ANSI_RESET);
+            log.info(ANSI_GREEN + "Lista warunków: " + szukane + ANSI_RESET);
         }
         if (id == -1) {
             if (!filtrowane.remove(name)) filtrowane.add(name);

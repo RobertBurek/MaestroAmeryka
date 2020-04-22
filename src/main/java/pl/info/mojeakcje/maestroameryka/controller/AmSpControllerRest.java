@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
-import pl.info.mojeakcje.maestroameryka.DBfromCSV;
+import pl.info.mojeakcje.maestroameryka.service.DBfromCSV;
 import pl.info.mojeakcje.maestroameryka.model.AmerykaSpolka;
 import pl.info.mojeakcje.maestroameryka.repository.AmSpRepository;
 

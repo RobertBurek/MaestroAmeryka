@@ -1,4 +1,4 @@
-package pl.info.mojeakcje.maestroameryka;
+package pl.info.mojeakcje.maestroameryka.service;
 
 import lombok.extern.log4j.Log4j2;
 import org.slf4j.Logger;

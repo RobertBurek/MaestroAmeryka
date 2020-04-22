@@ -19,12 +19,23 @@ public class MaestroamerykaApplication {
     public static List<Market> marketList = new ArrayList<>();
 
     public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_BRIGHT_RED = "\u001B[31;1m";
     public static final String ANSI_HIGHGREEN = "\u001B[92m";
     public static final String ANSI_GREEN_ = "\u001B[32;4m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_MORSKI = "\u001B[36m";
     public static final String ANSI_FIOLET = "\u001B[35m";
+    public static final String ANSI_GREY = "\u001B[30;1m";
     public static final String ANSI_BLUE = "\u001B[94m";
+    public static final String ANSI_BRIGHT_BLUE = "\u001B[37m";
+    public static final String ANSI_BLUEE = "\u001B[34m";
     public static final String ANSI_YELLOW = "\u001B[33;1m";
+    public static final String ANSI_BACKGROUND_RED = "\u001b[41;1m";
+    public static final String ANSI_BACKGROUND_GREEN = "\u001b[42;1m";
+    public static final String ANS_BACKGROUNDI_YELLOW = "\u001b[43;1m";
     public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_BOLD = "\u001B[1m";
+
 
     public static void main(String[] args) throws InterruptedException {
 //        final ConfigurableApplicationContext ctx =
