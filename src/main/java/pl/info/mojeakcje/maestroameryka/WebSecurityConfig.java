@@ -53,12 +53,26 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.authorizeRequests()
-                .antMatchers("/amerykastrategie")
-                .authenticated()
+        http
+
+                .authorizeRequests()
+                .antMatchers("/amerykaspolka").permitAll()
+                .antMatchers("/amerykastrategie").hasRole("USER")
+                .antMatchers("/amerykaspolka/edit").hasRole("ADMIN")
+
+//                .antMatchers("/**").hasRole("ADMIN")
+//                .antMatchers("/amerykastrategie").hasRole("ADMIN")
+
+//                .authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/loginMaestro");
+                .loginPage("/loginMaestro").permitAll()
+                .and()
+                .csrf().disable()
+                .headers().frameOptions().disable()
+                .and()
+                .headers().disable()
+        ;
 //        http
 //                .csrf().disable()
 //                .authorizeRequests()
