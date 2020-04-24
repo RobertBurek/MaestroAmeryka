@@ -31,7 +31,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark myBorder">
         <a class="navbar-brand" href="/"><img th:src="@{/img/LogoMM.png}" alt=""></a>
 
-<!--        <img class="myBaner" th:src="@{/img/slang13.png}" alt="">-->
+        <!--        <img class="myBaner" th:src="@{/img/slang13.png}" alt="">-->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
                 aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon myBackgrandButton"></span>
@@ -45,7 +45,7 @@
                 <!--                        <span class="sr-only">(current)</span>-->
                 <!--                    </a>-->
                 <li class="nav-item">
-<!--                    <a class="nav-link myBanerLink" th:href="@{/loginOpenID}">Login-->
+                    <!--                    <a class="nav-link myBanerLink" th:href="@{/loginOpenID}">Login-->
                     <a class="nav-link myBanerLink" style="color: #61a5ea;" href="/loginMaestro">Login
                         <!--                        <img src="https://github.com/fluidicon.png" style="height: 19px; width: 19px;"/>-->
                         <!--                        <img th:src="@{/img/LogoChrome.png}" style="height: 19px; width: 19px;"/>-->
@@ -56,10 +56,11 @@
                 <li class="nav-item">
                     <a class="nav-link myBanerLink" style="color: #61a5ea;" href="/amerykastrategie">Strategie</a>
                 </li>
-<!--                <img style=" width: 450px;" th:src="@{/img/slang13.png}" alt="">-->
+                <!--                <img style=" width: 450px;" th:src="@{/img/slang13.png}" alt="">-->
             </ul>
             <img class="myBaner" th:src="@{/img/slang13.png}" alt="">
-            <form class="form-inline my-2 my-lg-0" method="POST" action="/amerykaspolka" th:object="${amerykaSpolkaFind}">
+            <form class="form-inline my-2 my-lg-0" method="POST" action="/amerykaspolka"
+                  th:object="${amerykaSpolkaFind}">
                 <input class="form-control mr-sm-2" type="search" placeholder="Ticker" th:field="*{ticker}">
                 <button class="btn btn-outline-success my-2 my-sm-0 myColor" type="submit">Szukaj</button>
             </form>
@@ -67,32 +68,55 @@
     </nav>
     <main>
         <article>
-<!--            <label style="color: red; font-weight: bold">LogoMM.png</label>-->
+            <!--            <label style="color: red; font-weight: bold">LogoMM.png</label>-->
             <h1>Rynek amerykański</h1>
             <p></p>
             <div class="listSpolka" id="position">
                 <table class="table table-hover bg-light">
                     <thead>
-                    <tr>
-                        <th>Ticker</th>
-                        <th class="tableWidth">Name</th>
-                        <th>Stock</th>
-                        <th>Market</th>
+                    <tr style="background-color: grey;color: white">
+                        <!--                        <th>Ticker</th>-->
+                        <th class="tableWidth" style="font-weight: bold;vertical-align: middle;">Name</th>
+                        <th class="tableWidthSector" style="width: 20%;">
+                            Ticker<br>
+                            Market
+                        </th>
+                        <th style="width: 14%;">Stock<br>
+                            31/03/2020
+                        </th>
+                        <!--                        <th>Market</th>-->
+                        <th class="textCenter">YTD</th>
                         <th class="textCenter">Edit</th>
                         <th class="textCenter">Delete</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr th:each="amerykaSpolka: ${amerykaSpolki}">
-                        <td th:text="${amerykaSpolka.ticker}"/>
-                        <td class="tableWidth" th:text="${amerykaSpolka.name}"/>
-                        <td th:text="${amerykaSpolka.day0320}"/>
-                        <td th:text="${amerykaSpolka.market}"/>
-                        <td class="textCenter"><a th:href="@{/amerykaspolka/edit(index=${amerykaSpolka.id})}"><i
+                        <!--                        <td th:text="${amerykaSpolka.ticker}"/>-->
+                        <td class="tableWidth" style="vertical-align: middle;font-weight: bold;"
+                            th:text="${amerykaSpolka.name}"/>
+                        <td>
+                            <table class="myTable" style="font-size: 75%;">
+                                <tr>
+                                    <td class="tableWidthSector"
+                                        th:text="${amerykaSpolka.ticker}"/>
+                                </tr>
+                                <tr>
+                                    <td th:text="${amerykaSpolka.market}"/>
+                                </tr>
+                            </table>
+                        </td>
+                        <td style="vertical-align:middle;" th:text="${amerykaSpolka.day0320}"/>
+
+                        <td style="vertical-align:middle; padding: 0px;" th:text="${amerykaSpolka.yTD}"
+                            th:class="${amerykaSpolka.yTD.startsWith('-')} ? 'textCenter negative' : 'textCenter positive'"/>
+                        <td class="textCenter" style="vertical-align:middle;"><a
+                                th:href="@{/amerykaspolka/edit(index=${amerykaSpolka.id})}"><i
                                 class="fa fa-edit"></i></a></td>
                         <!--                        <td class="textCenter"><a href="#"><i class="fa fa-edit"></i></a></td>-->
                         <!--                        <td><a th:href="@{/amerykaSpolka/del(index=${amerykaSpolka.ticker})}"><i class="fa fa-trash"></i></a></td>-->
-                        <td class="textCenter"><a href="/amerykastrategie"><i class="fa fa-trash"></i></a></td>
+                        <td class="textCenter" style="vertical-align:middle;"><a href="/amerykastrategie"><i
+                                class="fa fa-trash"></i></a></td>
                     </tr>
                     </tbody>
 
