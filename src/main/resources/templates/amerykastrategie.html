@@ -61,7 +61,7 @@
     </nav>
     <main>
         <aside style="width: 22%;">
-<!--            <label style="color: red; font-weight: bold">LogoZ.png</label>-->
+            <!--            <label style="color: red; font-weight: bold">LogoZ.png</label>-->
             <p></p>
             <section class="widget">
                 <h5>Pokaż spółki:</h5>
@@ -269,14 +269,52 @@
                             <td style="vertical-align:middle; padding: 0px;" th:text="${amerykaSpolka.m2TD}"
                                 th:class="${amerykaSpolka.m2TD.startsWith('-')} ? 'textCenter negative' : 'textCenter positive'"/>
                             <td class="textCenter" style="vertical-align:middle;">
-                                <a th:href="@{/amerykaspolka/edit(index=${amerykaSpolka.id})}">
+                                <!--                                <a th:href="@{/amerykaspolka/edit(index=${amerykaSpolka.id})}">-->
+                                <a th:href="'#'+${amerykaSpolka.ticker}">
                                     <i th:title="${amerykaSpolka.note}"
                                        th:class="${amerykaSpolka.note.length()>0} ? 'far fa-comment-dots isNote' : 'far fa-comment'"
                                     ></i></a>
+
+
+                                <div th:id="${amerykaSpolka.ticker}" class="overlay">
+                                    <div class="popup">
+<!--                                        <a class="close" href="#">&times;</a>-->
+                                        <br>
+                                        <h4 th:text="${amerykaSpolka.name}+' ('+${amerykaSpolka.ticker}+')'"></h4>
+
+                                        <form method="POST" th:action="@{/amerykaspolka/save/edit}" th:object="${amerykaSpolkaModified}">
+                                            <p>
+<!--        &lt;!&ndash;                                            <h5>Notatka : </h5>&ndash;&gt;-->
+<!--        &lt;!&ndash;                                            <input class="boxstyle" type="text" name="name" value=""&ndash;&gt;-->
+<!--        &lt;!&ndash;                                                   autofocus="autofocus">&ndash;&gt;-->
+<!--        &lt;!&ndash;                                            <label th:for="'note'+${amerykaSpolka.ticker}">Note :&ndash;&gt;-->
+                                                    <label th:text="${amerykaSpolka.note}"></label>
+<!--                        <textarea th:field="*{note}" th:value="${amerykaSpolka.note}" type="textArea" class="form-control" rows="8" cols="50" th:placeholder="${amerykaSpolka.note}">-->
+<!--                        <textarea th:field="*{note}" th:text="${amerykaSpolka.note}" type="textArea" class="form-control" rows="8" cols="50" placeholder="Your note ...">-->
+                        <textarea th:field="*{note}" type="textArea" class="form-control" rows="2" cols="50" placeholder="Your note ...">
+<!--                        <textarea th:field="${amerykaSpolka.note}" type="textArea" class="form-control" rows="8" cols="50" placeholder="Your note ...">-->
+<!--                                                <textarea th:field="${amerykaSpolka.note}" type="textArea"-->
+<!--                                                          class="form-control" rows="8" cols="50"-->
+<!--                                                          placeholder="Your note ..."/>-->
+        <!--                                                          th:id="'note'+${amerykaSpolka.ticker}"-->
+        <!--                                                          th:name="'note'+${amerykaSpolka.ticker}"-->
+        <!--                                                          rows="8" cols="50" placeholder="Your note ..."/>-->
+                                                </textarea>
+                                            </p>
+                                            <a class="close" href="#">&times;</a>
+                                            <div class="content">
+                                            </div>
+<!--                                            class="myNaviButton"-->
+                                            <div>
+                                                <button type="submit" class="btn btn-outline-success">Zamień</button>
+                                                <a class="btn btn-outline-success" href="/">Powrót</a>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+
+
                             </td>
-                            <!--                        <td class="textCenter"><a href="#"><i class="fa fa-edit"></i></a></td>-->
-                            <!--                        <td><a th:href="@{/amerykaSpolkaStrategia/del(index=${amerykaSpolkaStrategia.ticker})}"><i class="fa fa-trash"></i></a></td>-->
-                            <!--                        <td class="textCenter"><a href="#"><i class="fa fa-trash"></i></a></td>-->
                         </tr>
                         </tbody>
 
