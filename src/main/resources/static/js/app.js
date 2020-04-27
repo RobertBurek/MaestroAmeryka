@@ -13,11 +13,12 @@ let industryButton = document.querySelector('#industryButton');
 
 document.addEventListener('DOMContentLoaded', function () {
 
-    console.log(sectorsList);
-    console.log(sectorButton);
+    // console.log(industryButton);
+    // console.log(wyszukiwanieLabelList);
     selectSectorsList();
     selectMarketsList();
     selectIndustriesList();
+
 
     [].forEach.call(myMarketLabel, function (marketElement) {
         marketElement.addEventListener('click', function (event) {
@@ -26,7 +27,10 @@ document.addEventListener('DOMContentLoaded', function () {
             // console.log(index);
             $("#mojeZmiany").load('/amerykastrategie/find/' + index + '&' + 'market');
             console.log("Wysłano zapytanie: " + '/amerykastrategie/find/' + index + '&' + 'market');
+            // let notatkaList = document.querySelectorAll('.myNote');
+            // console.log(notatkaList);
         })
+
     });
 
     [].forEach.call(sectorsLabelList, function (sectorElement) {
@@ -35,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
             index = this.getAttribute('value');
             // console.log(index);
             $("#mojeZmiany").load('/amerykastrategie/find/' + index + '&' + 'sector');
-            console.log("Wysłano zapytanie: "+'/amerykastrategie/find/' + index + '&' + 'sector');
+            console.log("Wysłano zapytanie: " + '/amerykastrategie/find/' + index + '&' + 'sector');
         })
     });
 
@@ -45,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function () {
             index = this.getAttribute('value');
             // console.log(index);
             $("#mojeZmiany").load('/amerykastrategie/find/' + index + '&' + 'industry');
-            console.log("Wysłano zapytanie: "+'/amerykastrategie/find/' + index + '&' + 'industry');
+            console.log("Wysłano zapytanie: " + '/amerykastrategie/find/' + index + '&' + 'industry');
         })
     });
 
@@ -70,6 +74,29 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
 })
+
+
+function startPopup(id) {
+    let noteOld = document.querySelector('#note' + id).getAttribute("title");
+    let spolkaNote = document.querySelector('#note' + id).getAttribute("value");
+    document.querySelector('#spolkaNote').innerText = spolkaNote;
+    document.querySelector('#textNote').innerText = noteOld;
+    location.href = "#popupNote";
+
+    // console.log(document.querySelector('#note' + id).getAttribute("id"));
+    // console.log(document.querySelector('#note' + id).getAttribute("value"));
+    // console.log(document.querySelector('#spolkaNote'));
+    //
+    //
+    // console.log(document.querySelector('#textNote'));
+    // const btn = document.querySelector("a");
+    // console.dir( btn );
+    // let cos = document.querySelector(this.se);
+}
+
+function przeslijNote() {
+console.log("wysłałem popup");
+}
 
 // function selectSectorsListAuto() {
 //     [].forEach.call(sectorsList, function (sectorElement) {

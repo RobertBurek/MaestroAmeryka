@@ -276,6 +276,15 @@ section p {
     text-align: justify;
 }
 
+.myNote{
+    cursor: pointer;
+}
+.tttt{}
+
+.myNote:hover{
+    cursor: pointer;
+}
+
 
 /*POPUP*/
 .overlay {
@@ -298,13 +307,15 @@ section p {
     right: 0;
 }
 .popup {
-    margin: 70px auto;
+    /*margin: 70px auto;*/
     padding: 20px;
     background: #fff;
     border-radius: 5px;
-    width: 21%;
+    width: 22%;
     position: relative;
     transition: all 1s ease-in-out;
+    top: 40%;
+    left: 65%;
 }
 .popup h2 {
     margin-top: -2px;
@@ -314,8 +325,8 @@ section p {
 }
 .popup .close {
     position: absolute;
-    top: 0px;
-    right: -25px;
+    top: -5px;
+    right: -60px;
     transition: all 200ms;
     font-size: 30px;
     font-weight: bold;

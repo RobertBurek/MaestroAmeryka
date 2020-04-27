@@ -212,7 +212,25 @@
                 </p>
             </section>
         </aside>
-
+<!--        OKIENKO POPUP-->
+        <div id="popupNote" class="overlay">
+            <div class="popup">
+                <br>
+                <h4 id="spolkaNote" style="text-align: center;"></h4>
+                <form method="POST" action="przeslijNote()">
+                    <p>
+                        <textarea id="textNote" type="textArea" class="form-control" rows="2" cols="50" placeholder="Your note ...">
+                        </textarea>
+                    </p>
+                    <a class="close" href="#">&times;</a>
+                    <div style="text-align: center;">
+                        <button type="submit" class="btn btn-outline-success">Zapisz</button>
+                        <a class="btn btn-outline-success" href="#">Powrót</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+<!--        WIDOK OKNA STRATEGII-->
         <article style="width: 78%; padding: 15px;">
             <div id="mojeZmiany" style="height: 97%">
                 <p></p>
@@ -269,55 +287,15 @@
                             <td style="vertical-align:middle; padding: 0px;" th:text="${amerykaSpolka.m2TD}"
                                 th:class="${amerykaSpolka.m2TD.startsWith('-')} ? 'textCenter negative' : 'textCenter positive'"/>
                             <td class="textCenter" style="vertical-align:middle;">
-                                <!--                                <a th:href="@{/amerykaspolka/edit(index=${amerykaSpolka.id})}">-->
-                                <a th:href="'#'+${amerykaSpolka.ticker}">
                                     <i th:title="${amerykaSpolka.note}"
-                                       th:class="${amerykaSpolka.note.length()>0} ? 'far fa-comment-dots isNote' : 'far fa-comment'"
-                                    ></i></a>
-
-
-                                <div th:id="${amerykaSpolka.ticker}" class="overlay">
-                                    <div class="popup">
-<!--                                        <a class="close" href="#">&times;</a>-->
-                                        <br>
-                                        <h4 th:text="${amerykaSpolka.name}+' ('+${amerykaSpolka.ticker}+')'"></h4>
-
-                                        <form method="POST" th:action="@{/amerykaspolka/save/edit}" th:object="${amerykaSpolkaModified}">
-                                            <p>
-<!--        &lt;!&ndash;                                            <h5>Notatka : </h5>&ndash;&gt;-->
-<!--        &lt;!&ndash;                                            <input class="boxstyle" type="text" name="name" value=""&ndash;&gt;-->
-<!--        &lt;!&ndash;                                                   autofocus="autofocus">&ndash;&gt;-->
-<!--        &lt;!&ndash;                                            <label th:for="'note'+${amerykaSpolka.ticker}">Note :&ndash;&gt;-->
-                                                    <label th:text="${amerykaSpolka.note}"></label>
-<!--                        <textarea th:field="*{note}" th:value="${amerykaSpolka.note}" type="textArea" class="form-control" rows="8" cols="50" th:placeholder="${amerykaSpolka.note}">-->
-<!--                        <textarea th:field="*{note}" th:text="${amerykaSpolka.note}" type="textArea" class="form-control" rows="8" cols="50" placeholder="Your note ...">-->
-                        <textarea th:field="*{note}" type="textArea" class="form-control" rows="2" cols="50" placeholder="Your note ...">
-<!--                        <textarea th:field="${amerykaSpolka.note}" type="textArea" class="form-control" rows="8" cols="50" placeholder="Your note ...">-->
-<!--                                                <textarea th:field="${amerykaSpolka.note}" type="textArea"-->
-<!--                                                          class="form-control" rows="8" cols="50"-->
-<!--                                                          placeholder="Your note ..."/>-->
-        <!--                                                          th:id="'note'+${amerykaSpolka.ticker}"-->
-        <!--                                                          th:name="'note'+${amerykaSpolka.ticker}"-->
-        <!--                                                          rows="8" cols="50" placeholder="Your note ..."/>-->
-                                                </textarea>
-                                            </p>
-                                            <a class="close" href="#">&times;</a>
-                                            <div class="content">
-                                            </div>
-<!--                                            class="myNaviButton"-->
-                                            <div>
-                                                <button type="submit" class="btn btn-outline-success">Zamień</button>
-                                                <a class="btn btn-outline-success" href="/">Powrót</a>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-
-
+                                       th:value="${amerykaSpolka.name}+' ('+${amerykaSpolka.ticker}+')'"
+                                       th:onclick="'startPopup('+${amerykaSpolka.id}+');'"
+                                       th:id="'note'+${amerykaSpolka.id}"
+                                       th:class="${amerykaSpolka.note.length()>0} ? 'far fa-comment-dots isNote myNote' : 'far fa-comment myNote'"
+                                    ></i>
                             </td>
                         </tr>
                         </tbody>
-
                     </table>
                 </div>
             </div>
