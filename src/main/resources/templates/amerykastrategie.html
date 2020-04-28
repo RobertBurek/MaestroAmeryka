@@ -27,6 +27,7 @@
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
 
     <link rel="stylesheet" th:href="@{/css/style.css}">
+
 </head>
 
 <body>
@@ -212,26 +213,35 @@
                 </p>
             </section>
         </aside>
-<!--        OKIENKO POPUP-->
+        <!--        OKIENKO POPUP-->
         <div id="popupNote" class="overlay">
             <div class="popup">
                 <br>
                 <h4 id="spolkaNote" style="text-align: center;"></h4>
-                <form method="POST" action="przeslijNote()">
+                <form method="post" name="formNote">
                     <p>
-                        <textarea id="textNote" type="textArea" class="form-control" rows="2" cols="50" placeholder="Your note ...">
+                        <textarea id="textNote" name="textNote" type="textArea" class="form-control" rows="2" cols="50"
+                                  placeholder="Your note ...">
                         </textarea>
                     </p>
                     <a class="close" href="#">&times;</a>
                     <div style="text-align: center;">
-                        <button type="submit" class="btn btn-outline-success">Zapisz</button>
+                        <button type="button" class="btn btn-outline-success" onclick="przeslijNote();">Zapisz</button>
                         <a class="btn btn-outline-success" href="#">Powrót</a>
                     </div>
                 </form>
             </div>
         </div>
-<!--        WIDOK OKNA STRATEGII-->
+<!--        <div class="comic">-->
+<!--            OMG, I am speaking fdvdfs in Comic Sans!-->
+<!--        </div>-->
+<!--        <div class="comment">-->
+<!--            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt, labore, corporis, error, sequi accusamus perspiciatis quo consequuntur doloremque quia provident itaque maiores tenetur velit aliquam dolor et laboriosam harum iure enim eum earum iusto placeat praesentium nostrum optio ipsum nihil porro vero accusantium culpa hic.</p>-->
+<!--        </div>-->
+
+        <!--        WIDOK OKNA STRATEGII-->
         <article style="width: 78%; padding: 15px;">
+
             <div id="mojeZmiany" style="height: 97%">
                 <p></p>
                 <h4 th:text="'Wynik wyszukiwania: (' + ${wynikWyszukiwania} + ')'">Wyniki wyszukiwania:</h4>
@@ -239,7 +249,7 @@
                 <div class="listSpolka" id="position">
                     <table class="table table-hover bg-light">
                         <thead>
-                        <tr>
+                        <tr class="tytulyKolumn">
                             <th class="tableWidth">
                                 Name <br>
                                 Ticker
@@ -256,44 +266,47 @@
                         </tr>
                         </thead>
                         <tbody>
+
                         <tr th:each="amerykaSpolka: ${amerykaSpolki}">
-                            <td>
-                                <table class="myTable ">
-                                    <tr>
-                                        <td class="tableWidth"
-                                            th:text="${amerykaSpolka.name}"/>
-                                    </tr>
-                                    <tr>
-                                        <td th:text="${amerykaSpolka.ticker}"/>
-                                    </tr>
-                                </table>
-                            </td>
-                            <td>
-                                <table class="myTable">
-                                    <tr>
-                                        <td class="tableWidthSector"
-                                            th:text="${amerykaSpolka.sector}"/>
-                                    </tr>
-                                    <tr>
-                                        <td th:text="${amerykaSpolka.industry}"/>
-                                    </tr>
-                                </table>
-                            </td>
-                            <td style="vertical-align:middle; padding: 0px;" th:text="${amerykaSpolka.market}"/>
-                            <td style="vertical-align:middle; padding: 0px;" th:text="${amerykaSpolka.yTD}"
-                                th:class="${amerykaSpolka.yTD.startsWith('-')} ? 'textCenter negative' : 'textCenter positive'"/>
-                            <td style="vertical-align:middle; padding: 0px;" th:text="${amerykaSpolka.m1TD}"
-                                th:class="${amerykaSpolka.m1TD.startsWith('-')} ? 'textCenter negative' : 'textCenter positive'"/>
-                            <td style="vertical-align:middle; padding: 0px;" th:text="${amerykaSpolka.m2TD}"
-                                th:class="${amerykaSpolka.m2TD.startsWith('-')} ? 'textCenter negative' : 'textCenter positive'"/>
-                            <td class="textCenter" style="vertical-align:middle;">
-                                    <i th:title="${amerykaSpolka.note}"
+                            <div th:id="'wierszTabeli'+${amerykaSpolka.id}">
+                                <td>
+                                    <table class="myTable ">
+                                        <tr>
+                                            <td class="tableWidth"
+                                                th:text="${amerykaSpolka.name}"/>
+                                        </tr>
+                                        <tr>
+                                            <td th:text="${amerykaSpolka.ticker}"/>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td>
+                                    <table class="myTable">
+                                        <tr>
+                                            <td class="tableWidthSector"
+                                                th:text="${amerykaSpolka.sector}"/>
+                                        </tr>
+                                        <tr>
+                                            <td th:text="${amerykaSpolka.industry}"/>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td style="vertical-align:middle; padding: 0px;" th:text="${amerykaSpolka.market}"/>
+                                <td style="vertical-align:middle; padding: 0px;" th:text="${amerykaSpolka.yTD}"
+                                    th:class="${amerykaSpolka.yTD.startsWith('-')} ? 'textCenter negative' : 'textCenter positive'"/>
+                                <td style="vertical-align:middle; padding: 0px;" th:text="${amerykaSpolka.m1TD}"
+                                    th:class="${amerykaSpolka.m1TD.startsWith('-')} ? 'textCenter negative' : 'textCenter positive'"/>
+                                <td style="vertical-align:middle; padding: 0px;" th:text="${amerykaSpolka.m2TD}"
+                                    th:class="${amerykaSpolka.m2TD.startsWith('-')} ? 'textCenter negative' : 'textCenter positive'"/>
+                                <td class="textCenter" style="vertical-align:middle;">
+                                    <i th:id="'note'+${amerykaSpolka.id}"
+                                       th:title="${amerykaSpolka.note}"
                                        th:value="${amerykaSpolka.name}+' ('+${amerykaSpolka.ticker}+')'"
                                        th:onclick="'startPopup('+${amerykaSpolka.id}+');'"
-                                       th:id="'note'+${amerykaSpolka.id}"
                                        th:class="${amerykaSpolka.note.length()>0} ? 'far fa-comment-dots isNote myNote' : 'far fa-comment myNote'"
                                     ></i>
-                            </td>
+                                </td>
+                            </div>
                         </tr>
                         </tbody>
                     </table>

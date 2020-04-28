@@ -1,5 +1,5 @@
 package pl.info.mojeakcje.maestroameryka.model.modelCustomer;
 
 public enum RoleCustomer {
-    ADMIN, USER, MODERATOR
+    ROLE_ADMIN, ROLE_USER, ROLE_MODERATOR
 }

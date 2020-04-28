@@ -9,6 +9,11 @@ let sortowanieLabelList = document.querySelectorAll('.mySortowanieLabel');
 let sectorButton = document.querySelector('#sectorButton');
 let marketButton = document.querySelector('#marketButton');
 let industryButton = document.querySelector('#industryButton');
+let spolkaNote = "";
+let noteOld = "";
+let wiersz = 0;
+let noteNew = "";
+let elementNoteTitle = "";
 
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -77,25 +82,53 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 function startPopup(id) {
-    let noteOld = document.querySelector('#note' + id).getAttribute("title");
-    let spolkaNote = document.querySelector('#note' + id).getAttribute("value");
+    wiersz = id;
+    elementNoteTitle = document.querySelector('#note' + id);
+    noteOld = elementNoteTitle.getAttribute("title");
+    spolkaNote = document.querySelector('#note' + id).getAttribute("value");
     document.querySelector('#spolkaNote').innerText = spolkaNote;
-    document.querySelector('#textNote').innerText = noteOld;
+    document.querySelector('#textNote').value = noteOld;
+    document.getElementById('textNote').autofocus = true;
+    document.getElementById('textNote').focus();
     location.href = "#popupNote";
+}
 
-    // console.log(document.querySelector('#note' + id).getAttribute("id"));
-    // console.log(document.querySelector('#note' + id).getAttribute("value"));
-    // console.log(document.querySelector('#spolkaNote'));
-    //
-    //
-    // console.log(document.querySelector('#textNote'));
-    // const btn = document.querySelector("a");
-    // console.dir( btn );
-    // let cos = document.querySelector(this.se);
+function replaceAll(t, T, S) {
+    var i;
+    var newS;
+    var dl = S.length;
+    for (i = 0; i < dl; i++) {
+        newS = S.replace(t, T);
+        S = newS;
+    }
+    return newS;
 }
 
 function przeslijNote() {
-console.log("wysłałem popup");
+    let tenWiersz = "#wierszTabeli" + wiersz;
+    console.log("Wyślę notatkę dla: " + spolkaNote);
+    noteNew = document.formNote.textNote.value;
+    noteNew = replaceAll(" ", "QTTTQ", noteNew);
+    // noteNew = replaceAll("\n ", "&#013;", noteNew);
+    if (noteNew === undefined) noteNew = "";
+    console.log(noteNew);
+    $(tenWiersz).load('/amerykastrategie/note/' + wiersz + '&' + noteNew, function (response, status, http) {
+        if (status == "success") {
+            console.log("Success");
+            // elementNoteTitle.title = replaceAll("QTTTQ", " ", noteNew);
+            if (noteNew.length > 0 && !undefined) {
+                elementNoteTitle.title = replaceAll("QTTTQ", " ", noteNew);
+                elementNoteTitle.classList.toggle("isNote");
+                elementNoteTitle.classList.toggle("fa-comment-dots");
+            } else {
+                elementNoteTitle.title = "";
+                elementNoteTitle.classList.remove("isNote");
+                elementNoteTitle.classList.remove("fa-comment-dots");
+                elementNoteTitle.classList.toggle("fa-comment");
+            }
+        }
+    });
+    location.href = "#";
 }
 
 // function selectSectorsListAuto() {

@@ -124,6 +124,11 @@ img {
     border: 2px solid #61a5ea;
 }
 
+.tytulyKolumn{
+    background-color: grey;
+    color: white;
+}
+
 .table thead th {
     vertical-align: middle;
 }
@@ -279,7 +284,7 @@ section p {
 .myNote{
     cursor: pointer;
 }
-.tttt{}
+
 
 .myNote:hover{
     cursor: pointer;

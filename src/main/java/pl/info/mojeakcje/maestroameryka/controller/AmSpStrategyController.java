@@ -5,10 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import pl.info.mojeakcje.maestroameryka.model.*;
 import pl.info.mojeakcje.maestroameryka.model.modeleStrategii.Industry;
 import pl.info.mojeakcje.maestroameryka.model.modeleStrategii.Sector;
@@ -94,6 +91,9 @@ public class AmSpStrategyController {
 
     @GetMapping("/amerykastrategie/find/{id}&{name}")
     public String getSectorStrategy(@PathVariable Integer id, @PathVariable String name, Model model) {
+        if (id == -3) {
+
+        }
         dodajDoWyszukiwania(id, name);
         amerykaSpolki = (List<AmerykaSpolka>) amSpRepository.findAll();
         amerykaSpolki = amerykaSpolki
@@ -127,6 +127,24 @@ public class AmSpStrategyController {
         model.addAttribute("wynikWyszukiwania", amerykaSpolki.size());
         model.addAttribute("filtry", filtry);
         return "amerykastrategie::#mojeZmiany";
+    }
+
+
+    @GetMapping("/amerykastrategie/note/{id}&{note}")
+    public String chengeNote(@PathVariable Long id, @PathVariable String note, Model model) {
+        String wierszTabeli = "amerykastrategie::#wierszTabeli"+id;
+        log.info("amerykastrategie::#wierszTabeli"+id);
+        log.info("notatka: "+note);
+        AmerykaSpolka amerykaSpolka = amSpRepository.findById(id.longValue()).get();
+        amerykaSpolka.setNote(note.replaceAll("QTTTQ"," "));
+        amSpRepository.save(amerykaSpolka);
+        log.info(""+amerykaSpolka);
+        model.addAttribute("amerykaSpolka", amerykaSpolka);
+//        model.addAttribute("amerykaSpolki", amerykaSpolki);
+//        model.addAttribute("amerykaSpolkaModified", new AmerykaSpolka());
+//        model.addAttribute("wynikWyszukiwania", amerykaSpolki.size());
+//        model.addAttribute("filtry", filtry);
+        return wierszTabeli;
     }
 
 
