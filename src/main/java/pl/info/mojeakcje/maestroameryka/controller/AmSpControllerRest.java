@@ -4,14 +4,16 @@ import lombok.extern.log4j.Log4j2;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import pl.info.mojeakcje.maestroameryka.service.DBfromCSV;
 import pl.info.mojeakcje.maestroameryka.model.AmerykaSpolka;
 import pl.info.mojeakcje.maestroameryka.repository.AmSpRepository;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.util.List;
+import java.util.UUID;
 
 import static pl.info.mojeakcje.maestroameryka.MaestroamerykaApplication.*;
 
@@ -78,6 +80,28 @@ public class AmSpControllerRest {
                 .stream()
                 .filter(amerykaSpolka -> amerykaSpolka.getTicker().equals(ticker.toUpperCase()))
                 .findAny().orElse(new AmerykaSpolka());
+    }
+
+    @RequestMapping(value="/upload", method=RequestMethod.POST)
+    public String handleFileUpload(@RequestParam("plik") MultipartFile file){
+        if (!file.isEmpty()) {
+            try {
+                UUID uuid = UUID.randomUUID();
+                String filename = "/uploads/upload_"+uuid.toString();
+                byte[] bytes = file.getBytes();
+                File fsFile = new File(filename);
+                fsFile.createNewFile();
+                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(fsFile));
+                stream.write(bytes);
+                stream.close();
+                log.info("File {} has been successfully uploaded as {}", new Object[] {file.getOriginalFilename(), filename});
+            } catch (Exception e) {
+                log.error("File has not been uploaded", e);
+            }
+        } else {
+            log.error("Uploaded file is empty");
+        }
+        return "redirect:/";
     }
 
 }
