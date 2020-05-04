@@ -117,6 +117,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //    @EventListener(ApplicationReadyEvent.class)
 //    public void get() {
 //        Customer customer1 = new Customer("Wiki", passwordEncoder().encode("wiki"), RoleCustomer.ROLE_ADMIN.toString(), "168.1.21.1");
+//        Customer customer1 = new Customer("Maja", passwordEncoder().encode("Maja2006"), RoleCustomer.ROLE_ADMIN.toString(), "168.1.31.3");
 //        Customer customer1 = new Customer("Robert", passwordEncoder().encode("Robert10"), RoleCustomer.ADMIN.toString(), "168.1.21.1");
 //        Customer customer2 = new Customer("Maciej", passwordEncoder().encode("Maciej10"), RoleCustomer.ADMIN.toString(), "165.12.2.21");
 //        Customer customer3 = new Customer("Adam", passwordEncoder().encode("Adam10"), RoleCustomer.USER.toString(), "165.161.251.13");
