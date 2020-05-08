@@ -1,7 +1,9 @@
 package pl.info.mojeakcje.maestroameryka;
 
 import org.jsoup.Connection;
+import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
+import org.jsoup.helper.HttpConnection;
 import org.jsoup.nodes.Document;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
@@ -10,12 +12,17 @@ import pl.info.mojeakcje.maestroameryka.model.AmerykaSpolka;
 import pl.info.mojeakcje.maestroameryka.model.SpolkaAmeryka;
 
 import java.io.IOException;
+import java.net.URL;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.StringTokenizer;
+
+import static pl.info.mojeakcje.maestroameryka.MaestroamerykaApplication.ANSI_RED;
+import static pl.info.mojeakcje.maestroameryka.MaestroamerykaApplication.ANSI_RESET;
 
 
 @Service
@@ -24,7 +31,7 @@ public class CzytanieDanychJsoup {
 
 //    public static void main(String[] args) throws IOException {
 
-    public static List<SpolkaAmeryka> run(List<AmerykaSpolka> staraListaSpolek) throws IOException {
+    public static List<SpolkaAmeryka> run(List<AmerykaSpolka> staraListaSpolek) throws InterruptedException {
 
         List<SpolkaAmeryka> nowaListaSpolek = new ArrayList<>();
 
@@ -33,12 +40,8 @@ public class CzytanieDanychJsoup {
         Double course12M = 0.0;
         Double courseYTD = 0.0;
         Double courseCurrent = 0.0;
-
-        String dayCourse1M = "";
-        String dayCourse3M = "";
-        String dayCourse12M = "";
-        String dayCourseYTD = "";
-        String dayCourseCurrent = "";
+        Double wynik = 0.0;
+        String stopa = "";
 
         // ustalanie parametrów dla URL
         LocalDate localDateStart = LocalDate.of(2020, 05, 02);
@@ -57,9 +60,9 @@ public class CzytanieDanychJsoup {
             // Tworzenie nowej spólki  - konstruktor (String ticker, String name, String market, String sector, String industry, String note)
             SpolkaAmeryka nowaSpolka = new SpolkaAmeryka(amSp.getTicker(), amSp.getName(), amSp.getMarket(), amSp.getSector(), amSp.getIndustry(), amSp.getNote());
 
+
             System.out.println("https://query1.finance.yahoo.com/v7/finance/download/" + amSp.getTicker() + "?period1=" + (startTime + deltaTime - rokTime) + "&period2=" + (startTime + deltaTime) + "&interval=1d&events=history");
-            Connection connect = Jsoup.connect("https://query1.finance.yahoo.com/v7/finance/download/" + amSp.getTicker() + "?period1=" + (startTime + deltaTime - rokTime) + "&period2=" + (startTime + deltaTime) + "&interval=1d&events=history");
-            Document document = connect.get();
+            Document document = connect("https://query1.finance.yahoo.com/v7/finance/download/" + amSp.getTicker() + "?period1=" + (startTime + deltaTime - rokTime) + "&period2=" + (startTime + deltaTime) + "&interval=1d&events=history");
 
             // Tworzenie listy dat
             List<String> listaDat = new ArrayList<>();
@@ -134,7 +137,7 @@ public class CzytanieDanychJsoup {
                     if (dane.startsWith(listaDat.get(0))) {
                         result = dane.split(",");
                         courseCurrent = Double.parseDouble(result[4]);
-                        nowaSpolka.setCourseCurrent(new DecimalFormat("# 0.000#").format(courseCurrent));
+                        nowaSpolka.setCourseCurrent(new DecimalFormat("# 0.000").format(courseCurrent));
                         nowaSpolka.setDayCourseCurrent(result[0]);
 //                        System.out.println("courseCurrent " + nowaSpolka.getDayCourseCurrent() + " - " + courseCurrent);
                         System.out.println("courseCurrent " + nowaSpolka.getDayCourseCurrent() + " - " + nowaSpolka.getCourseCurrent());
@@ -142,7 +145,7 @@ public class CzytanieDanychJsoup {
                     if (dane.startsWith(listaDat.get(1))) {
                         result = dane.split(",");
                         course12M = Double.parseDouble(result[4]);
-                        nowaSpolka.setCourse12M(new DecimalFormat("# 0.000#").format(course12M));
+                        nowaSpolka.setCourse12M(new DecimalFormat("# 0.000").format(course12M));
                         nowaSpolka.setDay12M(result[0]);
 //                        System.out.println("course12M " + nowaSpolka.getDay12M() + " - " + course12M);
                         System.out.println("course12M " + nowaSpolka.getDay12M() + " - " + nowaSpolka.getCourse12M());
@@ -150,7 +153,7 @@ public class CzytanieDanychJsoup {
                     if (dane.startsWith(listaDat.get(2))) {
                         result = dane.split(",");
                         courseYTD = Double.parseDouble(result[4]);
-                        nowaSpolka.setCourseYTD(new DecimalFormat("# 0.000#").format(courseYTD));
+                        nowaSpolka.setCourseYTD(new DecimalFormat("# 0.000").format(courseYTD));
                         nowaSpolka.setDayYTD(result[0]);
 //                        System.out.println("courseYTD " + nowaSpolka.getDayYTD() + " - " + courseYTD);
                         System.out.println("courseYTD " + nowaSpolka.getDayYTD() + " - " + nowaSpolka.getCourseYTD());
@@ -158,7 +161,7 @@ public class CzytanieDanychJsoup {
                     if (dane.startsWith(listaDat.get(3))) {
                         result = dane.split(",");
                         course3M = Double.parseDouble(result[4]);
-                        nowaSpolka.setCourse3M(new DecimalFormat("# 0.000#").format(course3M));
+                        nowaSpolka.setCourse3M(new DecimalFormat("# 0.000").format(course3M));
                         nowaSpolka.setDay3M(result[0]);
 //                        System.out.println("course3M " + nowaSpolka.getDay3M() + " - " + course3M);
                         System.out.println("course3M " + nowaSpolka.getDay3M() + " - " + nowaSpolka.getCourse3M());
@@ -166,12 +169,35 @@ public class CzytanieDanychJsoup {
                     if (dane.startsWith(listaDat.get(4))) {
                         result = dane.split(",");
                         course1M = Double.parseDouble(result[4]);
-                        nowaSpolka.setCourse1M(new DecimalFormat("# 0.000#").format(course1M));
+                        nowaSpolka.setCourse1M(new DecimalFormat("# 0.000").format(course1M));
                         nowaSpolka.setDay1M(result[0]);
 //                        System.out.println("course1M " + nowaSpolka.getDay1M() + " - " + course1M);
                         System.out.println("course1M " + nowaSpolka.getDay1M() + " - " + nowaSpolka.getCourse1M());
                     }
                 }
+
+
+                // wyliczanie stóp zwrotu dla listy dat
+                wynik = courseCurrent * 100 / course1M - 1;
+                stopa = new DecimalFormat("0.0").format(wynik);
+                nowaSpolka.setM1(stopa + "%");
+                System.out.println("M1: " + nowaSpolka.getM1());
+
+                wynik = courseCurrent * 100 / course3M - 1;
+                stopa = new DecimalFormat("0.0").format(wynik);
+                nowaSpolka.setM3(stopa + "%");
+                System.out.println("M3: " + nowaSpolka.getM3());
+
+                wynik = courseCurrent * 100 / course12M - 1;
+                stopa = new DecimalFormat("0.0").format(wynik);
+                nowaSpolka.setM12(stopa + "%");
+                System.out.println("M12: " + nowaSpolka.getM12());
+
+                wynik = courseCurrent * 100 / courseYTD - 1;
+                stopa = new DecimalFormat("0.0").format(wynik);
+                nowaSpolka.setyTD(stopa + "%");
+                System.out.println("YTD: " + nowaSpolka.getyTD());
+
             } // warunek nie pustej listy dat
 
             // Tworzenie nowej spólki  - konstruktor (String ticker, String name, String market, String sector, String industry, String note)
@@ -179,9 +205,37 @@ public class CzytanieDanychJsoup {
 
             nowaListaSpolek.add(nowaSpolka);
 
+            int millis = new Random().nextInt(800) + 700;
+            System.out.println("Czekam: " + millis + "ms");
+            Thread.sleep(millis);
+
         } // pętla po starej liście spółek i tworzenie nowej bazy
         return nowaListaSpolek; //cała metoda
     }
+
+
+    private static Document connect(String url) {
+//        String url = "http://www.transfermarkt.co.uk/real-madrid/startseite/verein/418";
+        Document doc = null;
+        try {
+            doc = Jsoup.connect(url)
+                    .userAgent("Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:25.0) Gecko/20100101 Firefox/25.0")
+                    .referrer("http://www.google.com")
+                    .ignoreHttpErrors(true)
+                    .get();
+        } catch (NullPointerException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (HttpStatusException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return doc;
+    }
+
+
 
 
     //        !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
