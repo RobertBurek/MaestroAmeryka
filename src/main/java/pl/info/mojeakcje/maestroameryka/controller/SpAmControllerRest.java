@@ -63,18 +63,24 @@ public class SpAmControllerRest {
     public String createTableWithHttp() throws IOException {
         List<String> listaTicker = new ArrayList<>();
         ((List<AmerykaSpolka>)amSpRepository.findAll()).stream().map(amerykaSpolka -> listaTicker.add(amerykaSpolka.getTicker())).collect(Collectors.toList());
-        czytanieDanychJsoup.run(listaTicker);
+        List<AmerykaSpolka> staraListaSpolek = new ArrayList<>();
+                staraListaSpolek.add(amSpRepository.findById(1L).get());
+                staraListaSpolek.add(amSpRepository.findById(2L).get());
+//                staraListaSpolek.add(amSpRepository.findById(3L).get());
+//                staraListaSpolek.add(amSpRepository.findById(4L).get());
+//                staraListaSpolek.add(amSpRepository.findById(5L).get());
+//                staraListaSpolek.add(amSpRepository.findById(6L).get());
+//                staraListaSpolek.add(amSpRepository.findById(7L).get());
+//                staraListaSpolek.add(amSpRepository.findById(8L).get());
+//                staraListaSpolek.add(amSpRepository.findById(9L).get());
+//                staraListaSpolek.add(amSpRepository.findById(10L).get());
+//        czytanieDanychJsoup.run(listaTicker);
+        List<SpolkaAmeryka> nowaListaSpolek = czytanieDanychJsoup.run(staraListaSpolek);
         log.info(ANSI_BLUE + " Zrobiłem !!! Odczyt danych z pliku pobranego z HTTP !!!");
 //        return "Tabela uzupełniona";
-        return listaTicker.toString();
+        return nowaListaSpolek.toString();
     }
 
-
-//    @GetMapping("/")
-//    public Iterable<AmerykaSpolka> getAll() {
-//        log.info(ANSI_BLUE + "Wypisałem wszystkie dane z bazy MaestroAmeryka z tabeli: ameryka_spolka" + ANSI_RESET);
-//        return amSpRepository.findAll();
-//    }
 
     @GetMapping("/dane/{ticker}")
     public SpolkaAmeryka getSpolkaTicker(@PathVariable String ticker) {

@@ -27,6 +27,8 @@ public class SpolkaAmeryka {
     private String course3M;
     private String courseCurrent;
     private String dayCourseCurrent;
+    private String dayYTD;
+    private String courseYTD;
     private String yTD;
     private String m1;
     private String m3;
@@ -98,6 +100,22 @@ public class SpolkaAmeryka {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public String getDayYTD() {
+        return dayYTD;
+    }
+
+    public void setDayYTD(String dayYTD) {
+        this.dayYTD = dayYTD;
+    }
+
+    public String getCourseYTD() {
+        return courseYTD;
+    }
+
+    public void setCourseYTD(String courseYTD) {
+        this.courseYTD = courseYTD;
     }
 
     public String getDay12M() {

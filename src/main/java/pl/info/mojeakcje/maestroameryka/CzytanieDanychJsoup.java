@@ -3,24 +3,19 @@ package pl.info.mojeakcje.maestroameryka;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.nodes.Node;
-import org.jsoup.select.NodeFilter;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
+import pl.info.mojeakcje.maestroameryka.model.AmerykaSpolka;
 import pl.info.mojeakcje.maestroameryka.model.SpolkaAmeryka;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.StringTokenizer;
-import java.util.function.Function;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 
 @Service
@@ -29,7 +24,9 @@ public class CzytanieDanychJsoup {
 
 //    public static void main(String[] args) throws IOException {
 
-    public static List<SpolkaAmeryka> run(List<String> listaTicker) throws IOException {
+    public static List<SpolkaAmeryka> run(List<AmerykaSpolka> staraListaSpolek) throws IOException {
+
+        List<SpolkaAmeryka> nowaListaSpolek = new ArrayList<>();
 
         Double course1M = 0.0;
         Double course3M = 0.0;
@@ -43,6 +40,7 @@ public class CzytanieDanychJsoup {
         String dayCourseYTD = "";
         String dayCourseCurrent = "";
 
+        // ustalanie parametrów dla URL
         LocalDate localDateStart = LocalDate.of(2020, 05, 02);
         LocalDate localDateNow = LocalDate.now();
         Period period2 = Period.between(localDateStart, localDateNow);
@@ -54,97 +52,137 @@ public class CzytanieDanychJsoup {
 
         LocalDate localDateFind = LocalDate.now();
 
-        System.out.println("https://query1.finance.yahoo.com/v7/finance/download/FOXA?period1=" + (startTime + deltaTime - rokTime) + "&period2=" + (startTime + deltaTime) + "&interval=1d&events=history");
-        Connection connect = Jsoup.connect("https://query1.finance.yahoo.com/v7/finance/download/FOXA?period1=" + (startTime + deltaTime - rokTime) + "&period2=" + (startTime + deltaTime) + "&interval=1d&events=history");
+        for (AmerykaSpolka amSp : staraListaSpolek) {
 
-        Document document = connect.get();
-        List<String> listaDat = new ArrayList<>();
-        if (document.body().getAllElements().toString().contains(localDateNow.toString())) {
-            listaDat.add(localDateNow.toString());
-        } else if (document.body().getAllElements().toString().contains(localDateNow.minusDays(1).toString())){
-            listaDat.add(localDateNow.minusDays(1).toString());
-            localDateNow = localDateNow.minusDays(1);
-//            System.out.println("Teraz localDateNow: "+localDateNow);
-        }
+            // Tworzenie nowej spólki  - konstruktor (String ticker, String name, String market, String sector, String industry, String note)
+            SpolkaAmeryka nowaSpolka = new SpolkaAmeryka(amSp.getTicker(), amSp.getName(), amSp.getMarket(), amSp.getSector(), amSp.getIndustry(), amSp.getNote());
 
-        if (!listaDat.isEmpty()){
-            System.out.println("ListaDat nie jest pusta: "+listaDat);
-            if (document.body().getAllElements().toString().contains(localDateFind.of(localDateNow.getYear() - 1, localDateNow.getMonth(), localDateNow.getDayOfMonth()).toString())) {
-                listaDat.add(localDateFind.of(localDateNow.getYear() - 1, localDateNow.getMonth(), localDateNow.getDayOfMonth()).toString());
-            } else if (document.body().getAllElements().toString().contains(localDateFind.of(localDateNow.getYear() - 1, localDateNow.getMonth(), localDateNow.getDayOfMonth()-1).toString())) {
-                listaDat.add(localDateFind.of(localDateNow.getYear() - 1, localDateNow.getMonth(), localDateNow.getDayOfMonth()-1).toString());
-            } else if (document.body().getAllElements().toString().contains(localDateFind.of(localDateNow.getYear() - 1, localDateNow.getMonth(), localDateNow.getDayOfMonth()-2).toString())) {
-                listaDat.add(localDateFind.of(localDateNow.getYear() - 1, localDateNow.getMonth(), localDateNow.getDayOfMonth() - 2).toString());
-            } else if (document.body().getAllElements().toString().contains(localDateFind.of(localDateNow.getYear() - 1, localDateNow.getMonth(), localDateNow.getDayOfMonth()-3).toString())) {
-                listaDat.add(localDateFind.of(localDateNow.getYear() - 1, localDateNow.getMonth(), localDateNow.getDayOfMonth() - 3).toString());
-            } else if (document.body().getAllElements().toString().contains(localDateFind.of(localDateNow.getYear() - 1, localDateNow.getMonth(), localDateNow.getDayOfMonth()-4).toString())) {
-                listaDat.add(localDateFind.of(localDateNow.getYear() - 1, localDateNow.getMonth(), localDateNow.getDayOfMonth() - 4).toString());
-            }
-            System.out.println("ListaDat ma datę 12M: "+listaDat);
-            if (document.body().getAllElements().toString().contains(localDateFind.of(localDateNow.getYear() - 1, 12, 31).toString())) {
-                listaDat.add(localDateFind.of(localDateNow.getYear() - 1, 12, 31).toString());
-            } else if (document.body().getAllElements().toString().contains(localDateFind.of(localDateNow.getYear() - 1, 12, 30).toString())) {
-                listaDat.add(localDateFind.of(localDateNow.getYear() - 1, 12, 30).toString());
-            } else if (document.body().getAllElements().toString().contains(localDateFind.of(localDateNow.getYear() - 1, 12, 29).toString())) {
-                listaDat.add(localDateFind.of(localDateNow.getYear() - 1, 12, 29).toString());
-            }
-            System.out.println("ListaDat ma datę YTD: "+listaDat);
+            System.out.println("https://query1.finance.yahoo.com/v7/finance/download/" + amSp.getTicker() + "?period1=" + (startTime + deltaTime - rokTime) + "&period2=" + (startTime + deltaTime) + "&interval=1d&events=history");
+            Connection connect = Jsoup.connect("https://query1.finance.yahoo.com/v7/finance/download/" + amSp.getTicker() + "?period1=" + (startTime + deltaTime - rokTime) + "&period2=" + (startTime + deltaTime) + "&interval=1d&events=history");
+            Document document = connect.get();
 
-        }
-
-
-        StringTokenizer st = new StringTokenizer(document.body().getAllElements().toString());
-        String dane = "";
-        String[] result;
-        while (st.hasMoreTokens()) {
-            dane = st.nextToken();
-            System.out.println(dane);
-            if (dane.startsWith(localDateNow.toString())) {
-//            if (dane.startsWith("2019-04-24")) {
-                result = dane.split(",");
-//                System.out.println(result[0] + " - " + result[4]);
-                courseCurrent = Double.parseDouble(result[4]);
-                dayCourseCurrent =result[0];
-                System.out.println(dayCourseCurrent + " - " + courseCurrent);
+            // Tworzenie listy dat
+            List<String> listaDat = new ArrayList<>();
+            if (document.body().getAllElements().toString().contains(localDateNow.toString())) {
+                listaDat.add(localDateNow.toString());
+            } else if (document.body().getAllElements().toString().contains(localDateNow.minusDays(1).toString())) {
+                listaDat.add(localDateNow.minusDays(1).toString());
+                localDateNow = localDateNow.minusDays(1);
             }
-            if (dane.startsWith(localDateFind.of(localDateNow.getYear() - 1, localDateNow.getMonth(), localDateNow.getDayOfMonth()).toString())) {
-//            if (dane.startsWith("2019-04-24")) {
-                result = dane.split(",");
-//                System.out.println(result[0] + " - " + result[4]);
-                course12M = Double.parseDouble(result[4]);
-                dayCourse12M =result[0];
-                System.out.println(dayCourse12M + " - " + course12M);
-            }
-            if (dane.startsWith(localDateFind.of(localDateNow.getYear() - 1, 12, 31).toString())) {
-//            if (dane.startsWith("2019-04-24")) {
-                result = dane.split(",");
-//                System.out.println(result[0] + " - " + result[4]);
-                courseYTD = Double.parseDouble(result[4]);
-                dayCourseYTD =result[0];
-                System.out.println(dayCourseYTD + " - " + courseYTD);
-            }
-//            if (dane.startsWith(localDateNow.minusDays(30).toString())) {
-            if (dane.startsWith(localDateFind.of(localDateNow.getYear(), localDateNow.getMonth().minus(3), localDateNow.getDayOfMonth()).toString())) {
-//            if (dane.startsWith("2019-04-24")) {
-                result = dane.split(",");
-//                System.out.println(result[0] + " - " + result[4]);
-                course3M = Double.parseDouble(result[4]);
-                dayCourse3M =result[0];
-                System.out.println(dayCourse3M + " - " + course3M);
-            }
-//            if (dane.startsWith(localDateNow.minusDays(365).toString())) {
-            if (dane.startsWith(localDateFind.of(localDateNow.getYear(), localDateNow.getMonth().minus(1), localDateNow.getDayOfMonth()).toString())) {
-//            if (dane.startsWith("2019-04-24")) {
-                result = dane.split(",");
-//                System.out.println(result[0] + " - " + result[4]);
-                course1M = Double.parseDouble(result[4]);
-                dayCourse1M =result[0];
-                System.out.println(dayCourse1M + " - " + course1M);
+            if (!listaDat.isEmpty()) {
+                System.out.println("ListaDat ma date current: " + listaDat);
+                // ustalamy datę dla 12M
+                if (document.body().getAllElements().toString().contains(localDateNow.minusYears(1).toString())) {
+                    listaDat.add(localDateNow.minusYears(1).toString());
+                } else if (document.body().getAllElements().toString().contains(localDateNow.minusYears(1).minusDays(1).toString())) {
+                    listaDat.add(localDateNow.minusYears(1).minusDays(1).toString());
+                } else if (document.body().getAllElements().toString().contains(localDateNow.minusYears(1).minusDays(2).toString())) {
+                    listaDat.add(localDateNow.minusYears(1).minusDays(2).toString());
+                } else if (document.body().getAllElements().toString().contains(localDateNow.minusYears(1).minusDays(3).toString())) {
+                    listaDat.add(localDateNow.minusYears(1).minusDays(3).toString());
+                } else if (document.body().getAllElements().toString().contains(localDateNow.minusYears(1).minusDays(4).toString())) {
+                    listaDat.add(localDateNow.minusYears(1).minusDays(4).toString());
+                } else listaDat.add("brak");
+                System.out.println("ListaDat ma datę 12M: " + listaDat);
+                // ustalamy datę dla YTD
+                if (document.body().getAllElements().toString().contains(localDateFind.of(localDateNow.getYear() - 1, 12, 31).toString())) {
+                    listaDat.add(localDateFind.of(localDateNow.getYear() - 1, 12, 31).toString());
+                } else if (document.body().getAllElements().toString().contains(localDateFind.of(localDateNow.getYear() - 1, 12, 30).toString())) {
+                    listaDat.add(localDateFind.of(localDateNow.getYear() - 1, 12, 30).toString());
+                } else if (document.body().getAllElements().toString().contains(localDateFind.of(localDateNow.getYear() - 1, 12, 29).toString())) {
+                    listaDat.add(localDateFind.of(localDateNow.getYear() - 1, 12, 29).toString());
+                } else if (document.body().getAllElements().toString().contains(localDateFind.of(localDateNow.getYear() - 1, 12, 28).toString())) {
+                    listaDat.add(localDateFind.of(localDateNow.getYear() - 1, 12, 28).toString());
+                } else listaDat.add("brak");
+                System.out.println("ListaDat ma datę YTD: " + listaDat);
+                // ustalamy datę dla 3M
+                if (document.body().getAllElements().toString().contains(localDateNow.minusMonths(3).toString())) {
+                    listaDat.add(localDateNow.minusMonths(3).toString());
+                } else if (document.body().getAllElements().toString().contains(localDateNow.minusMonths(3).minusDays(1).toString())) {
+                    listaDat.add(localDateNow.minusMonths(3).minusDays(1).toString());
+                } else if (document.body().getAllElements().toString().contains(localDateNow.minusMonths(3).minusDays(2).toString())) {
+                    listaDat.add(localDateNow.minusMonths(3).minusDays(2).toString());
+                } else if (document.body().getAllElements().toString().contains(localDateNow.minusMonths(3).minusDays(3).toString())) {
+                    listaDat.add(localDateNow.minusMonths(3).minusDays(3).toString());
+                } else if (document.body().getAllElements().toString().contains(localDateNow.minusMonths(3).minusDays(4).toString())) {
+                    listaDat.add(localDateNow.minusMonths(3).minusDays(4).toString());
+                } else listaDat.add("brak");
+                System.out.println("ListaDat ma datę 3M: " + listaDat);
+                // ustalamy datę dla 1M
+                if (document.body().getAllElements().toString().contains(localDateNow.minusMonths(1).toString())) {
+                    listaDat.add(localDateNow.minusMonths(1).toString());
+                } else if (document.body().getAllElements().toString().contains(localDateNow.minusMonths(1).minusDays(1).toString())) {
+                    listaDat.add(localDateNow.minusMonths(1).minusDays(1).toString());
+                } else if (document.body().getAllElements().toString().contains(localDateNow.minusMonths(1).minusDays(2).toString())) {
+                    listaDat.add(localDateNow.minusMonths(1).minusDays(2).toString());
+                } else if (document.body().getAllElements().toString().contains(localDateNow.minusMonths(1).minusDays(3).toString())) {
+                    listaDat.add(localDateNow.minusMonths(1).minusDays(3).toString());
+                } else if (document.body().getAllElements().toString().contains(localDateNow.minusMonths(1).minusDays(4).toString())) {
+                    listaDat.add(localDateNow.minusMonths(1).minusDays(4).toString());
+                } else listaDat.add("brak");
+                System.out.println("ListaDat ma datę 1M: " + listaDat);
             }
 
-        }
-        return null;
+            // wyszukiwanie wartości w pobranym pliku
+            if (listaDat.size() > 0) {
+                StringTokenizer st = new StringTokenizer(document.body().getAllElements().toString());
+                String dane = "";
+                String[] result;
+                while (st.hasMoreTokens()) {
+                    dane = st.nextToken();
+//            System.out.println(dane);
+                    if (dane.startsWith(listaDat.get(0))) {
+                        result = dane.split(",");
+                        courseCurrent = Double.parseDouble(result[4]);
+                        nowaSpolka.setCourseCurrent(new DecimalFormat("# 0.000#").format(courseCurrent));
+                        nowaSpolka.setDayCourseCurrent(result[0]);
+//                        System.out.println("courseCurrent " + nowaSpolka.getDayCourseCurrent() + " - " + courseCurrent);
+                        System.out.println("courseCurrent " + nowaSpolka.getDayCourseCurrent() + " - " + nowaSpolka.getCourseCurrent());
+                    }
+                    if (dane.startsWith(listaDat.get(1))) {
+                        result = dane.split(",");
+                        course12M = Double.parseDouble(result[4]);
+                        nowaSpolka.setCourse12M(new DecimalFormat("# 0.000#").format(course12M));
+                        nowaSpolka.setDay12M(result[0]);
+//                        System.out.println("course12M " + nowaSpolka.getDay12M() + " - " + course12M);
+                        System.out.println("course12M " + nowaSpolka.getDay12M() + " - " + nowaSpolka.getCourse12M());
+                    }
+                    if (dane.startsWith(listaDat.get(2))) {
+                        result = dane.split(",");
+                        courseYTD = Double.parseDouble(result[4]);
+                        nowaSpolka.setCourseYTD(new DecimalFormat("# 0.000#").format(courseYTD));
+                        nowaSpolka.setDayYTD(result[0]);
+//                        System.out.println("courseYTD " + nowaSpolka.getDayYTD() + " - " + courseYTD);
+                        System.out.println("courseYTD " + nowaSpolka.getDayYTD() + " - " + nowaSpolka.getCourseYTD());
+                    }
+                    if (dane.startsWith(listaDat.get(3))) {
+                        result = dane.split(",");
+                        course3M = Double.parseDouble(result[4]);
+                        nowaSpolka.setCourse3M(new DecimalFormat("# 0.000#").format(course3M));
+                        nowaSpolka.setDay3M(result[0]);
+//                        System.out.println("course3M " + nowaSpolka.getDay3M() + " - " + course3M);
+                        System.out.println("course3M " + nowaSpolka.getDay3M() + " - " + nowaSpolka.getCourse3M());
+                    }
+                    if (dane.startsWith(listaDat.get(4))) {
+                        result = dane.split(",");
+                        course1M = Double.parseDouble(result[4]);
+                        nowaSpolka.setCourse1M(new DecimalFormat("# 0.000#").format(course1M));
+                        nowaSpolka.setDay1M(result[0]);
+//                        System.out.println("course1M " + nowaSpolka.getDay1M() + " - " + course1M);
+                        System.out.println("course1M " + nowaSpolka.getDay1M() + " - " + nowaSpolka.getCourse1M());
+                    }
+                }
+            } // warunek nie pustej listy dat
+
+            // Tworzenie nowej spólki  - konstruktor (String ticker, String name, String market, String sector, String industry, String note)
+
+
+            nowaListaSpolek.add(nowaSpolka);
+
+        } // pętla po starej liście spółek i tworzenie nowej bazy
+        return nowaListaSpolek; //cała metoda
     }
+
 
     //        !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //            Metoda  automatycznego zapisu danych z HTTP, uruchamiana zawsze przy uruchomianiu aplikacji
