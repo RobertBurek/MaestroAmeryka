@@ -1,9 +1,7 @@
 package pl.info.mojeakcje.maestroameryka;
 
-import org.jsoup.Connection;
 import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
-import org.jsoup.helper.HttpConnection;
 import org.jsoup.nodes.Document;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
@@ -12,7 +10,6 @@ import pl.info.mojeakcje.maestroameryka.model.AmerykaSpolka;
 import pl.info.mojeakcje.maestroameryka.model.SpolkaAmeryka;
 
 import java.io.IOException;
-import java.net.URL;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.Period;
@@ -20,9 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.StringTokenizer;
-
-import static pl.info.mojeakcje.maestroameryka.MaestroamerykaApplication.ANSI_RED;
-import static pl.info.mojeakcje.maestroameryka.MaestroamerykaApplication.ANSI_RESET;
 
 
 @Service
@@ -200,9 +194,7 @@ public class CzytanieDanychJsoup {
 
             } // warunek nie pustej listy dat
 
-            // Tworzenie nowej spólki  - konstruktor (String ticker, String name, String market, String sector, String industry, String note)
-
-
+            nowaSpolka = changeNull(nowaSpolka);
             nowaListaSpolek.add(nowaSpolka);
 
             int millis = new Random().nextInt(800) + 700;
@@ -213,9 +205,26 @@ public class CzytanieDanychJsoup {
         return nowaListaSpolek; //cała metoda
     }
 
+    private static SpolkaAmeryka changeNull(SpolkaAmeryka nowaSpolka) {
+        if (nowaSpolka.getyTD() == null) nowaSpolka.setyTD("brak");
+        if (nowaSpolka.getM1() == null) nowaSpolka.setM1("brak");
+        if (nowaSpolka.getM3() == null) nowaSpolka.setM3("brak");
+        if (nowaSpolka.getM12() == null) nowaSpolka.setM12("brak");
+        if (nowaSpolka.getDay1M() == null) nowaSpolka.setDay1M("brak");
+        if (nowaSpolka.getDay3M() == null) nowaSpolka.setDay3M("brak");
+        if (nowaSpolka.getDay12M() == null) nowaSpolka.setDay12M("brak");
+        if (nowaSpolka.getDayYTD() == null) nowaSpolka.setDayYTD("brak");
+        if (nowaSpolka.getDayCourseCurrent() == null) nowaSpolka.setDayCourseCurrent("brak");
+        if (nowaSpolka.getCourse3M() == null) nowaSpolka.setCourse3M("brak");
+        if (nowaSpolka.getCourse1M() == null) nowaSpolka.setCourse1M("brak");
+        if (nowaSpolka.getCourseYTD() == null) nowaSpolka.setCourseYTD("brak");
+        if (nowaSpolka.getCourse12M() == null) nowaSpolka.setCourse12M("brak");
+        if (nowaSpolka.getCourseCurrent() == null) nowaSpolka.setCourseCurrent("brak");
+        return nowaSpolka;
+    }
+
 
     private static Document connect(String url) {
-//        String url = "http://www.transfermarkt.co.uk/real-madrid/startseite/verein/418";
         Document doc = null;
         try {
             doc = Jsoup.connect(url)
@@ -224,18 +233,14 @@ public class CzytanieDanychJsoup {
                     .ignoreHttpErrors(true)
                     .get();
         } catch (NullPointerException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (HttpStatusException e) {
             e.printStackTrace();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return doc;
     }
-
-
 
 
     //        !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

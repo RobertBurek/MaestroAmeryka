@@ -68,7 +68,7 @@ public class SpAmControllerRest {
                 staraListaSpolek.add(amSpRepository.findById(6L).get());
                 staraListaSpolek.add(amSpRepository.findById(7L).get());
                 staraListaSpolek.add(amSpRepository.findById(8L).get());
-//                staraListaSpolek.add(amSpRepository.findById(9L).get());
+                staraListaSpolek.add(amSpRepository.findById(9L).get());
 //                staraListaSpolek.add(amSpRepository.findById(10L).get());
 //        czytanieDanychJsoup.run(listaTicker);
         List<SpolkaAmeryka> nowaListaSpolek = czytanieDanychJsoup.run(staraListaSpolek);
