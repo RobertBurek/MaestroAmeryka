@@ -13,6 +13,7 @@ import pl.info.mojeakcje.maestroameryka.repository.AmSpRepository;
 import java.io.*;
 import java.util.List;
 import java.util.UUID;
+import java.util.function.Consumer;
 
 import static pl.info.mojeakcje.maestroameryka.MaestroamerykaApplication.*;
 

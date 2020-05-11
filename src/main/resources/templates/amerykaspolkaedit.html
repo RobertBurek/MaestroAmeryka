@@ -117,7 +117,7 @@
                         <div class="myColumn">
                             Historical stock :
                             <div class="form-group myDisplayFlex">
-                                <label for="courseCurrent" class="label-course">Current :</label>
+                                <label for="courseCurrent" class="label-course" th:text="*{dayCourseCurrent}+' :'"></label>
                                 <input th:field="*{courseCurrent}" type="text" class="form-control input-course" id="courseCurrent"
                                        name="courseCurrent"
                                        placeholder="course">

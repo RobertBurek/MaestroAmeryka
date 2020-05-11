@@ -1,27 +1,28 @@
 package pl.info.mojeakcje.maestroameryka;
 
+import lombok.extern.log4j.Log4j2;
 import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import pl.info.mojeakcje.maestroameryka.model.AmerykaSpolka;
-import pl.info.mojeakcje.maestroameryka.model.SpolkaAmeryka;
 import pl.info.mojeakcje.maestroameryka.repository.AmSpRepository;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
-import java.time.LocalDate;
-import java.time.Period;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.StringTokenizer;
+import java.time.*;
+import java.util.*;
 
+import static pl.info.mojeakcje.maestroameryka.MaestroamerykaApplication.*;
 
+@Log4j2
 @Service
 public class CzytanieDanychJsoup {
+
+    protected final org.slf4j.Logger log = LoggerFactory.getLogger(getClass());
 
     AmSpRepository amSpRepository;
 
@@ -29,9 +30,24 @@ public class CzytanieDanychJsoup {
         this.amSpRepository = amSpRepository;
     }
 
-    public List<SpolkaAmeryka> run(List<AmerykaSpolka> staraListaSpolek) throws InterruptedException {
+    public void czytaj() throws InterruptedException {
 
-        List<SpolkaAmeryka> nowaListaSpolek = new ArrayList<>();
+        log.info(ANSI_YELLOW + "Zacząłem odczyt danych z URL !!!" + ANSI_RESET);
+        log.info(ANSI_YELLOW + "A dokładnie: " + LocalTime.now() + ANSI_RESET);
+
+        List<AmerykaSpolka> staraListaSpolek = (List<AmerykaSpolka>) amSpRepository.findAll();
+
+//        List<AmerykaSpolka> staraListaSpolek = new ArrayList<>();
+//        staraListaSpolek.add(amSpRepository.findById(1L).get());
+//        staraListaSpolek.add(amSpRepository.findById(2L).get());
+//        staraListaSpolek.add(amSpRepository.findById(3L).get());
+//        staraListaSpolek.add(amSpRepository.findById(4L).get());
+//        staraListaSpolek.add(amSpRepository.findById(5L).get());
+//        staraListaSpolek.add(amSpRepository.findById(6L).get());
+//        staraListaSpolek.add(amSpRepository.findById(7L).get());
+//        staraListaSpolek.add(amSpRepository.findById(8L).get());
+//        staraListaSpolek.add(amSpRepository.findById(9L).get());
+//        staraListaSpolek.add(amSpRepository.findById(10L).get());
 
         Double course1M;
         Double course3M;
@@ -44,19 +60,20 @@ public class CzytanieDanychJsoup {
         // ustalanie parametrów dla URL
         LocalDate localDateStart = LocalDate.of(2020, 05, 02);
         LocalDate localDateNow = LocalDate.now();
-        Period period2 = Period.between(localDateStart, localDateNow);
-        System.out.println("Periot: " + period2.getDays());
-        Long deltaTime = period2.getDays() * 86400L;
-
+        Period period = Period.between(localDateStart, localDateNow);
+//        System.out.println("Minęło dni (period): " + period.getDays());
+        Long deltaTime = period.getDays() * 86400L;
         Long startTime = 1588450505L;  //  02.05.2020 22:15
         Long rokTime = 31536000L + 5 * 86400L;  // roku + 5 dni
-
         LocalDate localDateFind = LocalDate.now();
+
+        List<String> listaDat = new ArrayList<>();
 
         for (AmerykaSpolka amSp : staraListaSpolek) {
 
-            System.out.println("");
-            System.out.println("Czytam spółkę: " + amSp.getTicker());
+//            System.out.println("");
+//            System.out.println("Czytam spółkę: " + amSp.getTicker());
+
 
             course1M = null;
             course3M = null;
@@ -67,14 +84,17 @@ public class CzytanieDanychJsoup {
             stopa = null;
 
             // Tworzenie nowej spólki  - konstruktor (String ticker, String name, String market, String sector, String industry, String note)
-            SpolkaAmeryka nowaSpolka = new SpolkaAmeryka(amSp.getTicker(), amSp.getName(), amSp.getMarket(), amSp.getSector(), amSp.getIndustry(), amSp.getNote());
+            // z danych z bazy, które nie ulegają zmianie.
+            AmerykaSpolka nowaSpolka = new AmerykaSpolka(amSp.getTicker(), amSp.getName(), amSp.getMarket(), amSp.getSector(), amSp.getIndustry(), amSp.getNote());
+            nowaSpolka.setId(amSp.getId());
 
 
-            System.out.println("https://query1.finance.yahoo.com/v7/finance/download/" + amSp.getTicker() + "?period1=" + (startTime + deltaTime - rokTime) + "&period2=" + (startTime + deltaTime) + "&interval=1d&events=history");
+//            System.out.println("https://query1.finance.yahoo.com/v7/finance/download/" + amSp.getTicker() + "?period1=" + (startTime + deltaTime - rokTime) + "&period2=" + (startTime + deltaTime) + "&interval=1d&events=history");
+//            log.info("https://query1.finance.yahoo.com/v7/finance/download/" + amSp.getTicker() + "?period1=" + (startTime + deltaTime - rokTime) + "&period2=" + (startTime + deltaTime) + "&interval=1d&events=history");
             Document document = connect("https://query1.finance.yahoo.com/v7/finance/download/" + amSp.getTicker() + "?period1=" + (startTime + deltaTime - rokTime) + "&period2=" + (startTime + deltaTime) + "&interval=1d&events=history");
 
             // Tworzenie listy dat
-            List<String> listaDat = new ArrayList<>();
+            listaDat.clear();
             if (document.body().getAllElements().toString().contains(localDateNow.toString())) {
                 listaDat.add(localDateNow.toString());
             } else if (document.body().getAllElements().toString().contains(localDateNow.minusDays(1).toString())) {
@@ -82,7 +102,7 @@ public class CzytanieDanychJsoup {
                 localDateNow = localDateNow.minusDays(1);
             }
             if (!listaDat.isEmpty()) {
-                System.out.println("ListaDat ma date current: " + listaDat);
+//                System.out.println("ListaDat ma date current: " + listaDat);
                 // ustalamy datę dla 12M
                 if (document.body().getAllElements().toString().contains(localDateNow.minusYears(1).toString())) {
                     listaDat.add(localDateNow.minusYears(1).toString());
@@ -95,7 +115,7 @@ public class CzytanieDanychJsoup {
                 } else if (document.body().getAllElements().toString().contains(localDateNow.minusYears(1).minusDays(4).toString())) {
                     listaDat.add(localDateNow.minusYears(1).minusDays(4).toString());
                 } else listaDat.add("brak");
-                System.out.println("ListaDat ma datę 12M: " + listaDat);
+//                System.out.println("ListaDat ma datę 12M: " + listaDat);
                 // ustalamy datę dla YTD
                 if (document.body().getAllElements().toString().contains(localDateFind.of(localDateNow.getYear() - 1, 12, 31).toString())) {
                     listaDat.add(localDateFind.of(localDateNow.getYear() - 1, 12, 31).toString());
@@ -106,7 +126,7 @@ public class CzytanieDanychJsoup {
                 } else if (document.body().getAllElements().toString().contains(localDateFind.of(localDateNow.getYear() - 1, 12, 28).toString())) {
                     listaDat.add(localDateFind.of(localDateNow.getYear() - 1, 12, 28).toString());
                 } else listaDat.add("brak");
-                System.out.println("ListaDat ma datę YTD: " + listaDat);
+//                System.out.println("ListaDat ma datę YTD: " + listaDat);
                 // ustalamy datę dla 3M
                 if (document.body().getAllElements().toString().contains(localDateNow.minusMonths(3).toString())) {
                     listaDat.add(localDateNow.minusMonths(3).toString());
@@ -119,7 +139,7 @@ public class CzytanieDanychJsoup {
                 } else if (document.body().getAllElements().toString().contains(localDateNow.minusMonths(3).minusDays(4).toString())) {
                     listaDat.add(localDateNow.minusMonths(3).minusDays(4).toString());
                 } else listaDat.add("brak");
-                System.out.println("ListaDat ma datę 3M: " + listaDat);
+//                System.out.println("ListaDat ma datę 3M: " + listaDat);
                 // ustalamy datę dla 1M
                 if (document.body().getAllElements().toString().contains(localDateNow.minusMonths(1).toString())) {
                     listaDat.add(localDateNow.minusMonths(1).toString());
@@ -132,10 +152,13 @@ public class CzytanieDanychJsoup {
                 } else if (document.body().getAllElements().toString().contains(localDateNow.minusMonths(1).minusDays(4).toString())) {
                     listaDat.add(localDateNow.minusMonths(1).minusDays(4).toString());
                 } else listaDat.add("brak");
-                System.out.println("ListaDat ma datę 1M: " + listaDat);
+//                System.out.println("ListaDat ma datę 1M: " + listaDat);
             }
 
-            // wyszukiwanie wartości w pobranym pliku
+            log.info(ANSI_YELLOW + "Czytam spółkę: " + ANSI_RESET + amSp.getTicker() + ANSI_FIOLET + "       daty: " + listaDat + ANSI_RESET);
+            log.info("https://query1.finance.yahoo.com/v7/finance/download/" + amSp.getTicker() + "?period1=" + (startTime + deltaTime - rokTime) + "&period2=" + (startTime + deltaTime) + "&interval=1d&events=history");
+
+            // wyszukiwanie wartości kursów, po dacie w pobranym pliku
             if (listaDat.size() > 0) {
                 StringTokenizer st = new StringTokenizer(document.body().getAllElements().toString());
                 String dane = "";
@@ -146,47 +169,47 @@ public class CzytanieDanychJsoup {
                     if (dane.startsWith(listaDat.get(0))) {
                         result = dane.split(",");
                         if ((result[4] != null) && (!result[4].equals("null"))) {
-                            courseCurrent = Double.parseDouble(result[4].replace(",", "."));
-                            nowaSpolka.setCourseCurrent(new DecimalFormat("# 0.000").format(courseCurrent));
+                            courseCurrent = Double.parseDouble(result[4]);
+                            nowaSpolka.setCourseCurrent(new DecimalFormat("# 0.000").format(courseCurrent).replace(",", "."));
                         }
                         nowaSpolka.setDayCourseCurrent(result[0]);
-                        System.out.println("courseCurrent " + nowaSpolka.getDayCourseCurrent() + " - " + nowaSpolka.getCourseCurrent());
+//                        System.out.println("courseCurrent " + nowaSpolka.getDayCourseCurrent() + " - " + nowaSpolka.getCourseCurrent());
                     }
                     if (dane.startsWith(listaDat.get(1))) {
                         result = dane.split(",");
                         if ((result[4] != null) && (!result[4].equals("null"))) {
-                            course12M = Double.parseDouble(result[4].replace(",", "."));
-                            nowaSpolka.setCourse12M(new DecimalFormat("# 0.000").format(course12M));
+                            course12M = Double.parseDouble(result[4]);
+                            nowaSpolka.setCourse12M(new DecimalFormat("# 0.000").format(course12M).replace(",", "."));
                         }
                         nowaSpolka.setDay12M(result[0]);
-                        System.out.println("course12M " + nowaSpolka.getDay12M() + " - " + nowaSpolka.getCourse12M());
+//                        System.out.println("course12M " + nowaSpolka.getDay12M() + " - " + nowaSpolka.getCourse12M());
                     }
                     if (dane.startsWith(listaDat.get(2))) {
                         result = dane.split(",");
                         if ((result[4] != null) && (!result[4].equals("null"))) {
-                            courseYTD = Double.parseDouble(result[4].replace(",", "."));
-                            nowaSpolka.setCourseYTD(new DecimalFormat("# 0.000").format(courseYTD));
+                            courseYTD = Double.parseDouble(result[4]);
+                            nowaSpolka.setCourseYTD(new DecimalFormat("# 0.000").format(courseYTD).replace(",", "."));
                         }
                         nowaSpolka.setDayYTD(result[0]);
-                        System.out.println("courseYTD " + nowaSpolka.getDayYTD() + " - " + nowaSpolka.getCourseYTD());
+//                        System.out.println("courseYTD " + nowaSpolka.getDayYTD() + " - " + nowaSpolka.getCourseYTD());
                     }
                     if (dane.startsWith(listaDat.get(3))) {
                         result = dane.split(",");
                         if ((result[4] != null) && (!result[4].equals("null"))) {
-                            course3M = Double.parseDouble(result[4].replace(",", "."));
-                            nowaSpolka.setCourse3M(new DecimalFormat("# 0.000").format(course3M));
+                            course3M = Double.parseDouble(result[4]);
+                            nowaSpolka.setCourse3M(new DecimalFormat("# 0.000").format(course3M).replace(",", "."));
                         }
                         nowaSpolka.setDay3M(result[0]);
-                        System.out.println("course3M " + nowaSpolka.getDay3M() + " - " + nowaSpolka.getCourse3M());
+//                        System.out.println("course3M " + nowaSpolka.getDay3M() + " - " + nowaSpolka.getCourse3M());
                     }
                     if (dane.startsWith(listaDat.get(4))) {
                         result = dane.split(",");
                         if ((result[4] != null) && (!result[4].equals("null"))) {
-                            course1M = Double.parseDouble(result[4].replace(",", "."));
-                            nowaSpolka.setCourse1M(new DecimalFormat("# 0.000").format(course1M));
+                            course1M = Double.parseDouble(result[4]);
+                            nowaSpolka.setCourse1M(new DecimalFormat("# 0.000").format(course1M).replace(",", "."));
                         }
                         nowaSpolka.setDay1M(result[0]);
-                        System.out.println("course1M " + nowaSpolka.getDay1M() + " - " + nowaSpolka.getCourse1M());
+//                        System.out.println("course1M " + nowaSpolka.getDay1M() + " - " + nowaSpolka.getCourse1M());
                     }
                 }
 
@@ -197,42 +220,42 @@ public class CzytanieDanychJsoup {
                         wynik = ((courseCurrent / course1M) - 1) * 100;
                         stopa = new DecimalFormat("0.0").format(wynik);
                         nowaSpolka.setM1(stopa + "%");
-                        System.out.println("M1: " + nowaSpolka.getM1());
+//                        System.out.println("M1: " + nowaSpolka.getM1());
                     }
                     if (course3M != null) {
                         wynik = ((courseCurrent / course3M) - 1) * 100;
                         stopa = new DecimalFormat("0.0").format(wynik);
                         nowaSpolka.setM3(stopa + "%");
-                        System.out.println("M3: " + nowaSpolka.getM3());
+//                        System.out.println("M3: " + nowaSpolka.getM3());
                     }
                     if (course12M != null) {
                         wynik = ((courseCurrent / course12M) - 1) * 100;
                         stopa = new DecimalFormat("0.0").format(wynik);
                         nowaSpolka.setM12(stopa + "%");
-                        System.out.println("M12: " + nowaSpolka.getM12());
+//                        System.out.println("M12: " + nowaSpolka.getM12());
                     }
                     if (courseYTD != null) {
                         wynik = ((courseCurrent / courseYTD) - 1) * 100;
                         stopa = new DecimalFormat("0.0").format(wynik);
                         nowaSpolka.setyTD(stopa + "%");
-                        System.out.println("YTD: " + nowaSpolka.getyTD());
+//                        System.out.println("YTD: " + nowaSpolka.getyTD());
                     }
                 }
 
             } // warunek nie pustej listy dat
 
             nowaSpolka = changeNull(nowaSpolka);
-            nowaListaSpolek.add(nowaSpolka);
+            amSpRepository.save(nowaSpolka);
 
             int millis = new Random().nextInt(400) + 300;
-            System.out.println("Czekam: " + millis + "ms");
+//            System.out.println("Czekam: " + millis + "ms");
             Thread.sleep(millis);
 
         } // pętla po starej liście spółek i tworzenie nowej bazy
-        return nowaListaSpolek; //cała metoda
+//        return nowaListaSpolek; //cała metoda
     }
 
-    private static SpolkaAmeryka changeNull(SpolkaAmeryka nowaSpolka) {
+    private static AmerykaSpolka changeNull(AmerykaSpolka nowaSpolka) {
         if (nowaSpolka.getyTD() == null) nowaSpolka.setyTD("brak");
         if (nowaSpolka.getM1() == null) nowaSpolka.setM1("brak");
         if (nowaSpolka.getM3() == null) nowaSpolka.setM3("brak");
@@ -270,14 +293,33 @@ public class CzytanieDanychJsoup {
     }
 
 
-    //        !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //        !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //            Metoda  automatycznego zapisu danych z HTTP, uruchamiana zawsze przy uruchomianiu aplikacji
     @EventListener(ApplicationReadyEvent.class)
     public void get() {
-//        run();
+
+        LocalDateTime startCzytaj = LocalDateTime.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), LocalDate.now().getDayOfMonth(), 22, 20);
+        LocalDateTime teraz = LocalDateTime.now();
+        Duration czasOczekiwania = Duration.between(teraz, startCzytaj);
+//        System.out.println(czasOczekiwania.getSeconds() * 1000);
+
+        TimerTask taskNew = new TimerTask() {
+            @Override
+            public void run() {
+                try {
+                    czytaj();
+                } catch (InterruptedException e) {
+                    log.info(ANSI_RED + "Miałem problem z uruchomieniem metody czytaj()!" + ANSI_RESET);
+                    e.printStackTrace();
+                }
+            }
+        };
+        Timer timer = new Timer();
+        timer.schedule(taskNew, czasOczekiwania.getSeconds() * 1000, 86400000);
     }
 
 }
+
 
 //    ------------------------------------------------------- STARA WERSJA Tworzenie całej nowej tabeli z starej tabeli -------------------------
 
