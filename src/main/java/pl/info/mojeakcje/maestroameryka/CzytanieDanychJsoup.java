@@ -218,25 +218,25 @@ public class CzytanieDanychJsoup {
                 if ((courseCurrent != null) && (!courseCurrent.equals("null"))) {
                     if (course1M != null) {
                         wynik = ((courseCurrent / course1M) - 1) * 100;
-                        stopa = new DecimalFormat("0.0").format(wynik);
+                        stopa = new DecimalFormat("0.0").format(wynik).replace(",", ".");
                         nowaSpolka.setM1(stopa + "%");
 //                        System.out.println("M1: " + nowaSpolka.getM1());
                     }
                     if (course3M != null) {
                         wynik = ((courseCurrent / course3M) - 1) * 100;
-                        stopa = new DecimalFormat("0.0").format(wynik);
+                        stopa = new DecimalFormat("0.0").format(wynik).replace(",", ".");
                         nowaSpolka.setM3(stopa + "%");
 //                        System.out.println("M3: " + nowaSpolka.getM3());
                     }
                     if (course12M != null) {
                         wynik = ((courseCurrent / course12M) - 1) * 100;
-                        stopa = new DecimalFormat("0.0").format(wynik);
+                        stopa = new DecimalFormat("0.0").format(wynik).replace(",", ".");
                         nowaSpolka.setM12(stopa + "%");
 //                        System.out.println("M12: " + nowaSpolka.getM12());
                     }
                     if (courseYTD != null) {
                         wynik = ((courseCurrent / courseYTD) - 1) * 100;
-                        stopa = new DecimalFormat("0.0").format(wynik);
+                        stopa = new DecimalFormat("0.0").format(wynik).replace(",", ".");
                         nowaSpolka.setyTD(stopa + "%");
 //                        System.out.println("YTD: " + nowaSpolka.getyTD());
                     }
