@@ -7,8 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.info.mojeakcje.maestroameryka.model.*;
-import pl.info.mojeakcje.maestroameryka.model.modeleStrategii.Industry;
-import pl.info.mojeakcje.maestroameryka.model.modeleStrategii.Sector;
 import pl.info.mojeakcje.maestroameryka.model.modeleStrategii.Szukana;
 import pl.info.mojeakcje.maestroameryka.model.modeleStrategii.SzukanyModel;
 import pl.info.mojeakcje.maestroameryka.repository.AmSpRepository;
@@ -183,31 +181,31 @@ public class AmSpStrategyController {
                         return Double.compare(b2, b1);
                     }
                     case "1MTDRosnaco": {
-                        if (!o1.getM1TD().trim().equals("brak"))
-                            b1 = Double.parseDouble(o1.getM1TD().trim().replace("%", ""));
-                        if (!o2.getM1TD().trim().equals("brak"))
-                            b2 = Double.parseDouble(o2.getM1TD().trim().replace("%", ""));
+                        if (!o1.getCourse1M().trim().equals("brak"))
+                            b1 = Double.parseDouble(o1.getCourse1M().trim().replace("%", ""));
+                        if (!o2.getCourse1M().trim().equals("brak"))
+                            b2 = Double.parseDouble(o2.getCourse1M().trim().replace("%", ""));
                         return Double.compare(b1, b2);
                     }
                     case "1MTDMalejaco": {
-                        if (!o1.getM1TD().trim().equals("brak"))
-                            b1 = Double.parseDouble(o1.getM1TD().trim().replace("%", ""));
-                        if (!o2.getM1TD().trim().equals("brak"))
-                            b2 = Double.parseDouble(o2.getM1TD().trim().replace("%", ""));
+                        if (!o1.getCourse1M().trim().equals("brak"))
+                            b1 = Double.parseDouble(o1.getCourse1M().trim().replace("%", ""));
+                        if (!o2.getCourse1M().trim().equals("brak"))
+                            b2 = Double.parseDouble(o2.getCourse1M().trim().replace("%", ""));
                         return Double.compare(b2, b1);
                     }
                     case "2MTDRosnaco": {
-                        if (!o1.getM2TD().trim().equals("brak"))
-                            b1 = Double.parseDouble(o1.getM2TD().trim().replace("%", ""));
-                        if (!o2.getM2TD().trim().equals("brak"))
-                            b2 = Double.parseDouble(o2.getM2TD().trim().replace("%", ""));
+                        if (!o1.getCourse3M().trim().equals("brak"))
+                            b1 = Double.parseDouble(o1.getCourse3M().trim().replace("%", ""));
+                        if (!o2.getCourse3M().trim().equals("brak"))
+                            b2 = Double.parseDouble(o2.getCourse3M().trim().replace("%", ""));
                         return Double.compare(b1, b2);
                     }
                     case "2MTDMalejaco": {
-                        if (!o1.getM2TD().trim().equals("brak"))
-                            b1 = Double.parseDouble(o1.getM2TD().trim().replace("%", ""));
-                        if (!o2.getM2TD().trim().equals("brak"))
-                            b2 = Double.parseDouble(o2.getM2TD().trim().replace("%", ""));
+                        if (!o1.getCourse3M().trim().equals("brak"))
+                            b1 = Double.parseDouble(o1.getCourse3M().trim().replace("%", ""));
+                        if (!o2.getCourse3M().trim().equals("brak"))
+                            b2 = Double.parseDouble(o2.getCourse3M().trim().replace("%", ""));
                         return Double.compare(b2, b1);
                     }
                 }
@@ -238,29 +236,29 @@ public class AmSpStrategyController {
                         break;
                     }
                     case "dodatnia1MTD": {
-                        if (!amerykaSpolka.getM1TD().trim().equals("brak")) {
-                            if (Double.parseDouble(amerykaSpolka.getM1TD().trim().replace("%", "")) >= 0)
+                        if (!amerykaSpolka.getCourse1M().trim().equals("brak")) {
+                            if (Double.parseDouble(amerykaSpolka.getCourse1M().trim().replace("%", "")) >= 0)
                                 flaga = true;
                         }
                         break;
                     }
                     case "ujemna1MTD": {
-                        if (!amerykaSpolka.getM1TD().trim().equals("brak")) {
-                            if (Double.parseDouble(amerykaSpolka.getM1TD().trim().replace("%", "")) < 0)
+                        if (!amerykaSpolka.getCourse1M().trim().equals("brak")) {
+                            if (Double.parseDouble(amerykaSpolka.getCourse1M().trim().replace("%", "")) < 0)
                                 flaga = true;
                         }
                         break;
                     }
                     case "dodatnia2MTD": {
-                        if (!amerykaSpolka.getM2TD().trim().equals("brak")) {
-                            if (Double.parseDouble(amerykaSpolka.getM2TD().trim().replace("%", "")) >= 0)
+                        if (!amerykaSpolka.getCourse3M().trim().equals("brak")) {
+                            if (Double.parseDouble(amerykaSpolka.getCourse3M().trim().replace("%", "")) >= 0)
                                 flaga = true;
                         }
                         break;
                     }
                     case "ujemna2MTD": {
-                        if (!amerykaSpolka.getM2TD().trim().equals("brak")) {
-                            if (Double.parseDouble(amerykaSpolka.getM2TD().trim().replace("%", "")) < 0)
+                        if (!amerykaSpolka.getCourse3M().trim().equals("brak")) {
+                            if (Double.parseDouble(amerykaSpolka.getCourse3M().trim().replace("%", "")) < 0)
                                 flaga = true;
                         }
                         break;

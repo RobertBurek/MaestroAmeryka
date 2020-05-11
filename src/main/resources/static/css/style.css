@@ -94,14 +94,16 @@ img {
 
 .myDisplayFlex {
     display: flex;
-    height: 22px;
-    margin-bottom: 10px;
+    height: 32px;
+    margin-bottom: 25px;
+    margin-top: 10px;
 }
 
 .label-course {
-    padding-top: 0px;
+    padding-top: 4px;
     width: 134px;
-    text-align: center;
+    text-align: right;
+    margin-right: 10px;
 }
 
 .input-course {
@@ -134,11 +136,11 @@ img {
 }
 
 .tableWidth {
-    width: 31%;
+    width: 29%;
 }
 
 .tableWidthSector {
-    width: 26%;
+    width: 24%;
 }
 
 .myTableMarketTh {

@@ -10,7 +10,6 @@ import pl.info.mojeakcje.maestroameryka.service.DBfromCSV;
 import pl.info.mojeakcje.maestroameryka.model.AmerykaSpolka;
 import pl.info.mojeakcje.maestroameryka.repository.AmSpRepository;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.util.List;
 import java.util.UUID;
@@ -33,6 +32,7 @@ public class AmSpControllerRest {
     @Autowired
     DBfromCSV dBfromCSV;
 
+//    @Value("${data.folder.csv}")
     @Value("${data.folder.csv}")
     String myPath;
 
@@ -41,11 +41,11 @@ public class AmSpControllerRest {
     public String setDataToBase(@PathVariable String nameFile) {
         log.info("NameFile " + ANSI_BLUE + nameFile + ANSI_RESET);
         nameFile = "AmerykaSpolki.csv";
-        Iterable<AmerykaSpolka> amerykaSp = dBfromCSV.readFromFile(myPath + nameFile);
-        amerykaSp.forEach(amerykaSpolka -> {
-            log.info(amerykaSpolka.getTicker() + " -  " + ANSI_BLUE + amerykaSpolka.getName() + ANSI_RESET);
-            amSpRepository.save(amerykaSpolka);
-        });
+//        Iterable<AmerykaSpolka> amerykaSp = dBfromCSV.readFromFile(myPath + nameFile);
+//        amerykaSp.forEach(amerykaSpolka -> {
+//            log.info(amerykaSpolka.getTicker() + " -  " + ANSI_BLUE + amerykaSpolka.getName() + ANSI_RESET);
+//            amSpRepository.save(amerykaSpolka);
+//        });
         return "Dane wczytane z kliku " + myPath + nameFile;
     }
 

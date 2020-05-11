@@ -261,7 +261,8 @@
                             <th style="vertical-align: middle; padding: 0px; width: 10%;">Market</th>
                             <th class="textCenter">YTD</th>
                             <th class="textCenter">1M</th>
-                            <th class="textCenter">2M</th>
+                            <th class="textCenter">3M</th>
+                            <th class="textCenter">12M</th>
                             <th class="textCenter">Note</th>
                         </tr>
                         </thead>
@@ -294,10 +295,12 @@
                                 <td style="vertical-align:middle; padding: 0px;" th:text="${amerykaSpolka.market}"/>
                                 <td style="vertical-align:middle; padding: 0px;" th:text="${amerykaSpolka.yTD}"
                                     th:class="${amerykaSpolka.yTD.startsWith('-')} ? 'textCenter negative' : 'textCenter positive'"/>
-                                <td style="vertical-align:middle; padding: 0px;" th:text="${amerykaSpolka.m1TD}"
-                                    th:class="${amerykaSpolka.m1TD.startsWith('-')} ? 'textCenter negative' : 'textCenter positive'"/>
-                                <td style="vertical-align:middle; padding: 0px;" th:text="${amerykaSpolka.m2TD}"
-                                    th:class="${amerykaSpolka.m2TD.startsWith('-')} ? 'textCenter negative' : 'textCenter positive'"/>
+                                <td style="vertical-align:middle; padding: 0px;" th:text="${amerykaSpolka.m1}"
+                                    th:class="${amerykaSpolka.m1.startsWith('-')} ? 'textCenter negative' : 'textCenter positive'"/>
+                                <td style="vertical-align:middle; padding: 0px;" th:text="${amerykaSpolka.m3}"
+                                    th:class="${amerykaSpolka.m3.startsWith('-')} ? 'textCenter negative' : 'textCenter positive'"/>
+                                <td style="vertical-align:middle; padding: 0px;" th:text="${amerykaSpolka.m12}"
+                                    th:class="${amerykaSpolka.m12.startsWith('-')} ? 'textCenter negative' : 'textCenter positive'"/>
                                 <td class="textCenter" style="vertical-align:middle;">
                                     <i th:id="'note'+${amerykaSpolka.id}"
                                        th:title="${amerykaSpolka.note}"
