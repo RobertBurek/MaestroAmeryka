@@ -241,11 +241,12 @@ public class CzytanieDanychJsoup {
 //                        System.out.println("YTD: " + nowaSpolka.getyTD());
                     }
                 }
-
+                nowaSpolka = changeNull(nowaSpolka);
+                amSpRepository.save(nowaSpolka);
             } // warunek nie pustej listy dat
 
-            nowaSpolka = changeNull(nowaSpolka);
-            amSpRepository.save(nowaSpolka);
+//            nowaSpolka = changeNull(nowaSpolka);
+//            amSpRepository.save(nowaSpolka);
 
             int millis = new Random().nextInt(400) + 300;
 //            System.out.println("Czekam: " + millis + "ms");
