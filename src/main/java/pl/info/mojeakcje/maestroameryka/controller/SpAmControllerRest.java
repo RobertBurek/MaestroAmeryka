@@ -26,7 +26,7 @@ public class SpAmControllerRest {
     CzytanieDanychJsoup czytanieDanychJsoup;
 
 
-    @GetMapping("/czytaj") //na podstawie tabeli ameryka_spolka tworzy tabelę strategie
+    @GetMapping("/czytajdane") //czyta dane z URL
     public String createTableWithHttp() throws InterruptedException {
         czytanieDanychJsoup.czytaj();
         log.info(ANSI_BLUE + " Ręcznie uruchomiono czytanie danych!!!" + ANSI_RESET);
