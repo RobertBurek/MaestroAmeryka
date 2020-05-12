@@ -105,4 +105,26 @@ public class AmSpControllerRest {
         return "redirect:/";
     }
 
+    @GetMapping("/napraw") //na podstawie tabeli ameryka_spolka tworzy tabelę strategie
+    public String napraw() {
+        List<AmerykaSpolka> zbior = (List<AmerykaSpolka>) amSpRepository.findAll();
+        zbior.stream().forEach(new Consumer<AmerykaSpolka>() {
+            @Override
+            public void accept(AmerykaSpolka amerykaSpolka) {
+                amerykaSpolka.setCourse3M(amerykaSpolka.getCourse3M().replace(",","."));
+                amerykaSpolka.setCourse1M(amerykaSpolka.getCourse1M().replace(",","."));
+                amerykaSpolka.setCourse12M(amerykaSpolka.getCourse12M().replace(",","."));
+                amerykaSpolka.setCourseYTD(amerykaSpolka.getCourseYTD().replace(",","."));
+                amerykaSpolka.setCourseCurrent(amerykaSpolka.getCourseCurrent().replace(",","."));
+                amerykaSpolka.setM3(amerykaSpolka.getM3().replace(",","."));
+                amerykaSpolka.setM1(amerykaSpolka.getM1().replace(",","."));
+                amerykaSpolka.setM12(amerykaSpolka.getM12().replace(",","."));
+                amerykaSpolka.setyTD(amerykaSpolka.getyTD().replace(",","."));
+                amSpRepository.save(amerykaSpolka);
+            }
+        });
+        log.info(ANSI_BLUE + "Naprawiłem!!!" + ANSI_RESET);
+        return " Zrobiłem !!! Odczyt danych z pliku pobranego z HTTP !!!";
+    }
+
 }
