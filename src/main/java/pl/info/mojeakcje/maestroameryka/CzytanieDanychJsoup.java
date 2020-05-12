@@ -302,6 +302,7 @@ public class CzytanieDanychJsoup {
         LocalDateTime startCzytaj = LocalDateTime.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), LocalDate.now().getDayOfMonth(), 22, 20);
         LocalDateTime teraz = LocalDateTime.now();
         Duration czasOczekiwania = Duration.between(teraz, startCzytaj);
+        if (czasOczekiwania.getSeconds()<0) czasOczekiwania = Duration.between(teraz.minusDays(1), startCzytaj);
 //        System.out.println(czasOczekiwania.getSeconds() * 1000);
 
         TimerTask taskNew = new TimerTask() {
