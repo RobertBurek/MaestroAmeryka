@@ -235,30 +235,44 @@ public class AmSpStrategyController {
                         }
                         break;
                     }
-                    case "dodatnia1MTD": {
-                        if (!amerykaSpolka.getCourse1M().trim().equals("brak")) {
-                            if (Double.parseDouble(amerykaSpolka.getCourse1M().trim().replace("%", "")) >= 0)
+                    case "dodatnia1M": {
+                        if (!amerykaSpolka.getM1().trim().equals("brak")) {
+                            if (Double.parseDouble(amerykaSpolka.getM1().trim().replace("%", "")) >= 0)
                                 flaga = true;
                         }
                         break;
                     }
-                    case "ujemna1MTD": {
-                        if (!amerykaSpolka.getCourse1M().trim().equals("brak")) {
-                            if (Double.parseDouble(amerykaSpolka.getCourse1M().trim().replace("%", "")) < 0)
+                    case "ujemna1M": {
+                        if (!amerykaSpolka.getM1().trim().equals("brak")) {
+                            if (Double.parseDouble(amerykaSpolka.getM1().trim().replace("%", "")) < 0)
                                 flaga = true;
                         }
                         break;
                     }
-                    case "dodatnia2MTD": {
-                        if (!amerykaSpolka.getCourse3M().trim().equals("brak")) {
-                            if (Double.parseDouble(amerykaSpolka.getCourse3M().trim().replace("%", "")) >= 0)
+                    case "dodatnia3M": {
+                        if (!amerykaSpolka.getM3().trim().equals("brak")) {
+                            if (Double.parseDouble(amerykaSpolka.getM3().trim().replace("%", "")) >= 0)
                                 flaga = true;
                         }
                         break;
                     }
-                    case "ujemna2MTD": {
-                        if (!amerykaSpolka.getCourse3M().trim().equals("brak")) {
-                            if (Double.parseDouble(amerykaSpolka.getCourse3M().trim().replace("%", "")) < 0)
+                    case "ujemna3M": {
+                        if (!amerykaSpolka.getM3().trim().equals("brak")) {
+                            if (Double.parseDouble(amerykaSpolka.getM3().trim().replace("%", "")) < 0)
+                                flaga = true;
+                        }
+                        break;
+                    }
+                    case "dodatnia12M": {
+                        if (!amerykaSpolka.getM12().trim().equals("brak")) {
+                            if (Double.parseDouble(amerykaSpolka.getM12().trim().replace("%", "")) >= 0)
+                                flaga = true;
+                        }
+                        break;
+                    }
+                    case "ujemna12M": {
+                        if (!amerykaSpolka.getM12().trim().equals("brak")) {
+                            if (Double.parseDouble(amerykaSpolka.getM12().trim().replace("%", "")) < 0)
                                 flaga = true;
                         }
                         break;
@@ -318,7 +332,7 @@ public class AmSpStrategyController {
         if (id == -1) {
             if (!filtrowane.remove(name)) filtrowane.add(name);
             log.info(ANSI_YELLOW + "Dodano/Usunięto filtr: " + name + ANSI_RESET);
-            log.info(ANSI_YELLOW + "Ilość filtrów: " + szukane.size() + ANSI_RESET);
+            log.info(ANSI_YELLOW + "Ilość filtrów: " + filtrowane.size() + ANSI_RESET);
             log.info(ANSI_YELLOW + "Lista filtrów: " + filtrowane + ANSI_RESET);
         }
     }
