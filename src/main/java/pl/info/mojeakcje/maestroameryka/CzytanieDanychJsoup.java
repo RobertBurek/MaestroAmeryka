@@ -94,6 +94,7 @@ public class CzytanieDanychJsoup {
             Document document = connect("https://query1.finance.yahoo.com/v7/finance/download/" + amSp.getTicker() + "?period1=" + (startTime + deltaTime - rokTime) + "&period2=" + (startTime + deltaTime) + "&interval=1d&events=history");
 
             // Tworzenie listy dat
+            localDateNow = LocalDate.now();
             listaDat.clear();
             if (document.body().getAllElements().toString().contains(localDateNow.toString())) {
                 listaDat.add(localDateNow.toString());
@@ -304,6 +305,8 @@ public class CzytanieDanychJsoup {
         Duration czasOczekiwania = Duration.between(teraz, startCzytaj);
         if (czasOczekiwania.getSeconds()<0) czasOczekiwania = Duration.between(teraz.minusDays(1), startCzytaj);
 //        System.out.println(czasOczekiwania.getSeconds() * 1000);
+        log.info(ANSI_FIOLET + "Czytanie danych zacznie się za: "+ czasOczekiwania.getSeconds() +"s"+ ANSI_RESET);
+
 
         TimerTask taskNew = new TimerTask() {
             @Override
