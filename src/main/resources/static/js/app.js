@@ -229,6 +229,8 @@ function selectMarketsList() {
         console.log("Sector zwybrane: " + countCheckedSector);
         if (countCheckedSector != 0) document.querySelector('#customSwitchSector').checked = true;
         if (countCheckedSector == 0) document.querySelector('#customSwitchSector').checked = false;
+        if (countCheckedSector != 0) sectorButton.innerHTML = "Sector  (" + countCheckedSector + ")";
+        else sectorButton.innerHTML = "Sector";
 
         [].forEach.call(industriesList, function (industryElement) {
             industryElement.hidden = true;
@@ -241,6 +243,8 @@ function selectMarketsList() {
         console.log("Industry zwybrane: " + countCheckedIndustry);
         if (countCheckedIndustry != 0) document.querySelector('#customSwitchIndustry').checked = true;
         if (countCheckedIndustry == 0) document.querySelector('#customSwitchIndustry').checked = false;
+        if (countCheckedIndustry != 0) industryButton.innerHTML = "Industry  (" + countCheckedIndustry + ")";
+        else industryButton.innerHTML = "Industry";
     });
 };
 
