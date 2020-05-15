@@ -100,7 +100,8 @@ public class AmSpStrategyController {
                 .collect(Collectors.toList());
         log.info(ANSI_RED + "Ilość pokazanych spółek: " + amerykaSpolki.size() + ANSI_RESET);
         if (szukane.size() == 0)
-            amerykaSpolki = (List<AmerykaSpolka>) amSpRepository.findAll();
+            amerykaSpolki.clear();
+//            amerykaSpolki = (List<AmerykaSpolka>) amSpRepository.findAll();
         filtry = "";
         if (filtrowane.size() > 0) {
             for (String filtr : filtrowane) {
@@ -180,32 +181,46 @@ public class AmSpStrategyController {
                             b2 = Double.parseDouble(o2.getyTD().trim().replace("%", ""));
                         return Double.compare(b2, b1);
                     }
-                    case "1MTDRosnaco": {
-                        if (!o1.getCourse1M().trim().equals("brak"))
-                            b1 = Double.parseDouble(o1.getCourse1M().trim().replace("%", ""));
-                        if (!o2.getCourse1M().trim().equals("brak"))
-                            b2 = Double.parseDouble(o2.getCourse1M().trim().replace("%", ""));
+                    case "1MRosnaco": {
+                        if (!o1.getM1().trim().equals("brak"))
+                            b1 = Double.parseDouble(o1.getM1().trim().replace("%", ""));
+                        if (!o2.getM1().trim().equals("brak"))
+                            b2 = Double.parseDouble(o2.getM1().trim().replace("%", ""));
                         return Double.compare(b1, b2);
                     }
-                    case "1MTDMalejaco": {
-                        if (!o1.getCourse1M().trim().equals("brak"))
-                            b1 = Double.parseDouble(o1.getCourse1M().trim().replace("%", ""));
-                        if (!o2.getCourse1M().trim().equals("brak"))
-                            b2 = Double.parseDouble(o2.getCourse1M().trim().replace("%", ""));
+                    case "1MMalejaco": {
+                        if (!o1.getM1().trim().equals("brak"))
+                            b1 = Double.parseDouble(o1.getM1().trim().replace("%", ""));
+                        if (!o2.getM1().trim().equals("brak"))
+                            b2 = Double.parseDouble(o2.getM1().trim().replace("%", ""));
                         return Double.compare(b2, b1);
                     }
-                    case "2MTDRosnaco": {
-                        if (!o1.getCourse3M().trim().equals("brak"))
-                            b1 = Double.parseDouble(o1.getCourse3M().trim().replace("%", ""));
-                        if (!o2.getCourse3M().trim().equals("brak"))
-                            b2 = Double.parseDouble(o2.getCourse3M().trim().replace("%", ""));
+                    case "3MRosnaco": {
+                        if (!o1.getM3().trim().equals("brak"))
+                            b1 = Double.parseDouble(o1.getM3().trim().replace("%", ""));
+                        if (!o2.getM3().trim().equals("brak"))
+                            b2 = Double.parseDouble(o2.getM3().trim().replace("%", ""));
                         return Double.compare(b1, b2);
                     }
-                    case "2MTDMalejaco": {
-                        if (!o1.getCourse3M().trim().equals("brak"))
-                            b1 = Double.parseDouble(o1.getCourse3M().trim().replace("%", ""));
-                        if (!o2.getCourse3M().trim().equals("brak"))
-                            b2 = Double.parseDouble(o2.getCourse3M().trim().replace("%", ""));
+                    case "3MMalejaco": {
+                        if (!o1.getM3().trim().equals("brak"))
+                            b1 = Double.parseDouble(o1.getM3().trim().replace("%", ""));
+                        if (!o2.getM3().trim().equals("brak"))
+                            b2 = Double.parseDouble(o2.getM3().trim().replace("%", ""));
+                        return Double.compare(b2, b1);
+                    }
+                    case "12MRosnaco": {
+                        if (!o1.getM12().trim().equals("brak"))
+                            b1 = Double.parseDouble(o1.getM12().trim().replace("%", ""));
+                        if (!o2.getM12().trim().equals("brak"))
+                            b2 = Double.parseDouble(o2.getM12().trim().replace("%", ""));
+                        return Double.compare(b1, b2);
+                    }
+                    case "12MMalejaco": {
+                        if (!o1.getM12().trim().equals("brak"))
+                            b1 = Double.parseDouble(o1.getM12().trim().replace("%", ""));
+                        if (!o2.getM12().trim().equals("brak"))
+                            b2 = Double.parseDouble(o2.getM12().trim().replace("%", ""));
                         return Double.compare(b2, b1);
                     }
                 }

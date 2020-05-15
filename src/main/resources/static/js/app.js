@@ -6,8 +6,8 @@ let industriesList = document.querySelectorAll('.myIndustry');
 let industryLabelList = document.querySelectorAll('.myIndustryLabel');
 let wyszukiwanieLabelList = document.querySelectorAll('.myWyszukiwanieLabel');
 let sortowanieLabelList = document.querySelectorAll('.mySortowanieLabel');
-let sectorButton = document.querySelector('#sectorButton');
 let marketButton = document.querySelector('#marketButton');
+let sectorButton = document.querySelector('#sectorButton');
 let industryButton = document.querySelector('#industryButton');
 let spolkaNote = "";
 let noteOld = "";
@@ -197,18 +197,6 @@ function Industry(id, name) {
     this.name = name;
 };
 
-function selectSectorsList() {
-    sectorButton.addEventListener('click', function (event) {
-        [].forEach.call(sectorsList, function (sectorElement) {
-            if (sectorElement.hidden == true) {
-                sectorElement.hidden = false;
-            } else {
-                sectorElement.hidden = true;
-            }
-        })
-    })
-};
-
 function selectMarketsList() {
     marketButton.addEventListener('click', function (event) {
         [].forEach.call(marketsList, function (marketElement) {
@@ -217,8 +205,20 @@ function selectMarketsList() {
             } else {
                 marketElement.hidden = true;
             }
-        })
-    })
+        });
+    });
+};
+
+function selectSectorsList() {
+    sectorButton.addEventListener('click', function (event) {
+        [].forEach.call(sectorsList, function (sectorElement) {
+            if (sectorElement.hidden == true) {
+                sectorElement.hidden = false;
+            } else {
+                sectorElement.hidden = true;
+            }
+        });
+    });
 };
 
 function selectIndustriesList() {
@@ -229,8 +229,8 @@ function selectIndustriesList() {
             } else {
                 industryElement.hidden = true;
             }
-        })
-    })
+        });
+    });
 };
 
 // //    obsługa usuwania produktu
