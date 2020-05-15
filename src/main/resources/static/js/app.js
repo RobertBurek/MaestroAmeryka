@@ -209,6 +209,8 @@ function selectMarketsList() {
         });
         console.log("Market zwybrane: " + countCheckedMarket);
         if (countCheckedMarket != 0) document.querySelector('#customSwitchMarket').checked = false;
+        if (countCheckedMarket != 0) marketButton.innerHTML = "Market  (" + countCheckedMarket + ")";
+        else marketButton.innerHTML = "Market";
         [].forEach.call(marketsList, function (marketElement) {
             if (marketElement.hidden == true) {
                 marketElement.hidden = false;
