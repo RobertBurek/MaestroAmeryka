@@ -224,6 +224,13 @@ function selectMarketsList() {
 
 function selectSectorsList() {
     sectorButton.addEventListener('click', function (event) {
+        var ListInputSector = document.querySelectorAll('.mySector input');
+        var countCheckedSector = 0;
+        ListInputSector.forEach(value => {
+            if (value.checked) countCheckedSector++;
+        });
+        console.log("Sector zwybrane: " + countCheckedSector);
+        if (countCheckedSector != 0) document.querySelector('#customSwitchSector').checked = false;
         [].forEach.call(sectorsList, function (sectorElement) {
             if (sectorElement.hidden == true) {
                 sectorElement.hidden = false;
