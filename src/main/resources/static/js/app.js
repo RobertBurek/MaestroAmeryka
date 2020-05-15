@@ -227,8 +227,8 @@ function selectSectorsList() {
         [].forEach.call(marketsList, function (marketElement) {
             marketElement.hidden = true;
         });
-        [].forEach.call(sectorsList, function (sectorElement) {
-            sectorElement.hidden = true;
+        [].forEach.call(industriesList, function (industryElement) {
+            industryElement.hidden = true;
         });
     });
 };
@@ -241,6 +241,12 @@ function selectIndustriesList() {
             } else {
                 industryElement.hidden = true;
             }
+        });
+        [].forEach.call(marketsList, function (marketElement) {
+            marketElement.hidden = true;
+        });
+        [].forEach.call(sectorsList, function (sectorElement) {
+            sectorElement.hidden = true;
         });
     });
 };
