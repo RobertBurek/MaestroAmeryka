@@ -199,6 +199,13 @@ function Industry(id, name) {
 
 function selectMarketsList() {
     marketButton.addEventListener('click', function (event) {
+        var ListInputMarket = document.querySelectorAll('.myMarket input');
+        var countCheckedMarket = 0;
+        ListInputMarket.forEach(value => {
+            if (value.checked) countCheckedMarket++;
+        });
+        console.log("Market zwybrane: " + countCheckedMarket);
+        if (countCheckedMarket != 0) document.querySelector('#customSwitchMarket').checked = false;
         [].forEach.call(marketsList, function (marketElement) {
             if (marketElement.hidden == true) {
                 marketElement.hidden = false;
