@@ -206,6 +206,12 @@ function selectMarketsList() {
                 marketElement.hidden = true;
             }
         });
+        [].forEach.call(sectorsList, function (sectorElement) {
+            sectorElement.hidden = true;
+        });
+        [].forEach.call(industriesList, function (industryElement) {
+            industryElement.hidden = true;
+        });
     });
 };
 
