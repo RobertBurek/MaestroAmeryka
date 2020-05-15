@@ -249,6 +249,13 @@ function selectSectorsList() {
 
 function selectIndustriesList() {
     industryButton.addEventListener('click', function (event) {
+        var ListInputIndustry = document.querySelectorAll('.myIndustry input');
+        var countCheckedIndustry = 0;
+        ListInputIndustry.forEach(value => {
+            if (value.checked) countCheckedIndustry++;
+        });
+        console.log("Industry zwybrane: " + countCheckedIndustry);
+        if (countCheckedIndustry != 0) document.querySelector('#customSwitchIndustry').checked = false;
         [].forEach.call(industriesList, function (industryElement) {
             if (industryElement.hidden == true) {
                 industryElement.hidden = false;
