@@ -14,6 +14,9 @@ let noteOld = "";
 let wiersz = 0;
 let noteNew = "";
 let elementNoteTitle = "";
+let countCheckedMarket = 0;
+let countCheckedSector = 0;
+let countCheckedIndustry = 0;
 
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -200,7 +203,7 @@ function Industry(id, name) {
 function selectMarketsList() {
     marketButton.addEventListener('click', function (event) {
         var ListInputMarket = document.querySelectorAll('.myMarket input');
-        var countCheckedMarket = 0;
+        countCheckedMarket = 0;
         ListInputMarket.forEach(value => {
             if (value.checked) countCheckedMarket++;
         });
@@ -216,16 +219,33 @@ function selectMarketsList() {
         [].forEach.call(sectorsList, function (sectorElement) {
             sectorElement.hidden = true;
         });
+        var ListInputSector = document.querySelectorAll('.mySector input');
+        countCheckedSector = 0;
+        ListInputSector.forEach(value => {
+            if (value.checked) countCheckedSector++;
+        });
+        console.log("Sector zwybrane: " + countCheckedSector);
+        if (countCheckedSector != 0) document.querySelector('#customSwitchSector').checked = true;
+        if (countCheckedSector == 0) document.querySelector('#customSwitchSector').checked = false;
+
         [].forEach.call(industriesList, function (industryElement) {
             industryElement.hidden = true;
         });
+        var ListInputIndustry = document.querySelectorAll('.myIndustry input');
+        countCheckedIndustry = 0;
+        ListInputIndustry.forEach(value => {
+            if (value.checked) countCheckedIndustry++;
+        });
+        console.log("Industry zwybrane: " + countCheckedIndustry);
+        if (countCheckedIndustry != 0) document.querySelector('#customSwitchIndustry').checked = true;
+        if (countCheckedIndustry == 0) document.querySelector('#customSwitchIndustry').checked = false;
     });
 };
 
 function selectSectorsList() {
     sectorButton.addEventListener('click', function (event) {
         var ListInputSector = document.querySelectorAll('.mySector input');
-        var countCheckedSector = 0;
+        countCheckedSector = 0;
         ListInputSector.forEach(value => {
             if (value.checked) countCheckedSector++;
         });
@@ -250,7 +270,7 @@ function selectSectorsList() {
 function selectIndustriesList() {
     industryButton.addEventListener('click', function (event) {
         var ListInputIndustry = document.querySelectorAll('.myIndustry input');
-        var countCheckedIndustry = 0;
+        countCheckedIndustry = 0;
         ListInputIndustry.forEach(value => {
             if (value.checked) countCheckedIndustry++;
         });
