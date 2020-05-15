@@ -303,9 +303,26 @@ function selectIndustriesList() {
         [].forEach.call(marketsList, function (marketElement) {
             marketElement.hidden = true;
         });
+        var ListInputMarket = document.querySelectorAll('.myMarket input');
+        countCheckedMarket = 0;
+        ListInputMarket.forEach(value => {
+            if (value.checked) countCheckedMarket++;
+        });
+        console.log("Market zwybrane: " + countCheckedMarket);
+        if (countCheckedMarket != 0) document.querySelector('#customSwitchMarket').checked = true;
+        if (countCheckedMarket == 0) document.querySelector('#customSwitchMarket').checked = false;
+
         [].forEach.call(sectorsList, function (sectorElement) {
             sectorElement.hidden = true;
         });
+        var ListInputSector = document.querySelectorAll('.mySector input');
+        countCheckedSector = 0;
+        ListInputSector.forEach(value => {
+            if (value.checked) countCheckedSector++;
+        });
+        console.log("Sector zwybrane: " + countCheckedSector);
+        if (countCheckedSector != 0) document.querySelector('#customSwitchSector').checked = true;
+        if (countCheckedSector == 0) document.querySelector('#customSwitchSector').checked = false;
     });
 };
 
