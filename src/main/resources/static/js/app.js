@@ -261,9 +261,26 @@ function selectSectorsList() {
         [].forEach.call(marketsList, function (marketElement) {
             marketElement.hidden = true;
         });
+        var ListInputMarket = document.querySelectorAll('.myMarket input');
+        countCheckedMarket = 0;
+        ListInputMarket.forEach(value => {
+            if (value.checked) countCheckedMarket++;
+        });
+        console.log("Market zwybrane: " + countCheckedMarket);
+        if (countCheckedMarket != 0) document.querySelector('#customSwitchMarket').checked = true;
+        if (countCheckedMarket == 0) document.querySelector('#customSwitchMarket').checked = false;
+
         [].forEach.call(industriesList, function (industryElement) {
             industryElement.hidden = true;
         });
+        var ListInputIndustry = document.querySelectorAll('.myIndustry input');
+        countCheckedIndustry = 0;
+        ListInputIndustry.forEach(value => {
+            if (value.checked) countCheckedIndustry++;
+        });
+        console.log("Industry zwybrane: " + countCheckedIndustry);
+        if (countCheckedIndustry != 0) document.querySelector('#customSwitchIndustry').checked = true;
+        if (countCheckedIndustry == 0) document.querySelector('#customSwitchIndustry').checked = false;
     });
 };
 
