@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Entity
 public class Goscie {
@@ -13,6 +14,7 @@ public class Goscie {
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id;
         private LocalDate infoKiedy;
+        private LocalTime infoOKtorej;
         private String infoKto;
         private String infoMiasto;
         private String InfoKraj;
@@ -20,8 +22,9 @@ public class Goscie {
     public Goscie() {
     }
 
-    public Goscie(LocalDate infoKiedy, String infoKto, String infoMiasto, String infoKraj) {
+    public Goscie(LocalDate infoKiedy, LocalTime infoOKtorej, String infoKto, String infoMiasto, String infoKraj) {
         this.infoKiedy = infoKiedy;
+        this.infoOKtorej = infoOKtorej;
         this.infoKto = infoKto;
         this.infoMiasto = infoMiasto;
         InfoKraj = infoKraj;
@@ -41,6 +44,14 @@ public class Goscie {
 
     public void setInfoKiedy(LocalDate infoKiedy) {
         this.infoKiedy = infoKiedy;
+    }
+
+    public LocalTime getInfoOKtorej() {
+        return infoOKtorej;
+    }
+
+    public void setInfoOKtorej(LocalTime infoOKtorej) {
+        this.infoOKtorej = infoOKtorej;
     }
 
     public String getInfoKto() {
