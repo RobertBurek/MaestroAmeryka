@@ -118,30 +118,35 @@
                             Historical stock :
                             <div class="form-group myDisplayFlex">
                                 <label for="courseCurrent" class="label-course" th:text="*{dayCourseCurrent}+' :'"></label>
+                                <input th:field="*{dayCourseCurrent}" type="hidden">
                                 <input th:field="*{courseCurrent}" type="text" class="form-control input-course" id="courseCurrent"
                                        name="courseCurrent"
                                        placeholder="course">
                             </div>
                             <div class="form-group myDisplayFlex">
                                 <label for="course1M" class="label-course" th:text="*{day1M}+' :'"></label>
+                                <input th:field="*{day1M}" type="hidden">
                                 <input th:field="*{course1M}" type="text" class="form-control input-course" id="course1M"
                                        name="course1M"
                                        placeholder="course">
                             </div>
                             <div class="form-group myDisplayFlex">
                                 <label for="course3M" class="label-course" th:text="*{day3M}+' :'"></label>
+                                <input th:field="*{day3M}" type="hidden">
                                 <input th:field="*{course3M}" type="text" class="form-control input-course" id="course3M"
                                        name="course3M"
                                        placeholder="course">
                             </div>
                             <div class="form-group myDisplayFlex">
                                 <label for="course12M" class="label-course" th:text="*{day12M}+' :'"></label>
+                                <input th:field="*{day12M}" type="hidden">
                                 <input th:field="*{course12M}" type="text" class="form-control input-course" id="course12M"
                                        name="course12M"
                                        placeholder="course">
                             </div>
                             <div class="form-group myDisplayFlex">
                                 <label for="courseYTD" class="label-course" th:text="*{dayYTD}+' :'"></label>
+                                <input th:field="*{dayYTD}" type="hidden">
                                 <input th:field="*{courseYTD}" type="text" class="form-control input-course" id="courseYTD"
                                        name="courseYTD"
                                        placeholder="course">
