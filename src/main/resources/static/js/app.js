@@ -37,6 +37,11 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log("Wysłano zapytanie: " + '/amerykastrategie/find/' + index + '&' + 'market');
             // let notatkaList = document.querySelectorAll('.myNote');
             // console.log(notatkaList);
+            console.log(document.querySelector("#market"+index).checked);
+            if (document.querySelector("#market"+index).checked) countCheckedMarket--;
+            else countCheckedMarket++;
+            console.log(countCheckedMarket);
+            SprawdzZaznaczone("Market");
         })
 
     });
@@ -48,6 +53,11 @@ document.addEventListener('DOMContentLoaded', function () {
             // console.log(index);
             $("#mojeZmiany").load('/amerykastrategie/find/' + index + '&' + 'sector');
             console.log("Wysłano zapytanie: " + '/amerykastrategie/find/' + index + '&' + 'sector');
+            console.log(document.querySelector("#sector"+index).checked);
+            if (document.querySelector("#sector"+index).checked) countCheckedSector--;
+            else countCheckedSector++;
+            console.log(countCheckedSector);
+            SprawdzZaznaczone("Sector");
         })
     });
 
@@ -58,6 +68,11 @@ document.addEventListener('DOMContentLoaded', function () {
             // console.log(index);
             $("#mojeZmiany").load('/amerykastrategie/find/' + index + '&' + 'industry');
             console.log("Wysłano zapytanie: " + '/amerykastrategie/find/' + index + '&' + 'industry');
+            console.log(document.querySelector("#industry"+index).checked);
+            if (document.querySelector("#industry"+index).checked) countCheckedIndustry--;
+            else countCheckedIndustry++;
+            console.log(countCheckedIndustry);
+            SprawdzZaznaczone("Industry");
         })
     });
 
@@ -91,8 +106,8 @@ function startPopup(id) {
     spolkaNote = document.querySelector('#note' + id).getAttribute("value");
     document.querySelector('#spolkaNote').innerText = spolkaNote;
     document.querySelector('#textNote').value = noteOld;
-    document.getElementById('textNote').autofocus = true;
-    document.getElementById('textNote').focus();
+    // document.getElementById('textNote').autofocus = true;
+    // document.getElementById('textNote').focus();
     location.href = "#popupNote";
 }
 
@@ -109,25 +124,22 @@ function replaceAll(t, T, S) {
 
 function przeslijNote() {
     let tenWiersz = "#wierszTabeli" + wiersz;
-    console.log("Wyślę notatkę dla: " + spolkaNote);
     noteNew = document.formNote.textNote.value;
+    console.log("Wysłano notatkę dla: " + spolkaNote + ", treści: " + noteNew);
     noteNew = replaceAll(" ", "QTTTQ", noteNew);
-    // noteNew = replaceAll("\n ", "&#013;", noteNew);
     if (noteNew === undefined) noteNew = "";
-    console.log(noteNew);
     $(tenWiersz).load('/amerykastrategie/note/' + wiersz + '&' + noteNew, function (response, status, http) {
         if (status == "success") {
-            console.log("Success");
-            // elementNoteTitle.title = replaceAll("QTTTQ", " ", noteNew);
             if (noteNew.length > 0 && !undefined) {
                 elementNoteTitle.title = replaceAll("QTTTQ", " ", noteNew);
-                elementNoteTitle.classList.toggle("isNote");
-                elementNoteTitle.classList.toggle("fa-comment-dots");
+                elementNoteTitle.classList.remove("fa-comment");
+                elementNoteTitle.classList.add("fa-comment-dots");
+                elementNoteTitle.classList.add("isNote");
             } else {
                 elementNoteTitle.title = "";
-                elementNoteTitle.classList.remove("isNote");
                 elementNoteTitle.classList.remove("fa-comment-dots");
-                elementNoteTitle.classList.toggle("fa-comment");
+                elementNoteTitle.classList.remove("isNote");
+                elementNoteTitle.classList.add("fa-comment");
             }
         }
     });
@@ -199,6 +211,21 @@ function Industry(id, name) {
     this.id = id;
     this.name = name;
 };
+
+function SprawdzZaznaczone(nameList) {
+    if (nameList == "Market") {
+        if (countCheckedMarket != 0) marketButton.innerHTML = nameList + "  (" + countCheckedMarket + ")";
+        else marketButton.innerHTML = nameList;
+    }
+    if (nameList == "Sector") {
+        if (countCheckedSector != 0) sectorButton.innerHTML = nameList + "  (" + countCheckedSector + ")";
+        else sectorButton.innerHTML = nameList;
+    }
+    if (nameList == "Industry") {
+        if (countCheckedIndustry != 0) industryButton.innerHTML = nameList + "  (" + countCheckedIndustry + ")";
+        else industryButton.innerHTML = nameList;
+    }
+}
 
 function selectMarketsList() {
     marketButton.addEventListener('click', function (event) {

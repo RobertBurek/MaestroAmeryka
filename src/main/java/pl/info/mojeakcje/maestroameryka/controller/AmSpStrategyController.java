@@ -132,12 +132,13 @@ public class AmSpStrategyController {
     @GetMapping("/amerykastrategie/note/{id}&{note}")
     public String chengeNote(@PathVariable Long id, @PathVariable String note, Model model) {
         String wierszTabeli = "amerykastrategie::#wierszTabeli"+id;
-        log.info("amerykastrategie::#wierszTabeli"+id);
-        log.info("notatka: "+note);
+//        log.info("amerykastrategie::#wierszTabeli"+id);
+//        log.info("notatka: "+note);
         AmerykaSpolka amerykaSpolka = amSpRepository.findById(id.longValue()).get();
+        log.info("Notatka dla spólki: "+amerykaSpolka.getName());
         amerykaSpolka.setNote(note.replaceAll("QTTTQ"," "));
         amSpRepository.save(amerykaSpolka);
-        log.info(""+amerykaSpolka);
+        log.info("Zmieniono notatkę na: "+amerykaSpolka.getNote());
         model.addAttribute("amerykaSpolka", amerykaSpolka);
 //        model.addAttribute("amerykaSpolki", amerykaSpolki);
 //        model.addAttribute("amerykaSpolkaModified", new AmerykaSpolka());

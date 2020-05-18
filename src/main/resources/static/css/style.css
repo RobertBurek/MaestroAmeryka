@@ -318,7 +318,7 @@ section p {
     padding: 20px;
     background: #fff;
     border-radius: 5px;
-    width: 22%;
+    width: 330px;
     position: relative;
     transition: all 1s ease-in-out;
     top: 40%;
@@ -465,6 +465,11 @@ section p {
     .myNaviButton {
         margin-left: 20%;
     }
+    .popup {
+        width: 330px;
+        top: 10%;
+        left: 40%;
+    }
 }
 
 @media (max-width: 758px ) {
@@ -568,5 +573,10 @@ section p {
 
     .btn-outline-success {
         font-size: 60%;
+    }
+    .popup {
+        width: 330px;
+        top: 10%;
+        left: 10%;
     }
 }
