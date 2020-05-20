@@ -6,16 +6,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import pl.info.mojeakcje.maestroameryka.service.DBfromCSV;
 import pl.info.mojeakcje.maestroameryka.model.AmerykaSpolka;
 import pl.info.mojeakcje.maestroameryka.repository.AmSpRepository;
+import pl.info.mojeakcje.maestroameryka.service.DBfromCSV;
 
-import java.io.*;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.List;
 import java.util.UUID;
 import java.util.function.Consumer;
 
-import static pl.info.mojeakcje.maestroameryka.MaestroamerykaApplication.*;
+import static pl.info.mojeakcje.maestroameryka.MaestroamerykaApplication.ANSI_BLUE;
+import static pl.info.mojeakcje.maestroameryka.MaestroamerykaApplication.ANSI_RESET;
 
 /**
  * Created by Robert Burek
@@ -33,7 +36,7 @@ public class AmSpControllerRest {
     @Autowired
     DBfromCSV dBfromCSV;
 
-//    @Value("${data.folder.csv}")
+    //    @Value("${data.folder.csv}")
     @Value("${data.folder.csv}")
     String myPath;
 
@@ -83,19 +86,19 @@ public class AmSpControllerRest {
                 .findAny().orElse(new AmerykaSpolka());
     }
 
-    @RequestMapping(value="/upload", method=RequestMethod.POST)
-    public String handleFileUpload(@RequestParam("plik") MultipartFile file){
+    @RequestMapping(value = "/upload", method = RequestMethod.POST)
+    public String handleFileUpload(@RequestParam("plik") MultipartFile file) {
         if (!file.isEmpty()) {
             try {
                 UUID uuid = UUID.randomUUID();
-                String filename = "/uploads/upload_"+uuid.toString();
+                String filename = "/uploads/upload_" + uuid.toString();
                 byte[] bytes = file.getBytes();
                 File fsFile = new File(filename);
                 fsFile.createNewFile();
                 BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(fsFile));
                 stream.write(bytes);
                 stream.close();
-                log.info("File {} has been successfully uploaded as {}", new Object[] {file.getOriginalFilename(), filename});
+                log.info("File {} has been successfully uploaded as {}", new Object[]{file.getOriginalFilename(), filename});
             } catch (Exception e) {
                 log.error("File has not been uploaded", e);
             }
@@ -111,15 +114,15 @@ public class AmSpControllerRest {
         zbior.stream().forEach(new Consumer<AmerykaSpolka>() {
             @Override
             public void accept(AmerykaSpolka amerykaSpolka) {
-                amerykaSpolka.setCourse3M(amerykaSpolka.getCourse3M().replace(",","."));
-                amerykaSpolka.setCourse1M(amerykaSpolka.getCourse1M().replace(",","."));
-                amerykaSpolka.setCourse12M(amerykaSpolka.getCourse12M().replace(",","."));
-                amerykaSpolka.setCourseYTD(amerykaSpolka.getCourseYTD().replace(",","."));
-                amerykaSpolka.setCourseCurrent(amerykaSpolka.getCourseCurrent().replace(",","."));
-                amerykaSpolka.setM3(amerykaSpolka.getM3().replace(",","."));
-                amerykaSpolka.setM1(amerykaSpolka.getM1().replace(",","."));
-                amerykaSpolka.setM12(amerykaSpolka.getM12().replace(",","."));
-                amerykaSpolka.setyTD(amerykaSpolka.getyTD().replace(",","."));
+                amerykaSpolka.setCourse3M(amerykaSpolka.getCourse3M().replace(",", "."));
+                amerykaSpolka.setCourse1M(amerykaSpolka.getCourse1M().replace(",", "."));
+                amerykaSpolka.setCourse12M(amerykaSpolka.getCourse12M().replace(",", "."));
+                amerykaSpolka.setCourseYTD(amerykaSpolka.getCourseYTD().replace(",", "."));
+                amerykaSpolka.setCourseCurrent(amerykaSpolka.getCourseCurrent().replace(",", "."));
+                amerykaSpolka.setM3(amerykaSpolka.getM3().replace(",", "."));
+                amerykaSpolka.setM1(amerykaSpolka.getM1().replace(",", "."));
+                amerykaSpolka.setM12(amerykaSpolka.getM12().replace(",", "."));
+                amerykaSpolka.setyTD(amerykaSpolka.getyTD().replace(",", "."));
                 amSpRepository.save(amerykaSpolka);
             }
         });

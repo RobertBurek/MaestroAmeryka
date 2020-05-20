@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import pl.info.mojeakcje.maestroameryka.model.AmerykaSpolka;
-import pl.info.mojeakcje.maestroameryka.model.AmerykaSpolkaNew;
-import pl.info.mojeakcje.maestroameryka.repository.AmSpNewRepository;
 import pl.info.mojeakcje.maestroameryka.repository.AmSpRepository;
 
 import java.util.Random;
@@ -19,40 +17,47 @@ public class AmSpNewControllerRest {
 
     protected final org.slf4j.Logger log = LoggerFactory.getLogger(getClass());
 
-    AmSpNewRepository amSpNewRepository;
     AmSpRepository amSpRepository;
+//    AmSpNewRepository amSpNewRepository ;  // wersja przy konwersji encji ze starej do nowej rozszezonej
 
-    public AmSpNewControllerRest(AmSpNewRepository amSpNewRepository, AmSpRepository amSpRepository) {
-        this.amSpNewRepository = amSpNewRepository;
+    public AmSpNewControllerRest(AmSpRepository amSpRepository) {
         this.amSpRepository = amSpRepository;
     }
+
+    //    public AmSpNewControllerRest(AmSpNewRepository amSpNewRepository, AmSpRepository amSpRepository) {
+//        this.amSpNewRepository = amSpNewRepository;
+//        this.amSpRepository = amSpRepository;
+//    }
 
     @GetMapping("/modyfikuj")
     public String modyfikuj() throws InterruptedException {
         AmerykaSpolka amerykaSpolka;
-        AmerykaSpolkaNew amerykaSpolkaNew;
-//        for (long i = 1; i < amSpRepository.count(); i++) {
-            amerykaSpolka = amSpRepository.findById(788L).get();
-            amerykaSpolkaNew = new AmerykaSpolkaNew(amerykaSpolka.getTicker()
-                    , amerykaSpolka.getName()
-                    , amerykaSpolka.getMarket()
-                    , amerykaSpolka.getSector()
-                    , amerykaSpolka.getIndustry()
-                    , amerykaSpolka.getNote());
-            amerykaSpolkaNew.setCourseCurrent(amerykaSpolka.getCourseCurrent());
-            amerykaSpolkaNew.setCourse1M(amerykaSpolka.getCourse1M());
-            amerykaSpolkaNew.setCourse3M(amerykaSpolka.getCourse3M());
-            amerykaSpolkaNew.setCourse12M(amerykaSpolka.getCourse12M());
-            amerykaSpolkaNew.setCourseYTD(amerykaSpolka.getCourseYTD());
-            amerykaSpolkaNew.setDayCourseCurrent(amerykaSpolka.getDayCourseCurrent());
-            amerykaSpolkaNew.setDay1M(amerykaSpolka.getDay1M());
-            amerykaSpolkaNew.setDay3M(amerykaSpolka.getDay3M());
-            amerykaSpolkaNew.setDay12M(amerykaSpolka.getDay12M());
-            amerykaSpolkaNew.setDayYTD(amerykaSpolka.getDayYTD());
-            amerykaSpolkaNew.setM1(amerykaSpolka.getM1());
-            amerykaSpolkaNew.setM3(amerykaSpolka.getM3());
-            amerykaSpolkaNew.setM12(amerykaSpolka.getM12());
-            amerykaSpolkaNew.setyTD(amerykaSpolka.getyTD());
+//        AmerykaSpolkaNew amerykaSpolkaNew;  // wersja przy konwersji encji ze starej do nowej rozszezonej
+        for (long i = 1; i < amSpRepository.count() + 1; i++) {
+//        for (long i = 1; i < 10; i++) {
+            amerykaSpolka = amSpRepository.findById(i).get();
+
+            // wersja przy konwersji encji ze starej do nowej rozszezonej
+//            amerykaSpolkaNew = new AmerykaSpolkaNew(amerykaSpolka.getTicker()
+//                    , amerykaSpolka.getName()
+//                    , amerykaSpolka.getMarket()
+//                    , amerykaSpolka.getSector()
+//                    , amerykaSpolka.getIndustry()
+//                    , amerykaSpolka.getNote());
+//            amerykaSpolkaNew.setCourseCurrent(amerykaSpolka.getCourseCurrent());
+//            amerykaSpolkaNew.setCourse1M(amerykaSpolka.getCourse1M());
+//            amerykaSpolkaNew.setCourse3M(amerykaSpolka.getCourse3M());
+//            amerykaSpolkaNew.setCourse12M(amerykaSpolka.getCourse12M());
+//            amerykaSpolkaNew.setCourseYTD(amerykaSpolka.getCourseYTD());
+//            amerykaSpolkaNew.setDayCourseCurrent(amerykaSpolka.getDayCourseCurrent());
+//            amerykaSpolkaNew.setDay1M(amerykaSpolka.getDay1M());
+//            amerykaSpolkaNew.setDay3M(amerykaSpolka.getDay3M());
+//            amerykaSpolkaNew.setDay12M(amerykaSpolka.getDay12M());
+//            amerykaSpolkaNew.setDayYTD(amerykaSpolka.getDayYTD());
+//            amerykaSpolkaNew.setM1(amerykaSpolka.getM1());
+//            amerykaSpolkaNew.setM3(amerykaSpolka.getM3());
+//            amerykaSpolkaNew.setM12(amerykaSpolka.getM12());
+//            amerykaSpolkaNew.setyTD(amerykaSpolka.getyTD());
 
             String url = "https://finance.yahoo.com/quote/" + amerykaSpolka.getTicker() + "/profile?p=" + amerykaSpolka.getTicker();
             RestTemplate restTemplate = new RestTemplate();
@@ -64,12 +69,14 @@ public class AmSpNewControllerRest {
             } else {
                 webSite = "#brak";
             }
-            amerykaSpolkaNew.setWebsite(webSite);
+//            amerykaSpolkaNew.setWebsite(webSite);     // wersja przy konwersji encji ze starej do nowej rozszezonej
+            amerykaSpolka.setWebsite(webSite);
             System.out.println(amerykaSpolka.getId() + "  " + webSite);
-            amSpNewRepository.save(amerykaSpolkaNew);
-            int millis = new Random().nextInt(400) + 300;
+//            amSpNewRepository.save(amerykaSpolkaNew);     // wersja przy konwersji encji ze starej do nowej rozszezonej
+            amSpRepository.save(amerykaSpolka);
+            int millis = new Random().nextInt(200);
             Thread.sleep(millis);
-//        }
+        }
 
         return "Zrobine!!!";
     }
