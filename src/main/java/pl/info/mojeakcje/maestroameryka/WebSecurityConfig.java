@@ -51,11 +51,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService);
     }
 
-//    @Override
-//    public void configure(WebSecurity security) {
-//        security.ignoring().antMatchers("/info/**");
-//    }
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
@@ -64,7 +59,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/amerykaspolka").permitAll()
 //                .antMatchers("/amerykastrategie").hasRole("USER")
-//                .antMatchers("/amerykaspolka/edit").hasRole("ADMIN")
+                .antMatchers("/amerykaspolka/save/edit").hasRole("ADMIN")
 
 
 //                .antMatchers("/**").hasRole("ADMIN")
