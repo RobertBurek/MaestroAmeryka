@@ -96,13 +96,26 @@
                     <tbody>
                     <tr th:each="amerykaSpolka: ${amerykaSpolki}">
                         <!--                        <td th:text="${amerykaSpolka.ticker}"/>-->
-                        <td class="tableWidth" style="vertical-align: middle;font-weight: bold;"
-                            th:text="${amerykaSpolka.name}"/>
+                        <td class="tableWidth" style="vertical-align: middle;font-weight: bold;">
+                            <a class="myTableA" th:href="${amerykaSpolka.website}" th:text="${amerykaSpolka.name}"
+                               target="_blank">
+                            </a>
+                        </td>
+
+                        <!--                        <td class="tableWidth" style="vertical-align: middle;font-weight: bold;" th:text="${amerykaSpolka.name}"/>-->
+                        <!--                        <a th:href="${amerykaSpolka.website}" th:text="${amerykaSpolka.name}"></a>-->
+
                         <td style="padding-bottom: 6px; padding-top: 6px;">
                             <table class="myTable" style="font-size: 75%;">
                                 <tr>
-                                    <td class="tableWidthSector"
-                                        th:text="${amerykaSpolka.ticker}"/>
+                                    <!--                                    <td class="tableWidthSector" th:text="${amerykaSpolka.ticker}" th:href="${amerykaSpolka.website}"/>-->
+                                    <td class="tableWidthSector">
+                                        <a class="myTableA" th:text="${amerykaSpolka.ticker}"
+                                           th:href="'https://finance.yahoo.com/quote/'+${amerykaSpolka.ticker}+'/profile?p='+${amerykaSpolka.ticker}"
+                                           target="_blank">
+                                        </a>
+                                    </td>
+
                                 </tr>
                                 <tr>
                                     <td th:text="${amerykaSpolka.market}"/>

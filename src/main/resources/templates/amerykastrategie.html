@@ -254,12 +254,12 @@
                 </form>
             </div>
         </div>
-<!--        <div class="comic">-->
-<!--            OMG, I am speaking fdvdfs in Comic Sans!-->
-<!--        </div>-->
-<!--        <div class="comment">-->
-<!--            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt, labore, corporis, error, sequi accusamus perspiciatis quo consequuntur doloremque quia provident itaque maiores tenetur velit aliquam dolor et laboriosam harum iure enim eum earum iusto placeat praesentium nostrum optio ipsum nihil porro vero accusantium culpa hic.</p>-->
-<!--        </div>-->
+        <!--        <div class="comic">-->
+        <!--            OMG, I am speaking fdvdfs in Comic Sans!-->
+        <!--        </div>-->
+        <!--        <div class="comment">-->
+        <!--            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt, labore, corporis, error, sequi accusamus perspiciatis quo consequuntur doloremque quia provident itaque maiores tenetur velit aliquam dolor et laboriosam harum iure enim eum earum iusto placeat praesentium nostrum optio ipsum nihil porro vero accusantium culpa hic.</p>-->
+        <!--        </div>-->
 
         <!--        WIDOK OKNA STRATEGII-->
         <article style="width: 78%; padding: 15px;">
@@ -295,11 +295,20 @@
                                 <td style="padding-bottom: 0px;padding-top: 5px;">
                                     <table class="myTable ">
                                         <tr>
-                                            <td class="tableWidth" style="font-weight: bold;"
-                                                th:text="${amerykaSpolka.name}"/>
+                                            <td class="tableWidth" style="font-weight: bold;">
+                                                <a class="myTableA" th:href="${amerykaSpolka.website}"
+                                                   th:text="${amerykaSpolka.name}"
+                                                   target="_blank">
+                                                </a>
+                                            </td>
                                         </tr>
                                         <tr>
-                                            <td style="font-size: 75%;" th:text="${amerykaSpolka.ticker}"/>
+                                            <td style="font-size: 75%;">
+                                                <a class="myTableA" th:text="${amerykaSpolka.ticker}"
+                                                   th:href="'https://finance.yahoo.com/quote/'+${amerykaSpolka.ticker}+'/profile?p='+${amerykaSpolka.ticker}"
+                                                   target="_blank">
+                                                </a>
+                                            </td>
                                         </tr>
                                     </table>
                                 </td>
@@ -314,7 +323,8 @@
                                         </tr>
                                     </table>
                                 </td>
-                                <td style="vertical-align:middle; padding: 0px; font-size: 75%;" th:text="${amerykaSpolka.market}"/>
+                                <td style="vertical-align:middle; padding: 0px; font-size: 75%;"
+                                    th:text="${amerykaSpolka.market}"/>
                                 <td style="vertical-align:middle; padding: 0px;" th:text="${amerykaSpolka.yTD}"
                                     th:class="${amerykaSpolka.yTD.startsWith('-')} ? 'textCenter negative' : 'textCenter positive'"/>
                                 <td style="vertical-align:middle; padding: 0px;" th:text="${amerykaSpolka.m1}"

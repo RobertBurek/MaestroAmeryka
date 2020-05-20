@@ -122,6 +122,15 @@ img {
     vertical-align: middle;
 }
 
+.myTableA {
+    color: black;
+    text-decoration: none;
+}
+.myTableA:hover {
+    color: black;
+    text-decoration: none;
+}
+
 .myBorder {
     border: 2px solid #61a5ea;
 }

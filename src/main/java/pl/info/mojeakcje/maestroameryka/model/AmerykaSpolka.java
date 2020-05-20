@@ -30,6 +30,7 @@ public class AmerykaSpolka {
     private String m1;
     private String m3;
     private String m12;
+    private String website;
 
     public AmerykaSpolka() {
     }
@@ -211,9 +212,17 @@ public class AmerykaSpolka {
         this.m12 = m12;
     }
 
+    public String getWebsite() {
+        return website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
+    }
+
     @Override
     public String toString() {
-        return "Spolka{" +
+        return "AmerykaSpolka{" +
                 "id=" + id +
                 ", ticker='" + ticker + '\'' +
                 ", name='" + name + '\'' +
@@ -221,20 +230,22 @@ public class AmerykaSpolka {
                 ", sector='" + sector + '\'' +
                 ", industry='" + industry + '\'' +
                 ", note='" + note + '\'' +
+                ", day12M='" + day12M + '\'' +
+                ", course12M='" + course12M + '\'' +
+                ", day1M='" + day1M + '\'' +
+                ", course1M='" + course1M + '\'' +
+                ", day3M='" + day3M + '\'' +
+                ", course3M='" + course3M + '\'' +
                 ", courseCurrent='" + courseCurrent + '\'' +
                 ", dayCourseCurrent='" + dayCourseCurrent + '\'' +
+                ", dayYTD='" + dayYTD + '\'' +
+                ", courseYTD='" + courseYTD + '\'' +
                 ", yTD='" + yTD + '\'' +
                 ", m1='" + m1 + '\'' +
                 ", m3='" + m3 + '\'' +
                 ", m12='" + m12 + '\'' +
                 '}';
     }
-
-
-
-
-
-
 
 //    @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)

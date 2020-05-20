@@ -214,4 +214,32 @@ public class AmerykaSpolkaNew {
     public void setWebsite(String webside) {
         this.website = webside;
     }
+
+    @Override
+    public String toString() {
+        return "AmerykaSpolkaNew{" +
+                "id=" + id +
+                ", ticker='" + ticker + '\'' +
+                ", name='" + name + '\'' +
+                ", market='" + market + '\'' +
+                ", sector='" + sector + '\'' +
+                ", industry='" + industry + '\'' +
+                ", note='" + note + '\'' +
+                ", day12M='" + day12M + '\'' +
+                ", course12M='" + course12M + '\'' +
+                ", day1M='" + day1M + '\'' +
+                ", course1M='" + course1M + '\'' +
+                ", day3M='" + day3M + '\'' +
+                ", course3M='" + course3M + '\'' +
+                ", courseCurrent='" + courseCurrent + '\'' +
+                ", dayCourseCurrent='" + dayCourseCurrent + '\'' +
+                ", dayYTD='" + dayYTD + '\'' +
+                ", courseYTD='" + courseYTD + '\'' +
+                ", yTD='" + yTD + '\'' +
+                ", m1='" + m1 + '\'' +
+                ", m3='" + m3 + '\'' +
+                ", m12='" + m12 + '\'' +
+                ", website='" + website + '\'' +
+                '}';
+    }
 }
