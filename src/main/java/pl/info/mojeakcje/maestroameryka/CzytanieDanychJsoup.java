@@ -85,7 +85,7 @@ public class CzytanieDanychJsoup {
 
             // Tworzenie nowej spólki  - konstruktor (String ticker, String name, String market, String sector, String industry, String note)
             // z danych z bazy, które nie ulegają zmianie.
-            AmerykaSpolka nowaSpolka = new AmerykaSpolka(amSp.getTicker(), amSp.getName(), amSp.getMarket(), amSp.getSector(), amSp.getIndustry(), amSp.getNote());
+            AmerykaSpolka nowaSpolka = new AmerykaSpolka(amSp.getTicker(), amSp.getName(), amSp.getMarket(), amSp.getSector(), amSp.getIndustry(), amSp.getNote(), amSp.getWebsite());
             nowaSpolka.setId(amSp.getId());
 
 

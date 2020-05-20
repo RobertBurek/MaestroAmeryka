@@ -35,13 +35,14 @@ public class AmerykaSpolka {
     public AmerykaSpolka() {
     }
 
-    public AmerykaSpolka(String ticker, String name, String market, String sector, String industry, String note) {
+    public AmerykaSpolka(String ticker, String name, String market, String sector, String industry, String note, String website) {
         this.ticker = ticker;
         this.name = name;
         this.market = market;
         this.sector = sector;
         this.industry = industry;
         this.note = note;
+        this.website = website;
     }
 
     public Long getId() {
