@@ -94,13 +94,13 @@ img {
 
 .myDisplayFlex {
     display: flex;
-    height: 32px;
+    height: 35px;
     margin-bottom: 25px;
     margin-top: 10px;
 }
 
 .label-course {
-    padding-top: 4px;
+    padding-top: 6px;
     width: 134px;
     text-align: right;
     margin-right: 10px;
