@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import pl.info.mojeakcje.maestroameryka.CzytanieDanychJsoup;
 import pl.info.mojeakcje.maestroameryka.model.AmerykaSpolka;
@@ -15,6 +16,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 import java.util.function.Consumer;
 
@@ -139,6 +141,31 @@ public class AmSpControllerRest {
         czytanieDanychJsoup.czytaj();
         log.info(ANSI_BLUE + " Ręcznie uruchomiono czytanie danych!!!" + ANSI_RESET);
         return " Zrobiłem !!! Odczyt danych z pliku pobranego z HTTP !!!";
+    }
+
+
+    @GetMapping("/czytajWebsite")
+    public String czytajWebsite() throws InterruptedException {
+        AmerykaSpolka amerykaSpolka;
+        for (long i = 1; i < amSpRepository.count() + 1; i++) {
+            amerykaSpolka = amSpRepository.findById(i).get();
+            String url = "https://finance.yahoo.com/quote/" + amerykaSpolka.getTicker() + "/profile?p=" + amerykaSpolka.getTicker();
+            RestTemplate restTemplate = new RestTemplate();
+            String values = restTemplate.getForObject(url, String.class);
+            String odpowiedniaLinia = values.substring(values.lastIndexOf("website") + 10, values.lastIndexOf("website") + 200);
+            String webSite = "";
+            if (odpowiedniaLinia.startsWith("http")) {
+                webSite = odpowiedniaLinia.substring(0, odpowiedniaLinia.indexOf("maxAge") - 3).replace("u002F", "").replace("\\\\", "//");
+            } else {
+                webSite = "#brak";
+            }
+            amerykaSpolka.setWebsite(webSite);
+            System.out.println(amerykaSpolka.getId() + "  " + webSite);
+            amSpRepository.save(amerykaSpolka);
+            int millis = new Random().nextInt(200);
+            Thread.sleep(millis);
+        }
+        return "Zrobine!!!";
     }
 
 }
