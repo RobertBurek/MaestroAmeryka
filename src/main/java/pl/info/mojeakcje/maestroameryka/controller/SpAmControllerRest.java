@@ -26,12 +26,12 @@ public class SpAmControllerRest {
     CzytanieDanychJsoup czytanieDanychJsoup;
 
 
-    @GetMapping("/czytajdane") //czyta dane z URL
-    public String createTableWithHttp() throws InterruptedException {
-        czytanieDanychJsoup.czytaj();
-        log.info(ANSI_BLUE + " Ręcznie uruchomiono czytanie danych!!!" + ANSI_RESET);
-        return " Zrobiłem !!! Odczyt danych z pliku pobranego z HTTP !!!";
-    }
+//    @GetMapping("/czytajdane") //czyta dane z URL
+//    public String createTableWithHttp() throws InterruptedException {
+//        czytanieDanychJsoup.czytaj();
+//        log.info(ANSI_BLUE + " Ręcznie uruchomiono czytanie danych!!!" + ANSI_RESET);
+//        return " Zrobiłem !!! Odczyt danych z pliku pobranego z HTTP !!!";
+//    }
 
 
 

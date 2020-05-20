@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import pl.info.mojeakcje.maestroameryka.CzytanieDanychJsoup;
 import pl.info.mojeakcje.maestroameryka.model.AmerykaSpolka;
 import pl.info.mojeakcje.maestroameryka.repository.AmSpRepository;
 import pl.info.mojeakcje.maestroameryka.service.DBfromCSV;
@@ -32,6 +33,9 @@ public class AmSpControllerRest {
 
     @Autowired
     AmSpRepository amSpRepository;
+
+    @Autowired
+    CzytanieDanychJsoup czytanieDanychJsoup;
 
     @Autowired
     DBfromCSV dBfromCSV;
@@ -127,6 +131,13 @@ public class AmSpControllerRest {
             }
         });
         log.info(ANSI_BLUE + "Naprawiłem!!!" + ANSI_RESET);
+        return " Zrobiłem !!! Odczyt danych z pliku pobranego z HTTP !!!";
+    }
+
+    @GetMapping("/czytajdane") //czyta dane z URL
+    public String createTableWithHttp() throws InterruptedException {
+        czytanieDanychJsoup.czytaj();
+        log.info(ANSI_BLUE + " Ręcznie uruchomiono czytanie danych!!!" + ANSI_RESET);
         return " Zrobiłem !!! Odczyt danych z pliku pobranego z HTTP !!!";
     }
 
