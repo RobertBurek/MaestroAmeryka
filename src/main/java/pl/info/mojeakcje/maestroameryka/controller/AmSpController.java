@@ -57,9 +57,7 @@ public class AmSpController {
 
     @GetMapping("/")
     public String getAll(Model model) {
-//        amerykaSpolkiStretegie = (List<AmerykaSpolkaStrategia>) amSpStrategyRepository.findAll();
         amerykaSpolki = (List<AmerykaSpolka>) amSpRepository.findAll();
-//        amerykaSpolki.stream().map(amerykaSpolka -> Double.parseDouble(amerykaSpolka.getDay0119()))
         log.info(ANSI_BLUE + "Odczyt wszystkich danych z bazy ..." + ANSI_RESET);
         model.addAttribute("amerykaSpolki", amerykaSpolki);
         model.addAttribute("amerykaSpolkaNew", new AmerykaSpolka());
@@ -124,10 +122,7 @@ public class AmSpController {
 //
     @GetMapping("/amerykaspolka/edit")
     public String editAmerykaSpolka(@RequestParam Long index, Model model) {
-//        amerykaSpolki = (List<AmerykaSpolka>) amSpRepository.findAll();
         AmerykaSpolka modifiedAmerykaSpolka = amSpRepository.findById(index.longValue()).get();
-//        List<AmerykaSpolka> newAmerykaSpolki =
-//                amerykaSpolki.stream().filter(amerykaSpolka -> (amerykaSpolka.getTicker()).equals(modifiedAmerykaSpolka.getTicker())).collect(Collectors.toList());
         log.info("Spółka do modyfikacji: " + ANSI_RED + modifiedAmerykaSpolka.getName() + " (" + modifiedAmerykaSpolka.getTicker() + ")" + ANSI_RESET);
         model.addAttribute("amerykaSpolkaFind", new AmerykaSpolka());
         model.addAttribute("amerykaSpolkaModified", modifiedAmerykaSpolka);
@@ -160,35 +155,5 @@ public class AmSpController {
         amerykaSpolki = (List<AmerykaSpolka>) amSpRepository.findAll();
         return "redirect:/amerykaspolka/edit?index=" + modifiedAmerykaSpolka.getId();
     }
-
-
-//    @GetMapping("/strategie")
-//    public String getAllStrategy(Model model) {
-////        amerykaSpolkiStretegie = (List<AmerykaSpolkaStrategia>) amSpStrategyRepository.findAll();
-////        amerykaSpolki.stream().map(amerykaSpolka -> Double.parseDouble(amerykaSpolka.getDay0119()))
-//        log.info(ANSI_BLUE + "Odczyt wszystkich danych z bazy ..." + ANSI_RESET);
-//        model.addAttribute("industryList", industryList);
-//        model.addAttribute("sectorList", sectorList);
-//        model.addAttribute("amerykaSpolkiStrategie", amerykaSpolkiStretegie);
-//        model.addAttribute("amerykaSpolkaNew", new AmerykaSpolka());
-//        model.addAttribute("amerykaSpolkaFind", new AmerykaSpolka());
-//        return "amerykastrategie";
-//    }
-//
-//    @PutMapping("/strategie")
-//    public void modificationList(@RequestBody Industry industry) {
-////        int index=0;
-//        log.info("Wysłałem : " + industry);
-////        for (Industry ind :industryList) {
-////            if (ind.getId()==industry.getId()) break;
-////            else index++;
-////        }
-//        amerykaSpolkiStretegie = (List<AmerykaSpolkaStrategia>) amSpStrategyRepository.findAll();
-//        amerykaSpolkiStretegie=amerykaSpolkiStretegie
-//                .stream()
-//                .filter(amerykaSpolkaStrategia -> amerykaSpolkaStrategia.getIndustry().equals(industry.getName()))
-//                .collect(Collectors.toList());
-////        return "redirect:/strategie";
-//    }
 
 }
