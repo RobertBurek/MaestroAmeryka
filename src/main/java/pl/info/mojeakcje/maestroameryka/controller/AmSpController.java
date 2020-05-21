@@ -4,10 +4,7 @@ import lombok.extern.log4j.Log4j2;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import pl.info.mojeakcje.maestroameryka.model.AmerykaSpolka;
 import pl.info.mojeakcje.maestroameryka.repository.AmSpRepository;
 
@@ -111,15 +108,23 @@ public class AmSpController {
 //        return "redirect:/amerykaspolka/find#position";
 //    }
 //
-//    @GetMapping("/amerykaspolka/del")
-//    public String deleteAmerykaSpolka(@RequestParam Long index) {
-//        deleteAmerykaSpolka = amSpRepository.findById(index);
-//        log.info("Usuwanie danych: " + ANSI_RED + deleteAmerykaSpolka.getName() + " (" + deleteAmerykaSpolka.getTicker() + ")" + ANSI_RESET);
-//        amSpRepository.deleteById(index);
-//        amerykaSpolki = (List<AmerykaSpolka>) amSpRepository.findAll();
-//        return "redirect:/amerykaspolka/find#position";
-//    }
-//
+    @GetMapping("/amerykaspolka/del")
+    public String delAmerykaSpolka(@RequestParam Long index, Model model) {
+        AmerykaSpolka deleteAmerykaSpolka = amSpRepository.findById(index.longValue()).get();
+        log.info("Spółka do usunięcia: " + ANSI_RED + deleteAmerykaSpolka.getName() + " (" + deleteAmerykaSpolka.getTicker() + ")" + ANSI_RESET);
+        model.addAttribute("amerykaSpolkaFind", new AmerykaSpolka());
+        model.addAttribute("amerykaSpolkadelete", deleteAmerykaSpolka);
+        return "amerykaspolkadelete";
+    }
+
+    @PostMapping("/amerykaspolka/delete")
+    public String deleteAmerykaSpolka(@ModelAttribute AmerykaSpolka deleteAmerykaSpolka) {
+        log.info("Usunięto spółkę: " + ANSI_RED + deleteAmerykaSpolka.getName() + " (" + deleteAmerykaSpolka.getTicker() + ")" + ANSI_RESET);
+        amSpRepository.deleteById(deleteAmerykaSpolka.getId());
+        amerykaSpolki = (List<AmerykaSpolka>) amSpRepository.findAll();
+        return "redirect:/amerykaspolka";
+    }
+
     @GetMapping("/amerykaspolka/edit")
     public String editAmerykaSpolka(@RequestParam Long index, Model model) {
         AmerykaSpolka modifiedAmerykaSpolka = amSpRepository.findById(index.longValue()).get();

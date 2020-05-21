@@ -60,57 +60,53 @@
         <article>
             <section style="width: 100%;">
                 </br></br>
-                <h3 th:text="'Zmodyfikuj dane spółki: ' + ${amerykaSpolkaModified.name} + ' (' + ${amerykaSpolkaModified.ticker} + ')'">
-                    Zmodyfikuj dane spólki.</h3>
+                <h3 style="color: red; font-weight: 600;" th:text="'Chcesz usunąć spółkę:  ' + ${amerykaSpolkadelete.name} + ' (' + ${amerykaSpolkadelete.ticker} + ') ?!'">
+                    Usuwanie spólki.</h3>
                 <!--                action="/nameDay/save/edit"-->
 
-                <form method="POST" th:action="@{/amerykaspolka/save/edit}" th:object="${amerykaSpolkaModified}">
+                <form method="POST" th:action="@{/amerykaspolka/delete}" th:object="${amerykaSpolkadelete}">
                     <div class="myForm">
                         <div class="myColumn">
                             <input th:field="*{id}" class="form-control" id="id" type="hidden">
                             <div class="form-group">
-                                <label for="ticker">Ticker :
+                                <label>Ticker :
                                     <input th:field="*{ticker}" type="text" class="form-control" name="ticker" disabled>
-                                    <input th:field="*{ticker}" class="form-control" id="ticker" type="hidden">
                                 </label>
                             </div>
                             <div class="form-group">
-                                <label for="nameSpolka">Name :
+                                <label>Name :
                                     <input th:field="*{name}" type="text" class="form-control" name="nameSpolka"
                                            disabled>
-                                    <input th:field="*{name}" class="form-control" id="nameSpolka" type="hidden">
                                 </label>
                             </div>
                             <div class="form-group">
-                                <label for="market">Market :
+                                <label>Market :
                                     <input th:field="*{market}" type="text" class="form-control" name="market" disabled>
-                                    <input th:field="*{market}" class="form-control" id="market" type="hidden">
                                 </label>
                             </div>
                             <div class="form-group">
-                                <label for="sector">Sector :
+                                <label>Sector :
                                     <input th:field="*{sector}" type="text" class="form-control" name="sector" disabled>
-                                    <input th:field="*{sector}" class="form-control" id="sector" type="hidden">
                                 </label>
                             </div>
                             <div class="form-group">
-                                <label for="industry">Industry :
+                                <label>Industry :
                                     <input th:field="*{industry}" type="text" class="form-control" name="industry"
                                            disabled>
-                                    <input th:field="*{industry}" class="form-control" id="industry" type="hidden">
                                 </label>
                             </div>
                             <div class="form-group">
                                 <label>Website :
-                                    <input th:field="*{website}" type="text" class="form-control" name="website">
+                                    <input th:field="*{website}" type="text" class="form-control" name="website"
+                                           disabled>
                                 </label>
                             </div>
                             <div class="form-group">
                                 <label for="note">Note :
                                     <textarea th:field="*{note}" type="textArea" class="form-control" id="note"
                                               name="note"
-                                              rows="4" cols="50" placeholder="Your note ...">
-                            </textarea>
+                                              rows="4" cols="50" placeholder="Your note ..." disabled>
+                                    </textarea>
                                 </label>
                             </div>
 
@@ -125,43 +121,38 @@
                             <div class="form-group myDisplayFlex">
                                 <label for="courseCurrent" class="label-course"
                                        th:text="*{dayCourseCurrent}+' :'"></label>
-                                <input th:field="*{dayCourseCurrent}" type="hidden">
                                 <input th:field="*{courseCurrent}" type="text" class="form-control input-course"
                                        id="courseCurrent"
                                        name="courseCurrent"
-                                       placeholder="course">
+                                       placeholder="course" disabled>
                             </div>
                             <div class="form-group myDisplayFlex">
                                 <label for="course1M" class="label-course" th:text="*{day1M}+' :'"></label>
-                                <input th:field="*{day1M}" type="hidden">
                                 <input th:field="*{course1M}" type="text" class="form-control input-course"
                                        id="course1M"
                                        name="course1M"
-                                       placeholder="course">
+                                       placeholder="course" disabled>
                             </div>
                             <div class="form-group myDisplayFlex">
                                 <label for="course3M" class="label-course" th:text="*{day3M}+' :'"></label>
-                                <input th:field="*{day3M}" type="hidden">
                                 <input th:field="*{course3M}" type="text" class="form-control input-course"
                                        id="course3M"
                                        name="course3M"
-                                       placeholder="course">
+                                       placeholder="course" disabled>
                             </div>
                             <div class="form-group myDisplayFlex">
                                 <label for="course12M" class="label-course" th:text="*{day12M}+' :'"></label>
-                                <input th:field="*{day12M}" type="hidden">
                                 <input th:field="*{course12M}" type="text" class="form-control input-course"
                                        id="course12M"
                                        name="course12M"
-                                       placeholder="course">
+                                       placeholder="course" disabled>
                             </div>
                             <div class="form-group myDisplayFlex">
                                 <label for="courseYTD" class="label-course" th:text="*{dayYTD}+' :'"></label>
-                                <input th:field="*{dayYTD}" type="hidden">
                                 <input th:field="*{courseYTD}" type="text" class="form-control input-course"
                                        id="courseYTD"
                                        name="courseYTD"
-                                       placeholder="course">
+                                       placeholder="course" disabled>
                             </div>
                             <br>
                             Rates of return :
@@ -170,35 +161,35 @@
                                 <input th:field="*{yTD}" type="text" class="form-control input-course"
                                        id="YTD"
                                        name="YTD"
-                                       placeholder="rates">
+                                       placeholder="rates" disabled>
                             </div>
                             <div class="form-group myDisplayFlex">
                                 <label for="M1" class="label-course">1M :</label>
                                 <input th:field="*{m1}" type="text" class="form-control input-course"
                                        id="M1"
                                        name="M1"
-                                       placeholder="rates">
+                                       placeholder="rates" disabled>
                             </div>
                             <div class="form-group myDisplayFlex">
                                 <label for="M3" class="label-course">3M :</label>
                                 <input th:field="*{m3}" type="text" class="form-control input-course"
                                        id="M3"
                                        name="M3"
-                                       placeholder="rates">
+                                       placeholder="rates" disabled>
                             </div>
                             <div class="form-group myDisplayFlex">
                                 <label for="M12" class="label-course">12M :</label>
                                 <input th:field="*{m12}" type="text" class="form-control input-course"
                                        id="M12"
                                        name="M12"
-                                       placeholder="rates">
+                                       placeholder="rates" disabled>
                             </div>
 
                         </div>
                     </div>
                     <!--                <button type="submit" class="btn btn-outline-success">Modyfikuj</button>-->
                     <div class="myNaviButton">
-                        <button type="submit" class="btn btn-outline-success">Modyfikuj</button>
+                        <button type="submit" class="btn btn-outline-success">Usuń</button>
                         <a class="btn btn-outline-success" href="/">Powrót</a>
                     </div>
                 </form>
