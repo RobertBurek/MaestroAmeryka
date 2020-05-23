@@ -9,14 +9,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import pl.info.mojeakcje.maestroameryka.model.AmerykaSpolka;
 import pl.info.mojeakcje.maestroameryka.model.modelCustomer.Customer;
-import pl.info.mojeakcje.maestroameryka.model.modelCustomer.RoleCustomer;
 import pl.info.mojeakcje.maestroameryka.model.modelCustomer.UserDetailsServiceImpl;
+import pl.info.mojeakcje.maestroameryka.repository.AmSpRepository;
 import pl.info.mojeakcje.maestroameryka.repository.CustoRepository;
 
 @Configuration
@@ -30,6 +30,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private UserDetailsServiceImpl userDetailsService;
     private CustoRepository custoRepository;
+
+    @Autowired
+    AmSpRepository amSpRepository;
 
     @Autowired
     public WebSecurityConfig(UserDetailsServiceImpl userDetailsService, CustoRepository custoRepository) {
@@ -114,13 +117,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .loginPage("/loginMaestro");
     }
 
-//    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //            Metoda dodawania customers do bazy danych , wykonywana zawsze przy uruchomianiu aplikacji
-//    @EventListener(ApplicationReadyEvent.class)
-//    public void get() {
+    @EventListener(ApplicationReadyEvent.class)
+    public void get() {
 //        Customer customer1 = new Customer("Wiki", passwordEncoder().encode("wiki"), RoleCustomer.ROLE_ADMIN.toString(), "168.1.21.1");
 //        Customer customer1 = new Customer("Maja", passwordEncoder().encode("Maja2006"), RoleCustomer.ROLE_ADMIN.toString(), "168.1.31.3");
-//        Customer customer1 = new Customer("Robert", passwordEncoder().encode("Robert10"), RoleCustomer.ADMIN.toString(), "168.1.21.1");
+//        Customer customer1 = new Customer("Robert", passwordEncoder().encode("Robert10"), RoleCustomer.ROLE_ADMIN.toString(), "168.1.21.1");
 //        Customer customer2 = new Customer("Maciej", passwordEncoder().encode("Maciej10"), RoleCustomer.ADMIN.toString(), "165.12.2.21");
 //        Customer customer3 = new Customer("Adam", passwordEncoder().encode("Adam10"), RoleCustomer.USER.toString(), "165.161.251.13");
 //        Customer customer4 = new Customer("Nowy", passwordEncoder().encode("Nowy123"), RoleCustomer.USER.toString(), "125.14.214.54");
@@ -128,5 +131,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //        custoRepository.save(customer2);
 //        custoRepository.save(customer3);
 //        custoRepository.save(customer4);
-//    }
+
+        Customer robert = custoRepository.findById(1L).get();
+
+        AmerykaSpolka stara = amSpRepository.findById(1L).get();
+        AmerykaSpolka amerykaSpolka = new AmerykaSpolka();
+        amerykaSpolka.setName(stara.getName());
+        amerykaSpolka.setTicker(stara.getTicker());
+        amerykaSpolka.setIndustry(stara.getIndustry());
+        amerykaSpolka.setNote(stara.getNote());
+        amerykaSpolka.setCustomer(robert);
+        System.out.println(amerykaSpolka);
+        amSpRepository.save(amerykaSpolka);
+
+
+    }
 }

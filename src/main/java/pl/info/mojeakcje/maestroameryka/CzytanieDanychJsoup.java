@@ -297,31 +297,28 @@ public class CzytanieDanychJsoup {
 
     //        !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //            Metoda  automatycznego zapisu danych z HTTP, uruchamiana zawsze przy uruchomianiu aplikacji
-    @EventListener(ApplicationReadyEvent.class)
-    public void get() {
-
-        LocalDateTime startCzytaj = LocalDateTime.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), LocalDate.now().getDayOfMonth(), 22, 20);
-        LocalDateTime teraz = LocalDateTime.now();
-        Duration czasOczekiwania = Duration.between(teraz, startCzytaj);
-        if (czasOczekiwania.getSeconds()<0) czasOczekiwania = Duration.between(teraz.minusDays(1), startCzytaj);
-//        System.out.println(czasOczekiwania.getSeconds() * 1000);
-        log.info(ANSI_FIOLET + "Czytanie danych zacznie się za: "+ czasOczekiwania.getSeconds() +"s"+ ANSI_RESET);
-
-
-        TimerTask taskNew = new TimerTask() {
-            @Override
-            public void run() {
-                try {
-                    czytaj();
-                } catch (InterruptedException e) {
-                    log.info(ANSI_RED + "Miałem problem z uruchomieniem metody czytaj()!" + ANSI_RESET);
-                    e.printStackTrace();
-                }
-            }
-        };
-        Timer timer = new Timer();
-        timer.schedule(taskNew, czasOczekiwania.getSeconds() * 1000, 86400000);
-    }
+//    @EventListener(ApplicationReadyEvent.class)
+//    public void get() {
+//
+//        LocalDateTime startCzytaj = LocalDateTime.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), LocalDate.now().getDayOfMonth(), 22, 20);
+//        LocalDateTime teraz = LocalDateTime.now();
+//        Duration czasOczekiwania = Duration.between(teraz, startCzytaj);
+//        if (czasOczekiwania.getSeconds()<0) czasOczekiwania = Duration.between(teraz.minusDays(1), startCzytaj);
+//        log.info(ANSI_FIOLET + "Czytanie danych zacznie się za: "+ czasOczekiwania.getSeconds() +"s"+ ANSI_RESET);
+//        TimerTask taskNew = new TimerTask() {
+//            @Override
+//            public void run() {
+//                try {
+//                    czytaj();
+//                } catch (InterruptedException e) {
+//                    log.info(ANSI_RED + "Miałem problem z uruchomieniem metody czytaj()!" + ANSI_RESET);
+//                    e.printStackTrace();
+//                }
+//            }
+//        };
+//        Timer timer = new Timer();
+//        timer.schedule(taskNew, czasOczekiwania.getSeconds() * 1000, 86400000);
+//    }
 
 }
 

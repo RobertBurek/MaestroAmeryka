@@ -1,10 +1,9 @@
 package pl.info.mojeakcje.maestroameryka.model;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import pl.info.mojeakcje.maestroameryka.model.modelCustomer.Customer;
+
+import javax.persistence.*;
 
 @Entity
 public class AmerykaSpolka {
@@ -33,6 +32,9 @@ public class AmerykaSpolka {
     private String m3;
     private String m12;
     private String website;
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 
     public AmerykaSpolka() {
     }
@@ -221,6 +223,14 @@ public class AmerykaSpolka {
 
     public void setWebsite(String website) {
         this.website = website;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     @Override

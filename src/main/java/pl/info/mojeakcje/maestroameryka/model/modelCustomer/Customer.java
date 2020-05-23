@@ -3,6 +3,7 @@ package pl.info.mojeakcje.maestroameryka.model.modelCustomer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import pl.info.mojeakcje.maestroameryka.model.AmerykaSpolka;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -14,11 +15,13 @@ public class Customer implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idCustomer;
+    private Long id;
     private String nickCustomer;
     private String passwordCustomer;
     private String roleCustomer;
     private String ipCustomer;
+    @OneToMany(mappedBy = "customer")
+    private List<AmerykaSpolka> amerykaSpolki;
 
     public Customer(String nickCustomer, String passwordCustomer, String roleCustomer, String ipCustomer) {
         this.nickCustomer = nickCustomer;
@@ -69,12 +72,12 @@ public class Customer implements UserDetails {
         return true;
     }
 
-    public Long getIdCustomer() {
-        return idCustomer;
+    public Long getId() {
+        return id;
     }
 
-    public void setIdCustomer(Long idCustomer) {
-        this.idCustomer = idCustomer;
+    public void setId(Long idCustomer) {
+        this.id = idCustomer;
     }
 
     public String getNickCustomer() {
@@ -108,4 +111,13 @@ public class Customer implements UserDetails {
     public void setIpCustomer(String ipCustomer) {
         this.ipCustomer = ipCustomer;
     }
+
+    public List<AmerykaSpolka> getAmerykaSpolki() {
+        return amerykaSpolki;
+    }
+
+    public void setAmerykaSpolki(List<AmerykaSpolka> amerykaSpolki) {
+        this.amerykaSpolki = amerykaSpolki;
+    }
+
 }
