@@ -2,7 +2,6 @@ package pl.info.mojeakcje.maestroameryka;
 
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +18,9 @@ import pl.info.mojeakcje.maestroameryka.model.modelCustomer.UserDetailsServiceIm
 import pl.info.mojeakcje.maestroameryka.repository.AmSpRepository;
 import pl.info.mojeakcje.maestroameryka.repository.CustoRepository;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Configuration
 @EnableWebSecurity
 //@EnableOAuth2Sso
@@ -30,14 +32,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private UserDetailsServiceImpl userDetailsService;
     private CustoRepository custoRepository;
+    private AmSpRepository amSpRepository;
 
-    @Autowired
-    AmSpRepository amSpRepository;
-
-    @Autowired
-    public WebSecurityConfig(UserDetailsServiceImpl userDetailsService, CustoRepository custoRepository) {
+    public WebSecurityConfig(UserDetailsServiceImpl userDetailsService, CustoRepository custoRepository, AmSpRepository amSpRepository) {
         this.userDetailsService = userDetailsService;
         this.custoRepository = custoRepository;
+        this.amSpRepository = amSpRepository;
     }
 
     @Bean
@@ -132,7 +132,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //        custoRepository.save(customer3);
 //        custoRepository.save(customer4);
 
-        Customer robert = custoRepository.findById(1L).get();
+        List<AmerykaSpolka> amerykaSpolki = new ArrayList<>();
+        Customer robert = custoRepository.findById(5L).get();
 
         AmerykaSpolka stara = amSpRepository.findById(1L).get();
         AmerykaSpolka amerykaSpolka = new AmerykaSpolka();
@@ -140,9 +141,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         amerykaSpolka.setTicker(stara.getTicker());
         amerykaSpolka.setIndustry(stara.getIndustry());
         amerykaSpolka.setNote(stara.getNote());
-        amerykaSpolka.setCustomer(robert);
-        System.out.println(amerykaSpolka);
-        amSpRepository.save(amerykaSpolka);
+        amerykaSpolki.add(amerykaSpolka);
+        stara = amSpRepository.findById(21L).get();
+        amerykaSpolka = new AmerykaSpolka();
+        amerykaSpolka.setName(stara.getName());
+        amerykaSpolka.setTicker(stara.getTicker());
+        amerykaSpolka.setIndustry(stara.getIndustry());
+        amerykaSpolka.setNote(stara.getNote());
+        amerykaSpolki.add(stara);
+        stara = amSpRepository.findById(50L).get();
+        stara.setId(null);
+        amerykaSpolki.add(stara);
+
+//        amerykaSpolka.setCustomer(robert);
+        System.out.println(amerykaSpolki);
+        robert.setAmerykaSpolki(amerykaSpolki);
+        custoRepository.save(robert);
 
 
     }

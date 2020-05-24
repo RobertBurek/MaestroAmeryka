@@ -20,7 +20,8 @@ public class Customer implements UserDetails {
     private String passwordCustomer;
     private String roleCustomer;
     private String ipCustomer;
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(targetEntity = AmerykaSpolka.class, cascade =CascadeType.ALL) //mappedBy = "customer")
+    @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private List<AmerykaSpolka> amerykaSpolki;
 
     public Customer(String nickCustomer, String passwordCustomer, String roleCustomer, String ipCustomer) {
