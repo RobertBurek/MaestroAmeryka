@@ -160,7 +160,7 @@ public class AmSpControllerRest {
                 webSite = "#brak";
             }
             amerykaSpolka.setWebsite(webSite);
-            System.out.println(amerykaSpolka.getId() + "  " + webSite);
+            System.out.println(amerykaSpolka.getIdSpolka() + "  " + webSite);
             amSpRepository.save(amerykaSpolka);
             int millis = new Random().nextInt(200);
             Thread.sleep(millis);

@@ -15,14 +15,15 @@ public class Customer implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long idCustomer;
     private String nickCustomer;
     private String passwordCustomer;
     private String roleCustomer;
     private String ipCustomer;
-    @OneToMany(targetEntity = AmerykaSpolka.class, cascade =CascadeType.ALL) //mappedBy = "customer")
-    @JoinColumn(name = "customer_id", referencedColumnName = "id")
-    private List<AmerykaSpolka> amerykaSpolki;
+//    @OneToMany(targetEntity = AmerykaSpolka.class, cascade =CascadeType.ALL) //mappedBy = "customer")
+//    @JoinColumn(name = "customer_id", referencedColumnName = "id")
+//    private List<AmerykaSpolka> amerykaSpolki;
+
 
     public Customer(String nickCustomer, String passwordCustomer, String roleCustomer, String ipCustomer) {
         this.nickCustomer = nickCustomer;
@@ -74,11 +75,11 @@ public class Customer implements UserDetails {
     }
 
     public Long getId() {
-        return id;
+        return idCustomer;
     }
 
     public void setId(Long idCustomer) {
-        this.id = idCustomer;
+        this.idCustomer = idCustomer;
     }
 
     public String getNickCustomer() {
@@ -113,12 +114,23 @@ public class Customer implements UserDetails {
         this.ipCustomer = ipCustomer;
     }
 
-    public List<AmerykaSpolka> getAmerykaSpolki() {
-        return amerykaSpolki;
-    }
+//    public List<AmerykaSpolka> getAmerykaSpolki() {
+//        return amerykaSpolki;
+//    }
+//
+//    public void setAmerykaSpolki(List<AmerykaSpolka> amerykaSpolki) {
+//        this.amerykaSpolki = amerykaSpolki;
+//    }
 
-    public void setAmerykaSpolki(List<AmerykaSpolka> amerykaSpolki) {
-        this.amerykaSpolki = amerykaSpolki;
-    }
 
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "idCustomer=" + idCustomer +
+                ", nickCustomer='" + nickCustomer + '\'' +
+                ", passwordCustomer='" + passwordCustomer + '\'' +
+                ", roleCustomer='" + roleCustomer + '\'' +
+                ", ipCustomer='" + ipCustomer + '\'' +
+                '}';
+    }
 }

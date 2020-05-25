@@ -162,13 +162,13 @@
                         <td style="vertical-align:middle; padding: 0px;" th:text="${amerykaSpolka.yTD}"
                             th:class="${amerykaSpolka.yTD.startsWith('-')} ? 'textCenter negative' : 'textCenter positive'"/>
                         <td class="textCenter" style="vertical-align:middle;">
-                            <a th:href="@{/amerykaspolka/edit(index=${amerykaSpolka.id})}">
+                            <a th:href="@{/amerykaspolka/edit(index=${amerykaSpolka.idSpolka})}">
                                 <i class="fa fa-edit"></i>
                             </a>
                         </td>
 <!--                        <td class="textCenter"><a href="#"><i class="fa fa-edit"></i></a></td>-->
                         <td class="textCenter" style="vertical-align:middle;">
-                            <a th:href="@{/amerykaspolka/del(index=${amerykaSpolka.id})}">
+                            <a th:href="@{/amerykaspolka/del(index=${amerykaSpolka.idSpolka})}">
                                 <i class="fa fa-trash"></i>
                             </a>
                         </td>

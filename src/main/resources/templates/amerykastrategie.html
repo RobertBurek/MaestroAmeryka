@@ -291,7 +291,7 @@
                         <tbody>
 
                         <tr th:each="amerykaSpolka: ${amerykaSpolki}">
-                            <div th:id="'wierszTabeli'+${amerykaSpolka.id}">
+                            <div th:id="'wierszTabeli'+${amerykaSpolka.idSpolka}">
                                 <td style="padding-bottom: 0px;padding-top: 5px;">
                                     <table class="myTable ">
                                         <tr>
@@ -334,10 +334,10 @@
                                 <td style="vertical-align:middle; padding: 0px;" th:text="${amerykaSpolka.m12}"
                                     th:class="${amerykaSpolka.m12.startsWith('-')} ? 'textCenter negative' : 'textCenter positive'"/>
                                 <td class="textCenter" style="vertical-align:middle;">
-                                    <i th:id="'note'+${amerykaSpolka.id}"
+                                    <i th:id="'note'+${amerykaSpolka.idSpolka}"
                                        th:title="${amerykaSpolka.note}"
                                        th:value="${amerykaSpolka.name}+' ('+${amerykaSpolka.ticker}+')'"
-                                       th:onclick="'startPopup('+${amerykaSpolka.id}+');'"
+                                       th:onclick="'startPopup('+${amerykaSpolka.idSpolka}+');'"
                                        th:class="${amerykaSpolka.note.length()>0} ? 'far fa-comment-dots isNote myNote' : 'far fa-comment myNote'"
                                     ></i>
                                 </td>

@@ -5,8 +5,6 @@ import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import pl.info.mojeakcje.maestroameryka.model.AmerykaSpolka;
 import pl.info.mojeakcje.maestroameryka.repository.AmSpRepository;
@@ -86,7 +84,7 @@ public class CzytanieDanychJsoup {
             // Tworzenie nowej spólki  - konstruktor (String ticker, String name, String market, String sector, String industry, String note)
             // z danych z bazy, które nie ulegają zmianie.
             AmerykaSpolka nowaSpolka = new AmerykaSpolka(amSp.getTicker(), amSp.getName(), amSp.getMarket(), amSp.getSector(), amSp.getIndustry(), amSp.getNote(), amSp.getWebsite());
-            nowaSpolka.setId(amSp.getId());
+            nowaSpolka.setIdSpolka(amSp.getIdSpolka());
 
 
 //            System.out.println("https://query1.finance.yahoo.com/v7/finance/download/" + amSp.getTicker() + "?period1=" + (startTime + deltaTime - rokTime) + "&period2=" + (startTime + deltaTime) + "&interval=1d&events=history");

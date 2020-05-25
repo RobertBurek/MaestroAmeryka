@@ -54,11 +54,14 @@ public class AmSpController {
 
     @GetMapping("/")
     public String getAll(Model model) {
+        long startTime = System.nanoTime();
         amerykaSpolki = (List<AmerykaSpolka>) amSpRepository.findAll();
         log.info(ANSI_BLUE + "Odczyt wszystkich danych z bazy ..." + ANSI_RESET);
         model.addAttribute("amerykaSpolki", amerykaSpolki);
         model.addAttribute("amerykaSpolkaNew", new AmerykaSpolka());
         model.addAttribute("amerykaSpolkaFind", new AmerykaSpolka());
+        long executionTime = System.nanoTime() - startTime;
+        log.info("Zajęło mi to: " + (executionTime / 1000000000) + "s");
         return "amerykawidok";
     }
 
@@ -120,7 +123,7 @@ public class AmSpController {
     @PostMapping("/amerykaspolka/delete")
     public String deleteAmerykaSpolka(@ModelAttribute AmerykaSpolka deleteAmerykaSpolka) {
         log.info("Usunięto spółkę: " + ANSI_RED + deleteAmerykaSpolka.getName() + " (" + deleteAmerykaSpolka.getTicker() + ")" + ANSI_RESET);
-        amSpRepository.deleteById(deleteAmerykaSpolka.getId());
+        amSpRepository.deleteById(deleteAmerykaSpolka.getIdSpolka());
         amerykaSpolki = (List<AmerykaSpolka>) amSpRepository.findAll();
         return "redirect:/amerykaspolka";
     }
@@ -158,7 +161,7 @@ public class AmSpController {
         amSpRepository.save(modifiedAmerykaSpolka);
         log.info("Zapisano nowe dane dla spólki: " + ANSI_YELLOW + modifiedAmerykaSpolka.getName() + " (" + modifiedAmerykaSpolka.getTicker() + ")" + ANSI_RESET);
         amerykaSpolki = (List<AmerykaSpolka>) amSpRepository.findAll();
-        return "redirect:/amerykaspolka/edit?index=" + modifiedAmerykaSpolka.getId();
+        return "redirect:/amerykaspolka/edit?index=" + modifiedAmerykaSpolka.getIdSpolka();
     }
 
 }

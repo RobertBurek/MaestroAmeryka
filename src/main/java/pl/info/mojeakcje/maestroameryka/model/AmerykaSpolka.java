@@ -1,8 +1,6 @@
 package pl.info.mojeakcje.maestroameryka.model;
 
 
-import pl.info.mojeakcje.maestroameryka.model.modelCustomer.Customer;
-
 import javax.persistence.*;
 
 @Entity
@@ -10,7 +8,7 @@ public class AmerykaSpolka {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long idSpolka;
     private String ticker;
     private String name;
     private String market;
@@ -49,12 +47,12 @@ public class AmerykaSpolka {
         this.website = website;
     }
 
-    public Long getId() {
-        return id;
+    public Long getIdSpolka() {
+        return idSpolka;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setIdSpolka(Long id) {
+        this.idSpolka = id;
     }
 
     public String getTicker() {
@@ -236,7 +234,7 @@ public class AmerykaSpolka {
     @Override
     public String toString() {
         return "AmerykaSpolka{" +
-                "id=" + id +
+                "id=" + idSpolka +
                 ", ticker='" + ticker + '\'' +
                 ", name='" + name + '\'' +
                 ", market='" + market + '\'' +

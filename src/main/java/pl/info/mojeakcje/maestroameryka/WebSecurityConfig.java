@@ -13,10 +13,13 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import pl.info.mojeakcje.maestroameryka.model.AmerykaSpolka;
+import pl.info.mojeakcje.maestroameryka.model.WszystkieDane;
 import pl.info.mojeakcje.maestroameryka.model.modelCustomer.Customer;
 import pl.info.mojeakcje.maestroameryka.model.modelCustomer.UserDetailsServiceImpl;
 import pl.info.mojeakcje.maestroameryka.repository.AmSpRepository;
 import pl.info.mojeakcje.maestroameryka.repository.CustoRepository;
+import pl.info.mojeakcje.maestroameryka.repository.QueryRepository;
+import pl.info.mojeakcje.maestroameryka.repository.WszysDaneRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,11 +36,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private UserDetailsServiceImpl userDetailsService;
     private CustoRepository custoRepository;
     private AmSpRepository amSpRepository;
+    private WszysDaneRepository wszysDaneRepository;
+    private QueryRepository queryRepository;
 
-    public WebSecurityConfig(UserDetailsServiceImpl userDetailsService, CustoRepository custoRepository, AmSpRepository amSpRepository) {
+    public WebSecurityConfig(UserDetailsServiceImpl userDetailsService, CustoRepository custoRepository, AmSpRepository amSpRepository, WszysDaneRepository wszysDaneRepository, QueryRepository queryRepository) {
         this.userDetailsService = userDetailsService;
         this.custoRepository = custoRepository;
         this.amSpRepository = amSpRepository;
+        this.wszysDaneRepository = wszysDaneRepository;
+        this.queryRepository = queryRepository;
     }
 
     @Bean
@@ -133,31 +140,73 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //        custoRepository.save(customer4);
 
         List<AmerykaSpolka> amerykaSpolki = new ArrayList<>();
-        Customer robert = custoRepository.findById(5L).get();
+        Customer robert = custoRepository.findById(1L).get();
 
-        AmerykaSpolka stara = amSpRepository.findById(1L).get();
-        AmerykaSpolka amerykaSpolka = new AmerykaSpolka();
-        amerykaSpolka.setName(stara.getName());
-        amerykaSpolka.setTicker(stara.getTicker());
-        amerykaSpolka.setIndustry(stara.getIndustry());
-        amerykaSpolka.setNote(stara.getNote());
-        amerykaSpolki.add(amerykaSpolka);
-        stara = amSpRepository.findById(21L).get();
-        amerykaSpolka = new AmerykaSpolka();
-        amerykaSpolka.setName(stara.getName());
-        amerykaSpolka.setTicker(stara.getTicker());
-        amerykaSpolka.setIndustry(stara.getIndustry());
-        amerykaSpolka.setNote(stara.getNote());
-        amerykaSpolki.add(stara);
-        stara = amSpRepository.findById(50L).get();
-        stara.setId(null);
-        amerykaSpolki.add(stara);
+        // relacja onetomany customer i amerykaspolka
+//        AmerykaSpolka stara = amSpRepository.findById(1L).get();
+//        AmerykaSpolka amerykaSpolka = new AmerykaSpolka();
+//        amerykaSpolka.setName(stara.getName());
+//        amerykaSpolka.setTicker(stara.getTicker());
+//        amerykaSpolka.setIndustry(stara.getIndustry());
+//        amerykaSpolka.setNote(stara.getNote());
+//        amerykaSpolki.add(amerykaSpolka);
+//        stara = amSpRepository.findById(21L).get();
+//        amerykaSpolka = new AmerykaSpolka();
+//        amerykaSpolka.setName(stara.getName());
+//        amerykaSpolka.setTicker(stara.getTicker());
+//        amerykaSpolka.setIndustry(stara.getIndustry());
+//        amerykaSpolka.setNote(stara.getNote());
+//        amerykaSpolki.add(stara);
+//        stara = amSpRepository.findById(50L).get();
+//        stara.setId(null);
+//        amerykaSpolki.add(stara);
+//        System.out.println(amerykaSpolki);
+//        robert.setAmerykaSpolki(amerykaSpolki);
+//        custoRepository.save(robert);
 
-//        amerykaSpolka.setCustomer(robert);
-        System.out.println(amerykaSpolki);
-        robert.setAmerykaSpolki(amerykaSpolki);
-        custoRepository.save(robert);
+        // relacja z dodatkową tabelą Maintable
+        WszystkieDane wszystkieDane = new WszystkieDane();
 
+//        AmerykaSpolka amerykaSpolka = amSpRepository.findById(1L).get();
+//        amerykaSpolki.add(amSpRepository.findById(1L).get());
+//        amerykaSpolki.add(amSpRepository.findById(3L).get());
+//        amerykaSpolki.add(amSpRepository.findById(4L).get());
+//            amerykaSpolka.setId(null);
+        wszystkieDane.setCustomer(robert);
+        wszystkieDane.setWidoczny(true);
+        wszystkieDane.setNotatka("");
+        System.out.println(wszystkieDane);
+//        Long i = wszysDaneRepository.count();
+//        ((List<AmerykaSpolka>)amSpRepository.findAll()).stream().forEach(amerykaSpolka -> {
+//            wszystkieDane.setAmerykaSpolka(amerykaSpolka);
+//            wszystkieDane.setId(null);
+////            System.out.println(wszystkieDane);
+//            wszysDaneRepository.save(wszystkieDane);
+//        });
+//        log.info("Zrobione!!!");
 
+//        AmerykaSpolka amerykaSpolka = new AmerykaSpolka();
+//        Long j =1L;
+//        for (int i = 1; i < amSpRepository.count()+1; i++) {
+//            amerykaSpolka.setId(j++);
+//            wszystkieDane.setAmerykaSpolka(amerykaSpolka);
+//            wszystkieDane.setId(null);
+//            wszysDaneRepository.save(wszystkieDane);
+//        }
+//        -----------------------------------------------------------------------------
+//        queryRepository.copyNewCustomer();
+//
+//        queryRepository.changeIdNewCustomer(2L);
+
+//        queryRepository.setView("Robert", 3L);
+//        log.info("zmieniłem na 2");  //-----------------------------------------------
+
+//        long startTime = System.nanoTime();
+        List<WszystkieDane> wszystkieDanes = queryRepository.getDaneView("Robert");
+        System.out.println(wszystkieDanes.get(0).getAmerykaSpolka());
+//        System.out.println(wszystkieDanes.get(0).getAmerykaSpolka());
+//        System.out.println(wszystkieDanes.get(0).getCustomer());
+//        long executionTime = System.nanoTime() - startTime;
+//        log.info("Zajęło mi to: " + (executionTime / 1000000000) + "s");
     }
 }

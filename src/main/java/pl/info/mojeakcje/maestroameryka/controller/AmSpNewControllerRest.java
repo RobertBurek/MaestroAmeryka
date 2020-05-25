@@ -71,7 +71,7 @@ public class AmSpNewControllerRest {
             }
 //            amerykaSpolkaNew.setWebsite(webSite);     // wersja przy konwersji encji ze starej do nowej rozszezonej
             amerykaSpolka.setWebsite(webSite);
-            System.out.println(amerykaSpolka.getId() + "  " + webSite);
+            System.out.println(amerykaSpolka.getIdSpolka() + "  " + webSite);
 //            amSpNewRepository.save(amerykaSpolkaNew);     // wersja przy konwersji encji ze starej do nowej rozszezonej
             amSpRepository.save(amerykaSpolka);
             int millis = new Random().nextInt(200);
