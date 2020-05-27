@@ -74,7 +74,7 @@ public class AmSpController {
 //        amerykaSpolki = wszystkieDaneList.stream().map(wszystkieDane -> wszystkieDane.getAmerykaSpolka()).collect(Collectors.toList());
 //        amerykaSpolki = (List<AmerykaSpolka>) amSpRepository.findAll();
         log.info(ANSI_BLUE + "Odczyt wszystkich danych z bazy, endpoint (/), użytkownik: " + currentUser.getName() + ANSI_RESET);
-        model.addAttribute("currentUser", currentUser.getName());
+        model.addAttribute("currentUserName", currentUser.getName());
         model.addAttribute("amerykaSpolki", amerykaSpolki);
         model.addAttribute("amerykaSpolkaNew", new AmerykaSpolka());
         model.addAttribute("amerykaSpolkaFind", new AmerykaSpolka());

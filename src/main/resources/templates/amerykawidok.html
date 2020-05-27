@@ -107,7 +107,7 @@
         </aside>
         <article id="mainWebsite">
             <!--            <label style="color: red; font-weight: bold">LogoMM.png</label>-->
-            <h1>Rynek amerykański</h1>
+            <h1 th:text="${currentUserName.equals('Guest')} ? 'Rynek amerykański' : ${currentUserName}+', Twoje spółki (rynek amerykański)'">Rynek amerykański</h1>
             <p></p>
             <div class="listSpolka" id="position">
                 <table class="table table-hover bg-light">
