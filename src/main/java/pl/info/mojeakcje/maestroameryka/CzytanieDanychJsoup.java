@@ -329,9 +329,10 @@ public class CzytanieDanychJsoup {
         Timer timer = new Timer();
         timer.schedule(taskNew, czasOczekiwania.getSeconds() * 1000, 86400000);
 
-        currentUser.setName("Guest");
-        currentUser.setIdCU(3L);
-        queryRepository.findAllWszystkieDane(currentUser.getName());
+//        currentUser.setName("Guest");
+//        currentUser.setIdCU(3L);
+        queryRepository.findAllWszystkieDane("anonymousUser");
+//        queryRepository.setView("anonymousUser", 9L);
     }
 
 }

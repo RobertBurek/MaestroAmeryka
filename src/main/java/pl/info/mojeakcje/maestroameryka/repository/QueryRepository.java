@@ -14,6 +14,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static pl.info.mojeakcje.maestroameryka.MaestroamerykaApplication.amerykaSpolki;
 
@@ -126,5 +127,9 @@ public class QueryRepository {
             amerykaSpolki.add(amerykaSpolka);
         }
         return amerykaSpolki;
+    }
+
+    public void showWD() {
+        amerykaSpolki = amerykaSpolki.stream().filter(amerykaSpolka -> amerykaSpolka.getWidok()).collect(Collectors.toList());
     }
 }

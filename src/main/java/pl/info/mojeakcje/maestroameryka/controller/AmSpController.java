@@ -2,6 +2,8 @@ package pl.info.mojeakcje.maestroameryka.controller;
 
 import lombok.extern.log4j.Log4j2;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.info.mojeakcje.maestroameryka.model.AmerykaSpolka;
+import pl.info.mojeakcje.maestroameryka.model.ShowSpolka;
 import pl.info.mojeakcje.maestroameryka.model.modelCustomer.CurrentUser;
 import pl.info.mojeakcje.maestroameryka.repository.AmSpRepository;
 import pl.info.mojeakcje.maestroameryka.repository.QueryRepository;
@@ -31,21 +34,14 @@ public class AmSpController {
     CurrentUser currentUser;
     AmSpRepository amSpRepository;
     QueryRepository queryRepository;
+    ShowSpolka showSpolka;
 
-    public AmSpController(CurrentUser currentUser, AmSpRepository amSpRepository, QueryRepository queryRepository) {
+    public AmSpController(CurrentUser currentUser, AmSpRepository amSpRepository, QueryRepository queryRepository, ShowSpolka showSpolka) {
         this.currentUser = currentUser;
         this.amSpRepository = amSpRepository;
         this.queryRepository = queryRepository;
+        this.showSpolka = showSpolka;
     }
-
-    //    public AmSpController(AmSpRepository amSpRepository, QueryRepository queryRepository) {
-//        this.amSpRepository = amSpRepository;
-//        this.queryRepository = queryRepository;
-//    }
-
-//    public AmSpController(AmSpRepository amSpRepository) {
-//        this.amSpRepository = amSpRepository;
-//    }
 
 //    @GetMapping("/loginOpenID")
 //    public String getLoginOpenID() {
@@ -69,12 +65,14 @@ public class AmSpController {
 
     @GetMapping("/")
     public String getAllView(Model model) {
-        queryRepository.findAllWszystkieDane(currentUser.getName());
+        queryRepository.findAllWszystkieDane(currentUserName());
+        if(!showSpolka.show) queryRepository.showWD();
 //        System.out.println("amerykawidok, currentUser: " + currentUser.getName());
 //        amerykaSpolki = wszystkieDaneList.stream().map(wszystkieDane -> wszystkieDane.getAmerykaSpolka()).collect(Collectors.toList());
 //        amerykaSpolki = (List<AmerykaSpolka>) amSpRepository.findAll();
-        log.info(ANSI_BLUE + "Odczyt wszystkich danych z bazy, endpoint (/), użytkownik: " + currentUser.getName() + ANSI_RESET);
-        model.addAttribute("currentUserName", currentUser.getName());
+        log.info(ANSI_BLUE + "Odczyt wszystkich danych z bazy, endpoint (/), użytkownik: " + currentUserName() + ANSI_RESET);
+        model.addAttribute("showAll", showSpolka.getShow());
+        model.addAttribute("currentUserName", currentUserName());
         model.addAttribute("amerykaSpolki", amerykaSpolki);
         model.addAttribute("amerykaSpolkaNew", new AmerykaSpolka());
         model.addAttribute("amerykaSpolkaFind", new AmerykaSpolka());
@@ -87,16 +85,26 @@ public class AmSpController {
 //        amerykaSpolkiStretegie = (List<AmerykaSpolkaStrategia>) amSpStrategyRepository.findAll();
 //        amerykaSpolki = (List<AmerykaSpolka>) amSpRepository.findAll();
 //        amerykaSpolki.stream().map(amerykaSpolka -> Double.parseDouble(amerykaSpolka.getDay0119()))
-        queryRepository.findAllWszystkieDane(currentUser.getName());
-        log.info(ANSI_BLUE + "Odczyt wszystkich danych z bazy, endpoint (/amerykaspolka), użytkownik: " + currentUser.getName() + ANSI_RESET);
-        model.addAttribute("currentUser", currentUser.getName());
+        queryRepository.findAllWszystkieDane(currentUserName());
+        if(!showSpolka.show) queryRepository.showWD();
+        log.info(ANSI_BLUE + "Odczyt wszystkich danych z bazy, endpoint (/amerykaspolka), użytkownik: " + currentUserName() + ANSI_RESET);
+        model.addAttribute("showAll", showSpolka.getShow());
+        model.addAttribute("currentUser", currentUserName());
         model.addAttribute("amerykaSpolki", amerykaSpolki);
         model.addAttribute("amerykaSpolkaNew", new AmerykaSpolka());
         model.addAttribute("amerykaSpolkaFind", new AmerykaSpolka());
         return "amerykawidok";
     }
 
-    //
+
+    @GetMapping("/showMineOrAll")
+    public String setShow() {
+        if (showSpolka.getShow()) showSpolka.setShow(false);
+        else showSpolka.setShow(true);
+        return "redirect:/";
+    }
+
+
     @GetMapping("/amerykaspolka/find")
     public String getAllFind(Model model) {
         model.addAttribute("amerykaSpolki", amerykaSpolki);
@@ -197,6 +205,18 @@ public class AmSpController {
 //        long executionTime = System.nanoTime() - startTime;
 //        log.info("Zajęło mi to: " + (executionTime / 1000000000) + "s");
         return "amerykawidok";
+    }
+
+
+    private String currentUserName() {
+        String username="";
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails)principal).getUsername();
+        } else {
+            username = principal.toString();
+        }
+        return username;
     }
 
 //    private void findAllWszystkieDane() {

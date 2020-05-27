@@ -88,6 +88,8 @@ img {
     padding-left: 50px;
 }
 
+
+
 .myForm {
     display: flex;
 }
@@ -192,6 +194,13 @@ img {
 .myColor:hover {
     background-color: #61a5ea;
     border-color: #61a5ea;
+}
+
+.myShow{
+    float: right;
+    height: 24px;
+    margin-top: 70px !important;
+    padding: 0px 6px;
 }
 
 .btn-outline-success {

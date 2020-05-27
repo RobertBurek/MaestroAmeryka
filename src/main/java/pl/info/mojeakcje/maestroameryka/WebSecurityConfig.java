@@ -2,30 +2,18 @@ package pl.info.mojeakcje.maestroameryka;
 
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.event.EventListener;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import pl.info.mojeakcje.maestroameryka.model.AmerykaSpolka;
-import pl.info.mojeakcje.maestroameryka.model.WszystkieDane;
-import pl.info.mojeakcje.maestroameryka.model.modelCustomer.CurrentUser;
-import pl.info.mojeakcje.maestroameryka.model.modelCustomer.Customer;
-import pl.info.mojeakcje.maestroameryka.model.modelCustomer.RoleCustomer;
 import pl.info.mojeakcje.maestroameryka.model.modelCustomer.UserDetailsServiceImpl;
 import pl.info.mojeakcje.maestroameryka.repository.AmSpRepository;
 import pl.info.mojeakcje.maestroameryka.repository.CustoRepository;
-import pl.info.mojeakcje.maestroameryka.repository.QueryRepository;
 import pl.info.mojeakcje.maestroameryka.repository.WszysDaneRepository;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -64,7 +52,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .inMemoryAuthentication()
 //                .withUser(new User("Admin", passwordEncoder().encode("Admin"), Collections.singleton(new SimpleGrantedAuthority("admin"))));
 
-        auth.userDetailsService(userDetailsService);
+        auth.userDetailsService(userDetailsService).getUserDetailsService();
     }
 
     @Override
@@ -86,12 +74,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .loginPage("/loginMaestro").permitAll()
+//                .and()
+//                .formLogin()
+//                .failureUrl("/login.html?error=true")
                 .and()
                 .csrf().disable()
                 .headers().frameOptions().disable()
                 .and()
-                .headers()
-                .disable()
+                .headers().disable()
+//                .and()
+//                .logout()
+//                .logoutUrl("/perform_logout")
+//                .deleteCookies("JSESSIONID")
+//                .logoutSuccessHandler(logoutSuccessHandler())
         ;
 //        http
 //                .csrf().disable()
@@ -151,7 +146,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //        Customer robert = custoRepository.findById(1L).get();
 
 
-        // relacja onetomany customer i amerykaspolka
+    // relacja onetomany customer i amerykaspolka
 //        AmerykaSpolka stara = amSpRepository.findById(1L).get();
 //        AmerykaSpolka amerykaSpolka = new AmerykaSpolka();
 //        amerykaSpolka.setName(stara.getName());
@@ -173,7 +168,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //        robert.setAmerykaSpolki(amerykaSpolki);
 //        custoRepository.save(robert);
 
-        // relacja z dodatkową tabelą Maintable
+    // relacja z dodatkową tabelą Maintable
 //        WszystkieDane wszystkieDane = new WszystkieDane();
 
 //        AmerykaSpolka amerykaSpolka = amSpRepository.findById(1L).get();
@@ -209,7 +204,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //        queryRepository.changeIdNewCustomer(9L);
 //        Thread.sleep(2000);
 //        System.out.println("Zrobione!!!");
-//        queryRepository.setView("Maja", 8L);
+//        queryRepository.setView("anonymousUser", 9L);
 //        log.info("zmieniłem na 2");  //-----------------------------------------------
 
 //        currentUser.setName("Guest");
