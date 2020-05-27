@@ -62,9 +62,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .authorizeRequests()
                 .antMatchers("/amerykaspolka").permitAll()
-//                .antMatchers("/amerykastrategie").hasRole("USER")
-                .antMatchers("/amerykaspolka/save/edit").hasRole("ADMIN")
-                .antMatchers("/amerykaspolka/delete").hasRole("ADMIN")
+                .antMatchers("/amerykastrategie").hasRole("USER")
+                .antMatchers("/amerykaspolka/save/edit").hasRole("USER")
+                .antMatchers("/amerykaspolka/show").hasRole("USER")
 
 
 //                .antMatchers("/**").hasRole("ADMIN")
@@ -77,6 +77,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .and()
 //                .formLogin()
 //                .failureUrl("/login.html?error=true")
+                .and()
+                .logout()
+                .logoutSuccessUrl("/amerykaspolka")
                 .and()
                 .csrf().disable()
                 .headers().frameOptions().disable()

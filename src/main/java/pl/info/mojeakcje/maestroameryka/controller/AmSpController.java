@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.info.mojeakcje.maestroameryka.model.AmerykaSpolka;
 import pl.info.mojeakcje.maestroameryka.model.ShowSpolka;
+import pl.info.mojeakcje.maestroameryka.model.WszystkieDane;
 import pl.info.mojeakcje.maestroameryka.model.modelCustomer.CurrentUser;
 import pl.info.mojeakcje.maestroameryka.repository.AmSpRepository;
 import pl.info.mojeakcje.maestroameryka.repository.QueryRepository;
+import pl.info.mojeakcje.maestroameryka.repository.WszysDaneRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,12 +37,14 @@ public class AmSpController {
     AmSpRepository amSpRepository;
     QueryRepository queryRepository;
     ShowSpolka showSpolka;
+    WszysDaneRepository wszysDaneRepository;
 
-    public AmSpController(CurrentUser currentUser, AmSpRepository amSpRepository, QueryRepository queryRepository, ShowSpolka showSpolka) {
+    public AmSpController(CurrentUser currentUser, AmSpRepository amSpRepository, QueryRepository queryRepository, ShowSpolka showSpolka, WszysDaneRepository wszysDaneRepository) {
         this.currentUser = currentUser;
         this.amSpRepository = amSpRepository;
         this.queryRepository = queryRepository;
         this.showSpolka = showSpolka;
+        this.wszysDaneRepository = wszysDaneRepository;
     }
 
 //    @GetMapping("/loginOpenID")
@@ -56,10 +60,15 @@ public class AmSpController {
 //    }
 
     @GetMapping("/loginMaestro")
-    public String login(Model model) {
-        log.info(ANSI_RED + "Formularz logowania, loginMaestro.html" + ANSI_RESET);
-        model.addAttribute("amerykaSpolkaFind", new AmerykaSpolka());
+    public String login() {
+        log.info(ANSI_RED + "Proces logowania!!!" + ANSI_RESET);
         return "loginMaestro";
+    }
+
+    @GetMapping("/logout")
+    public String logout() {
+        log.info(ANSI_RED + "Wylogowano: " + currentUserName() + ANSI_RESET);
+        return "redirect:/amerykaspolka";
     }
 
 
@@ -89,7 +98,7 @@ public class AmSpController {
         if(!showSpolka.show) queryRepository.showWD();
         log.info(ANSI_BLUE + "Odczyt wszystkich danych z bazy, endpoint (/amerykaspolka), użytkownik: " + currentUserName() + ANSI_RESET);
         model.addAttribute("showAll", showSpolka.getShow());
-        model.addAttribute("currentUser", currentUserName());
+        model.addAttribute("currentUserName", currentUserName());
         model.addAttribute("amerykaSpolki", amerykaSpolki);
         model.addAttribute("amerykaSpolkaNew", new AmerykaSpolka());
         model.addAttribute("amerykaSpolkaFind", new AmerykaSpolka());
@@ -138,14 +147,19 @@ public class AmSpController {
 //        amerykaSpolki = (List<AmerykaSpolka>) amSpRepository.findAll();
 //        return "redirect:/amerykaspolka/find#position";
 //    }
-//
-    @GetMapping("/amerykaspolka/del")
+
+    @GetMapping("/amerykaspolka/show")
     public String delAmerykaSpolka(@RequestParam Long index, Model model) {
-        AmerykaSpolka deleteAmerykaSpolka = amSpRepository.findById(index.longValue()).get();
-        log.info("Spółka do usunięcia: " + ANSI_RED + deleteAmerykaSpolka.getName() + " (" + deleteAmerykaSpolka.getTicker() + ")" + ANSI_RESET);
+        AmerykaSpolka showAmerykaSpolka = amerykaSpolki.stream().filter(amerykaSpolka -> amerykaSpolka.getIdSpolka()==index).findFirst().get();
+        WszystkieDane wszystkieDane = wszysDaneRepository.findById(showAmerykaSpolka.getIdWszystkieDane()).get();
+        System.out.println(wszystkieDane);
+        if (wszystkieDane.getWidoczny()) wszystkieDane.setWidoczny(false);
+        else wszystkieDane.setWidoczny(true);
+        wszysDaneRepository.save(wszystkieDane);
+        System.out.println(wszystkieDane);
+        log.info("Spółka usunięta z listy widoku: " + ANSI_RED + showAmerykaSpolka.getName() + " (" + showAmerykaSpolka.getTicker() + ")" + ANSI_RESET);
         model.addAttribute("amerykaSpolkaFind", new AmerykaSpolka());
-        model.addAttribute("amerykaSpolkadelete", deleteAmerykaSpolka);
-        return "amerykaspolkadelete";
+        return "redirect:/amerykaspolka";
     }
 
     @PostMapping("/amerykaspolka/delete")

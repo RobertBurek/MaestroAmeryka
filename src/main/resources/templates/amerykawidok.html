@@ -49,7 +49,8 @@
                 <!--                    </a>-->
                 <li class="nav-item">
                     <!--                    <a class="nav-link myBanerLink" th:href="@{/loginOpenID}">Login-->
-                    <a class="nav-link myBanerLink" style="color: #61a5ea;" href="/loginMaestro">Login
+                    <a class="nav-link myBanerLink" style="color: #61a5ea;" th:href="${currentUserName.equals('anonymousUser')} ? '/loginMaestro' : '/logout'"
+                       th:text="${currentUserName.equals('anonymousUser')} ? 'Login' : 'Logout'">Login
                         <!--                        <img src="https://github.com/fluidicon.png" style="height: 19px; width: 19px;"/>-->
                         <!--                        <img th:src="@{/img/LogoChrome.png}" style="height: 19px; width: 19px;"/>-->
                         <span class="sr-only">(current)</span>
@@ -178,7 +179,7 @@
                         </td>
                         <!--                        <td class="textCenter"><a href="#"><i class="fa fa-edit"></i></a></td>-->
                         <td class="textCenter" style="vertical-align:middle;">
-                            <a th:href="@{/amerykaspolka/del(index=${amerykaSpolka.idSpolka})}">
+                            <a th:href="@{/amerykaspolka/show(index=${amerykaSpolka.idSpolka})}">
                                 <i th:class="${amerykaSpolka.widok} ? 'fas fa-minus myRed' : 'fas fa-plus myGreen'"></i>
                             </a>
                         </td>
