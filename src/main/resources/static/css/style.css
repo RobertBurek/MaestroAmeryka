@@ -203,6 +203,14 @@ img {
     padding: 0px 6px;
 }
 
+.myGreen{
+    color: green;
+}
+
+.myRed{
+    color: red;
+}
+
 .btn-outline-success {
     color: #61a5ea;
     background-color: transparent;

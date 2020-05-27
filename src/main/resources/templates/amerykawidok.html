@@ -135,7 +135,7 @@
                         <!--                        <th>Market</th>-->
                         <th class="textCenter">YTD</th>
                         <th class="textCenter" style="padding-left: 0px; padding-right: 0px; width: 80px;">Edit</th>
-                        <th class="textCenter" style="padding-left: 0px; padding-right: 0px; width: 100px;">Delete</th>
+                        <th class="textCenter" style="padding-left: 0px; padding-right: 0px; width: 100px;">Show</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -179,7 +179,7 @@
                         <!--                        <td class="textCenter"><a href="#"><i class="fa fa-edit"></i></a></td>-->
                         <td class="textCenter" style="vertical-align:middle;">
                             <a th:href="@{/amerykaspolka/del(index=${amerykaSpolka.idSpolka})}">
-                                <i class="fa fa-trash"></i>
+                                <i th:class="${amerykaSpolka.widok} ? 'fas fa-minus myRed' : 'fas fa-plus myGreen'"></i>
                             </a>
                         </td>
                         <!--                                                <td><a th:href="@{/amerykaSpolka/del(index=${amerykaSpolka.ticker})}"><i class="fa fa-trash"></i></a></td>-->
