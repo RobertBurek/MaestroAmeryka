@@ -1,5 +1,6 @@
 package pl.info.mojeakcje.maestroameryka.repository;
 
+import antlr.ANTLRError;
 import lombok.extern.log4j.Log4j2;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -97,7 +98,7 @@ public class QueryRepository {
 
 //    INSERT INTO `MaestroAmerykaTeraz`.`wszystkie_dane`( `notatka`, `widoczny`, `spolka_id`, `cust_id`) SELECT `notatka`, `widoczny`, `spolka_id`, `cust_id` FROM `MaestroAmerykaTeraz`.`nowy_customer`
 
-    public void findAllWszystkieDane(String currentUserName) {
+    public List<AmerykaSpolka> findAllWszystkieDane(String currentUserName) {
         amerykaSpolki.clear();
         List<Object> wszystkieDaneList =getDaneWithView(currentUserName);
         Iterator itr = wszystkieDaneList.iterator();
@@ -124,6 +125,6 @@ public class QueryRepository {
 //            if (Long.parseLong(String.valueOf(obj[10]))==1) System.out.println(amerykaSpolka);
             amerykaSpolki.add(amerykaSpolka);
         }
-//        return amerykaSpolki;
+        return amerykaSpolki;
     }
 }
