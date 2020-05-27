@@ -5,9 +5,13 @@ import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import pl.info.mojeakcje.maestroameryka.model.AmerykaSpolka;
+import pl.info.mojeakcje.maestroameryka.model.modelCustomer.CurrentUser;
 import pl.info.mojeakcje.maestroameryka.repository.AmSpRepository;
+import pl.info.mojeakcje.maestroameryka.repository.QueryRepository;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -22,9 +26,17 @@ public class CzytanieDanychJsoup {
 
     protected final org.slf4j.Logger log = LoggerFactory.getLogger(getClass());
 
+    CurrentUser currentUser;
+    QueryRepository queryRepository;
     AmSpRepository amSpRepository;
 
-    public CzytanieDanychJsoup(AmSpRepository amSpRepository) {
+//    public CzytanieDanychJsoup(AmSpRepository amSpRepository) {
+//        this.amSpRepository = amSpRepository;
+//    }
+
+    public CzytanieDanychJsoup(CurrentUser currentUser, QueryRepository queryRepository, AmSpRepository amSpRepository) {
+        this.currentUser = currentUser;
+        this.queryRepository = queryRepository;
         this.amSpRepository = amSpRepository;
     }
 
@@ -169,7 +181,7 @@ public class CzytanieDanychJsoup {
                         result = dane.split(",");
                         if ((result[4] != null) && (!result[4].equals("null"))) {
                             courseCurrent = Double.parseDouble(result[4]);
-                            nowaSpolka.setCourseCurrent(new DecimalFormat("# 0.000").format(courseCurrent).replace(",", "."));
+                            nowaSpolka.setCourseCurrent(new DecimalFormat("# 0.000").format(courseCurrent).replace(",", ".").trim());
                         }
                         nowaSpolka.setDayCourseCurrent(result[0]);
 //                        System.out.println("courseCurrent " + nowaSpolka.getDayCourseCurrent() + " - " + nowaSpolka.getCourseCurrent());
@@ -178,7 +190,7 @@ public class CzytanieDanychJsoup {
                         result = dane.split(",");
                         if ((result[4] != null) && (!result[4].equals("null"))) {
                             course12M = Double.parseDouble(result[4]);
-                            nowaSpolka.setCourse12M(new DecimalFormat("# 0.000").format(course12M).replace(",", "."));
+                            nowaSpolka.setCourse12M(new DecimalFormat("# 0.000").format(course12M).replace(",", ".").trim());
                         }
                         nowaSpolka.setDay12M(result[0]);
 //                        System.out.println("course12M " + nowaSpolka.getDay12M() + " - " + nowaSpolka.getCourse12M());
@@ -187,7 +199,7 @@ public class CzytanieDanychJsoup {
                         result = dane.split(",");
                         if ((result[4] != null) && (!result[4].equals("null"))) {
                             courseYTD = Double.parseDouble(result[4]);
-                            nowaSpolka.setCourseYTD(new DecimalFormat("# 0.000").format(courseYTD).replace(",", "."));
+                            nowaSpolka.setCourseYTD(new DecimalFormat("# 0.000").format(courseYTD).replace(",", ".").trim());
                         }
                         nowaSpolka.setDayYTD(result[0]);
 //                        System.out.println("courseYTD " + nowaSpolka.getDayYTD() + " - " + nowaSpolka.getCourseYTD());
@@ -196,7 +208,7 @@ public class CzytanieDanychJsoup {
                         result = dane.split(",");
                         if ((result[4] != null) && (!result[4].equals("null"))) {
                             course3M = Double.parseDouble(result[4]);
-                            nowaSpolka.setCourse3M(new DecimalFormat("# 0.000").format(course3M).replace(",", "."));
+                            nowaSpolka.setCourse3M(new DecimalFormat("# 0.000").format(course3M).replace(",", ".").trim());
                         }
                         nowaSpolka.setDay3M(result[0]);
 //                        System.out.println("course3M " + nowaSpolka.getDay3M() + " - " + nowaSpolka.getCourse3M());
@@ -205,7 +217,7 @@ public class CzytanieDanychJsoup {
                         result = dane.split(",");
                         if ((result[4] != null) && (!result[4].equals("null"))) {
                             course1M = Double.parseDouble(result[4]);
-                            nowaSpolka.setCourse1M(new DecimalFormat("# 0.000").format(course1M).replace(",", "."));
+                            nowaSpolka.setCourse1M(new DecimalFormat("# 0.000").format(course1M).replace(",", ".").trim());
                         }
                         nowaSpolka.setDay1M(result[0]);
 //                        System.out.println("course1M " + nowaSpolka.getDay1M() + " - " + nowaSpolka.getCourse1M());
@@ -295,28 +307,32 @@ public class CzytanieDanychJsoup {
 
     //        !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //            Metoda  automatycznego zapisu danych z HTTP, uruchamiana zawsze przy uruchomianiu aplikacji
-//    @EventListener(ApplicationReadyEvent.class)
-//    public void get() {
-//
-//        LocalDateTime startCzytaj = LocalDateTime.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), LocalDate.now().getDayOfMonth(), 22, 20);
-//        LocalDateTime teraz = LocalDateTime.now();
-//        Duration czasOczekiwania = Duration.between(teraz, startCzytaj);
-//        if (czasOczekiwania.getSeconds()<0) czasOczekiwania = Duration.between(teraz.minusDays(1), startCzytaj);
-//        log.info(ANSI_FIOLET + "Czytanie danych zacznie się za: "+ czasOczekiwania.getSeconds() +"s"+ ANSI_RESET);
-//        TimerTask taskNew = new TimerTask() {
-//            @Override
-//            public void run() {
-//                try {
-//                    czytaj();
-//                } catch (InterruptedException e) {
-//                    log.info(ANSI_RED + "Miałem problem z uruchomieniem metody czytaj()!" + ANSI_RESET);
-//                    e.printStackTrace();
-//                }
-//            }
-//        };
-//        Timer timer = new Timer();
-//        timer.schedule(taskNew, czasOczekiwania.getSeconds() * 1000, 86400000);
-//    }
+    @EventListener(ApplicationReadyEvent.class)
+    public void get() {
+
+        LocalDateTime startCzytaj = LocalDateTime.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), LocalDate.now().getDayOfMonth(), 22, 20);
+        LocalDateTime teraz = LocalDateTime.now();
+        Duration czasOczekiwania = Duration.between(teraz, startCzytaj);
+        if (czasOczekiwania.getSeconds() < 0) czasOczekiwania = Duration.between(teraz.minusDays(1), startCzytaj);
+        log.info(ANSI_FIOLET + "Czytanie danych zacznie się za: " + czasOczekiwania.getSeconds() + "s" + ANSI_RESET);
+        TimerTask taskNew = new TimerTask() {
+            @Override
+            public void run() {
+                try {
+                    czytaj();
+                } catch (InterruptedException e) {
+                    log.info(ANSI_RED + "Miałem problem z uruchomieniem metody czytaj()!" + ANSI_RESET);
+                    e.printStackTrace();
+                }
+            }
+        };
+        Timer timer = new Timer();
+        timer.schedule(taskNew, czasOczekiwania.getSeconds() * 1000, 86400000);
+
+        currentUser.setName("Guest");
+        currentUser.setIdCU(3L);
+        queryRepository.findAllWszystkieDane(currentUser.getName());
+    }
 
 }
 

@@ -13,7 +13,7 @@ import java.util.List;
 @SpringBootApplication
 public class MaestroamerykaApplication {
 
-    public static List<AmerykaSpolka> amerykaSpolki;
+    public static List<AmerykaSpolka> amerykaSpolki = new ArrayList<>();
     public static List<Industry> industryList = new ArrayList<>();
     public static List<Sector> sectorList = new ArrayList<>();
     public static List<Market> marketList = new ArrayList<>();

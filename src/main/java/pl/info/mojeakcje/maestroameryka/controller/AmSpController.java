@@ -2,12 +2,19 @@ package pl.info.mojeakcje.maestroameryka.controller;
 
 import lombok.extern.log4j.Log4j2;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import pl.info.mojeakcje.maestroameryka.model.AmerykaSpolka;
+import pl.info.mojeakcje.maestroameryka.model.modelCustomer.CurrentUser;
 import pl.info.mojeakcje.maestroameryka.repository.AmSpRepository;
+import pl.info.mojeakcje.maestroameryka.repository.QueryRepository;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,11 +30,20 @@ public class AmSpController {
 
     protected final org.slf4j.Logger log = LoggerFactory.getLogger(getClass());
 
+    CurrentUser currentUser;
     AmSpRepository amSpRepository;
+    QueryRepository queryRepository;
 
-    public AmSpController(AmSpRepository amSpRepository) {
+    public AmSpController(CurrentUser currentUser, AmSpRepository amSpRepository, QueryRepository queryRepository) {
+        this.currentUser = currentUser;
         this.amSpRepository = amSpRepository;
+        this.queryRepository = queryRepository;
     }
+
+    //    public AmSpController(AmSpRepository amSpRepository, QueryRepository queryRepository) {
+//        this.amSpRepository = amSpRepository;
+//        this.queryRepository = queryRepository;
+//    }
 
 //    public AmSpController(AmSpRepository amSpRepository) {
 //        this.amSpRepository = amSpRepository;
@@ -52,25 +68,41 @@ public class AmSpController {
         return "loginMaestro";
     }
 
-    @GetMapping("/")
+    @GetMapping("/testSpolka")
     public String getAll(Model model) {
-        long startTime = System.nanoTime();
+//        long startTime = System.nanoTime();
         amerykaSpolki = (List<AmerykaSpolka>) amSpRepository.findAll();
-        log.info(ANSI_BLUE + "Odczyt wszystkich danych z bazy ..." + ANSI_RESET);
+        log.info(ANSI_BLUE + "Odczyt samych spółek z tabeli ameryka_spolka." + ANSI_RESET);
         model.addAttribute("amerykaSpolki", amerykaSpolki);
         model.addAttribute("amerykaSpolkaNew", new AmerykaSpolka());
         model.addAttribute("amerykaSpolkaFind", new AmerykaSpolka());
-        long executionTime = System.nanoTime() - startTime;
-        log.info("Zajęło mi to: " + (executionTime / 1000000000) + "s");
+//        long executionTime = System.nanoTime() - startTime;
+//        log.info("Zajęło mi to: " + (executionTime / 1000000000) + "s");
         return "amerykawidok";
     }
+
+    @GetMapping("/")
+    public String getAllView(Model model) {
+//        queryRepository.findAllWszystkieDane(currentUser.getName());
+        System.out.println("amerykawidok, currentUser: " + currentUser.getName());
+//        amerykaSpolki = wszystkieDaneList.stream().map(wszystkieDane -> wszystkieDane.getAmerykaSpolka()).collect(Collectors.toList());
+//        amerykaSpolki = (List<AmerykaSpolka>) amSpRepository.findAll();
+        log.info(ANSI_BLUE + "Odczyt wszystkich danych z bazy, endpoint (/) ..." + ANSI_RESET);
+        model.addAttribute("amerykaSpolki", amerykaSpolki);
+        model.addAttribute("amerykaSpolkaNew", new AmerykaSpolka());
+        model.addAttribute("amerykaSpolkaFind", new AmerykaSpolka());
+        return "amerykawidok";
+    }
+
+
 
     @GetMapping("/amerykaspolka")
     public String getStart(Model model) {
 //        amerykaSpolkiStretegie = (List<AmerykaSpolkaStrategia>) amSpStrategyRepository.findAll();
-        amerykaSpolki = (List<AmerykaSpolka>) amSpRepository.findAll();
+//        amerykaSpolki = (List<AmerykaSpolka>) amSpRepository.findAll();
 //        amerykaSpolki.stream().map(amerykaSpolka -> Double.parseDouble(amerykaSpolka.getDay0119()))
-        log.info(ANSI_BLUE + "Odczyt wszystkich danych z bazy ..." + ANSI_RESET);
+//        queryRepository.findAllWszystkieDane(currentUser.getName());
+        log.info(ANSI_BLUE + "Odczyt wszystkich danych z bazy, endpoint (/amerykaspolka) ..." + ANSI_RESET);
         model.addAttribute("amerykaSpolki", amerykaSpolki);
         model.addAttribute("amerykaSpolkaNew", new AmerykaSpolka());
         model.addAttribute("amerykaSpolkaFind", new AmerykaSpolka());
@@ -130,8 +162,11 @@ public class AmSpController {
 
     @GetMapping("/amerykaspolka/edit")
     public String editAmerykaSpolka(@RequestParam Long index, Model model) {
-        AmerykaSpolka modifiedAmerykaSpolka = amSpRepository.findById(index.longValue()).get();
+//        AmerykaSpolka modifiedAmerykaSpolka = amSpRepository.findById(index.longValue()).get();
+        AmerykaSpolka modifiedAmerykaSpolka = amerykaSpolki.get((int) (index - 1));
+
         log.info("Spółka do modyfikacji: " + ANSI_RED + modifiedAmerykaSpolka.getName() + " (" + modifiedAmerykaSpolka.getTicker() + ")" + ANSI_RESET);
+        log.info("Spółka do modyfikacji: " + ANSI_RED + modifiedAmerykaSpolka.getNote() + " (" + modifiedAmerykaSpolka.getIdWszystkieDane() + ")" + ANSI_RESET);
         model.addAttribute("amerykaSpolkaFind", new AmerykaSpolka());
         model.addAttribute("amerykaSpolkaModified", modifiedAmerykaSpolka);
         return "amerykaspolkaedit";
@@ -163,5 +198,32 @@ public class AmSpController {
         amerykaSpolki = (List<AmerykaSpolka>) amSpRepository.findAll();
         return "redirect:/amerykaspolka/edit?index=" + modifiedAmerykaSpolka.getIdSpolka();
     }
+
+//    private void findAllWszystkieDane() {
+//        List<Object> wszystkieDaneList = queryRepository.getDaneWithView(currentUser.getName());
+//        Iterator itr = wszystkieDaneList.iterator();
+//        while (itr.hasNext()) {
+//            Object[] obj = (Object[]) itr.next();
+//            AmerykaSpolka amerykaSpolka = new AmerykaSpolka(String.valueOf(obj[29]), String.valueOf(obj[26]), String.valueOf(obj[25]), String.valueOf(obj[28]), String.valueOf(obj[21]), String.valueOf(obj[1]), String.valueOf(obj[31]));
+//            amerykaSpolka.setIdSpolka(Long.parseLong(String.valueOf(obj[10])));
+//            amerykaSpolka.setIdWszystkieDane(Long.parseLong(String.valueOf(obj[0])));
+//            amerykaSpolka.setWidok(Boolean.valueOf(String.valueOf(obj[2])));
+//            amerykaSpolka.setyTD(String.valueOf(obj[30]));
+//            amerykaSpolka.setM1(String.valueOf(obj[22]));
+//            amerykaSpolka.setM3(String.valueOf(obj[24]));
+//            amerykaSpolka.setM12(String.valueOf(obj[23]));
+//            amerykaSpolka.setDay1M(String.valueOf(obj[17]));
+//            amerykaSpolka.setDay3M(String.valueOf(obj[18]));
+//            amerykaSpolka.setDay12M(String.valueOf(obj[16]));
+//            amerykaSpolka.setDayYTD(String.valueOf(obj[20]));
+//            amerykaSpolka.setDayCourseCurrent(String.valueOf(obj[19]));
+//            amerykaSpolka.setCourse3M(String.valueOf(obj[13]));
+//            amerykaSpolka.setCourse1M(String.valueOf(obj[12]));
+//            amerykaSpolka.setCourseYTD(String.valueOf(obj[15]));
+//            amerykaSpolka.setCourse12M(String.valueOf(obj[11]));
+//            amerykaSpolka.setCourseCurrent(String.valueOf(obj[14]));
+//            amerykaSpolki.add(amerykaSpolka);
+//        }
+//    }
 
 }

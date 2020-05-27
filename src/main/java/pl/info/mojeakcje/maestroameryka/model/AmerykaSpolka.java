@@ -30,6 +30,8 @@ public class AmerykaSpolka {
     private String m3;
     private String m12;
     private String website;
+    private Boolean widok;
+    private Long idWszystkieDane;
 //    @ManyToOne
 //    @JoinColumn(name = "customer_id")
 //    private Customer customer;
@@ -223,7 +225,15 @@ public class AmerykaSpolka {
         this.website = website;
     }
 
-//    public Customer getCustomer() {
+    public Long getIdWszystkieDane() {
+        return idWszystkieDane;
+    }
+
+    public void setIdWszystkieDane(Long idWszystkieDane) {
+        this.idWszystkieDane = idWszystkieDane;
+    }
+
+    //    public Customer getCustomer() {
 //        return customer;
 //    }
 //
@@ -231,10 +241,19 @@ public class AmerykaSpolka {
 //        this.customer = customer;
 //    }
 
+
+    public Boolean getWidok() {
+        return widok;
+    }
+
+    public void setWidok(Boolean widoczny) {
+        this.widok = widoczny;
+    }
+
     @Override
     public String toString() {
         return "AmerykaSpolka{" +
-                "id=" + idSpolka +
+                "idSpolka=" + idSpolka +
                 ", ticker='" + ticker + '\'' +
                 ", name='" + name + '\'' +
                 ", market='" + market + '\'' +
@@ -256,7 +275,8 @@ public class AmerykaSpolka {
                 ", m3='" + m3 + '\'' +
                 ", m12='" + m12 + '\'' +
                 ", website='" + website + '\'' +
+                ", widok=" + widok +
+                ", idWszystkieDane=" + idWszystkieDane +
                 '}';
     }
-
 }
