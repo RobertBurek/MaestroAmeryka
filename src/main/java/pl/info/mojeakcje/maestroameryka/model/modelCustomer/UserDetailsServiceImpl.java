@@ -53,9 +53,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             byNickCustomer = userDetailsNew;
         }
         currentUser.setName(byNickCustomer.getUsername());
-        System.out.println(currentUser.getName());
         queryRepository.findAllWszystkieDane(currentUser.getName());
-        System.out.println(custoRepository.findByNickCustomer(s).getId());
 //            log.info(byNickCustomer.getAuthorities().toString());
 //            log.info("" + byNickCustomer.getAuthorities().size());
 //            log.info(byNickCustomer.getPassword());

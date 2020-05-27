@@ -2,7 +2,6 @@ package pl.info.mojeakcje.maestroameryka.controller;
 
 import lombok.extern.log4j.Log4j2;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +13,6 @@ import pl.info.mojeakcje.maestroameryka.model.modelCustomer.CurrentUser;
 import pl.info.mojeakcje.maestroameryka.repository.AmSpRepository;
 import pl.info.mojeakcje.maestroameryka.repository.QueryRepository;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -73,6 +71,7 @@ public class AmSpController {
 //        long startTime = System.nanoTime();
         amerykaSpolki = (List<AmerykaSpolka>) amSpRepository.findAll();
         log.info(ANSI_BLUE + "Odczyt samych spółek z tabeli ameryka_spolka." + ANSI_RESET);
+        model.addAttribute("currentUser", currentUser.getName());
         model.addAttribute("amerykaSpolki", amerykaSpolki);
         model.addAttribute("amerykaSpolkaNew", new AmerykaSpolka());
         model.addAttribute("amerykaSpolkaFind", new AmerykaSpolka());
@@ -84,16 +83,16 @@ public class AmSpController {
     @GetMapping("/")
     public String getAllView(Model model) {
 //        queryRepository.findAllWszystkieDane(currentUser.getName());
-        System.out.println("amerykawidok, currentUser: " + currentUser.getName());
+//        System.out.println("amerykawidok, currentUser: " + currentUser.getName());
 //        amerykaSpolki = wszystkieDaneList.stream().map(wszystkieDane -> wszystkieDane.getAmerykaSpolka()).collect(Collectors.toList());
 //        amerykaSpolki = (List<AmerykaSpolka>) amSpRepository.findAll();
-        log.info(ANSI_BLUE + "Odczyt wszystkich danych z bazy, endpoint (/) ..." + ANSI_RESET);
+        log.info(ANSI_BLUE + "Odczyt wszystkich danych z bazy, endpoint (/), użytkownik: " + currentUser.getName() + ANSI_RESET);
+        model.addAttribute("currentUser", currentUser.getName());
         model.addAttribute("amerykaSpolki", amerykaSpolki);
         model.addAttribute("amerykaSpolkaNew", new AmerykaSpolka());
         model.addAttribute("amerykaSpolkaFind", new AmerykaSpolka());
         return "amerykawidok";
     }
-
 
 
     @GetMapping("/amerykaspolka")
@@ -102,7 +101,8 @@ public class AmSpController {
 //        amerykaSpolki = (List<AmerykaSpolka>) amSpRepository.findAll();
 //        amerykaSpolki.stream().map(amerykaSpolka -> Double.parseDouble(amerykaSpolka.getDay0119()))
 //        queryRepository.findAllWszystkieDane(currentUser.getName());
-        log.info(ANSI_BLUE + "Odczyt wszystkich danych z bazy, endpoint (/amerykaspolka) ..." + ANSI_RESET);
+        log.info(ANSI_BLUE + "Odczyt wszystkich danych z bazy, endpoint (/amerykaspolka), użytkownik: " + currentUser.getName() + ANSI_RESET);
+        model.addAttribute("currentUser", currentUser.getName());
         model.addAttribute("amerykaSpolki", amerykaSpolki);
         model.addAttribute("amerykaSpolkaNew", new AmerykaSpolka());
         model.addAttribute("amerykaSpolkaFind", new AmerykaSpolka());
