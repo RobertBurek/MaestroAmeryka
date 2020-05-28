@@ -30,7 +30,7 @@ img {
 
 .myBanerLink {
     font-size: 23px;
-    margin-left: 20px;
+    margin-left: 35px;
 }
 
 .myBaner {
@@ -453,25 +453,22 @@ section p {
     .listSpolka {
         max-height: 97%;
     }
-
     main {
         height: 1800px;
     }
+
 }
 
 @media (max-width: 840px ) {
     .listSpolka {
         max-height: 97%;
     }
-
     main {
         height: 1840px;
     }
-
     .myNaviButton {
         margin-left: 30%;
     }
-
     article {
         padding: 0px;
     }
@@ -481,17 +478,14 @@ section p {
     .listSpolka {
         max-height: 97%;
     }
-
     main {
         height: 2250px;
     }
-
     .myColumn {
         width: 46%;
         margin: 10px 0px;
         padding-left: 5px;
     }
-
     .myNaviButton {
         margin-left: 20%;
     }
@@ -500,13 +494,29 @@ section p {
         top: 10%;
         left: 40%;
     }
+    .myBaner{
+        left: 120px;
+        top: -200px;
+    }
+    .myBanerLogin{
+        position: relative;
+        top: -50px;
+        left: 130px;
+    }
+    .myBanerForm{
+        position: relative;
+        top: -195px;
+        left: 372px;
+    }
+    .collapse.show {
+        height: 70px;
+    }
 }
 
 @media (max-width: 758px ) {
     .listSpolka {
         max-height: 97%;
     }
-
     main {
         height: 2500px;
     }
@@ -526,14 +536,13 @@ section p {
     .listSpolka {
         max-height: 97%;
     }
-
     main {
         height: 1940px;
     }
-
     section p {
         font-size: 80%;
     }
+
 }
 
 @media (max-width: 620px ) {
@@ -564,29 +573,23 @@ section p {
     .listSpolka {
         max-height: 97%;
     }
-
     main {
         height: 2250px;
     }
-
     .input-course {
         margin-right: 2px;
         font-size: 90%;
         width: 80px;
     }
-
     .myForm {
         font-size: 80%;
     }
-
     .btn-outline-success {
         font-size: 80%;
     }
-
     section p {
         font-size: 74%;
     }
-
     h3 {
         font-size: 1.0rem;
     }
@@ -596,11 +599,9 @@ section p {
     .listSpolka {
         max-height: 97%;
     }
-
     main {
         height: 2500px;
     }
-
     .btn-outline-success {
         font-size: 60%;
     }
