@@ -97,6 +97,8 @@ public class CzytanieDanychJsoup {
             // z danych z bazy, które nie ulegają zmianie.
             AmerykaSpolka nowaSpolka = new AmerykaSpolka(amSp.getTicker(), amSp.getName(), amSp.getMarket(), amSp.getSector(), amSp.getIndustry(), amSp.getNote(), amSp.getWebsite());
             nowaSpolka.setIdSpolka(amSp.getIdSpolka());
+            nowaSpolka.setWidok(amSp.getWidok());
+            nowaSpolka.setIdWszystkieDane(amSp.getIdWszystkieDane());
 
 
 //            System.out.println("https://query1.finance.yahoo.com/v7/finance/download/" + amSp.getTicker() + "?period1=" + (startTime + deltaTime - rokTime) + "&period2=" + (startTime + deltaTime) + "&interval=1d&events=history");

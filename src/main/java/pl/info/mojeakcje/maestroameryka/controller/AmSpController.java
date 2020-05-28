@@ -116,6 +116,8 @@ public class AmSpController {
 
     @GetMapping("/amerykaspolka/find")
     public String getAllFind(Model model) {
+        model.addAttribute("showAll", showSpolka.getShow());
+        model.addAttribute("currentUserName", currentUserName());
         model.addAttribute("amerykaSpolki", amerykaSpolki);
         model.addAttribute("amerykaSpolkaNew", new AmerykaSpolka());
         model.addAttribute("amerykaSpolkaFind", new AmerykaSpolka());
@@ -126,7 +128,7 @@ public class AmSpController {
     public String postFindAmerykaSpolka(@ModelAttribute AmerykaSpolka amerykaSpolkaFind) {
         log.info("Szukać będziemy: " + ANSI_FIOLET + amerykaSpolkaFind.getTicker().toUpperCase() + ANSI_RESET);
 //        amerykaSpolki = (List<AmerykaSpolka>) amSpRepository.findAll();
-        amerykaSpolki = queryRepository.findAllWszystkieDane(currentUser.getName());
+        amerykaSpolki = queryRepository.findAllWszystkieDane(currentUserName());
         if (!amerykaSpolkaFind.getTicker().equals("")) {
             amerykaSpolki = amerykaSpolki.stream()
                     .filter(amerykaSpolka -> (amerykaSpolka.getTicker()).contains(amerykaSpolkaFind.getTicker().toUpperCase()))
@@ -149,14 +151,12 @@ public class AmSpController {
 //    }
 
     @GetMapping("/amerykaspolka/show")
-    public String delAmerykaSpolka(@RequestParam Long index, Model model) {
-        AmerykaSpolka showAmerykaSpolka = amerykaSpolki.stream().filter(amerykaSpolka -> amerykaSpolka.getIdSpolka() == index).findFirst().get();
+    public String showAmerykaSpolka(@RequestParam Long index, Model model) {
+        AmerykaSpolka showAmerykaSpolka = amerykaSpolki.stream().filter(amerykaSpolka -> amerykaSpolka.getIdSpolka().equals(index)).findFirst().get();
         WszystkieDane wszystkieDane = wszysDaneRepository.findById(showAmerykaSpolka.getIdWszystkieDane()).get();
-        System.out.println(wszystkieDane);
         if (wszystkieDane.getWidoczny()) wszystkieDane.setWidoczny(false);
         else wszystkieDane.setWidoczny(true);
         wszysDaneRepository.save(wszystkieDane);
-        System.out.println(wszystkieDane);
         log.info("Spółka usunięta z listy widoku: " + ANSI_RED + showAmerykaSpolka.getName() + " (" + showAmerykaSpolka.getTicker() + ")" + ANSI_RESET);
         model.addAttribute("amerykaSpolkaFind", new AmerykaSpolka());
         return "redirect:/amerykaspolka";
@@ -172,38 +172,50 @@ public class AmSpController {
 
     @GetMapping("/amerykaspolka/edit")
     public String editAmerykaSpolka(@RequestParam Long index, Model model) {
-//        AmerykaSpolka modifiedAmerykaSpolka = amSpRepository.findById(index.longValue()).get();
-        AmerykaSpolka modifiedAmerykaSpolka = amerykaSpolki.stream().filter(amerykaSpolka -> amerykaSpolka.getIdSpolka() == ((int) (long) (index))).findFirst().get();
-        log.info("Spółka do modyfikacji: " + ANSI_RED + modifiedAmerykaSpolka.getName() + " (" + modifiedAmerykaSpolka.getTicker() + ")" + ANSI_RESET);
+
+        AmerykaSpolka editAmerykaSpolka = amerykaSpolki.stream().filter(amerykaSpolka -> amerykaSpolka.getIdSpolka().equals(index)).findFirst().get();
+        log.info("Spółka do modyfikacji: " + ANSI_RED + editAmerykaSpolka.getName() + " (" + editAmerykaSpolka.getTicker() + ")" + ANSI_RESET);
+
         model.addAttribute("amerykaSpolkaFind", new AmerykaSpolka());
-        model.addAttribute("amerykaSpolkaModified", modifiedAmerykaSpolka);
+        model.addAttribute("amerykaSpolkaModified", editAmerykaSpolka);
         return "amerykaspolkaedit";
     }
 
-    @PostMapping("/amerykaspolka/edit")
-    public String findAmerykaSpolka(@ModelAttribute AmerykaSpolka amerykaSpolkaFind, Model model) {
-        log.info("Szukać będziemy: " + amerykaSpolkaFind.getTicker());
-        amerykaSpolki = (List<AmerykaSpolka>) amSpRepository.findAll();
-        List<AmerykaSpolka> newAmerykaSpolki;
-        if (!amerykaSpolkaFind.getTicker().equals("")) {
-            newAmerykaSpolki = amerykaSpolki.stream()
-                    .filter(amerykaSpolka -> (amerykaSpolka.getTicker()).contains(amerykaSpolkaFind.getTicker().toUpperCase()))
-                    .collect(Collectors.toList());
-        } else {
-            newAmerykaSpolki = amerykaSpolki;
-        }
-        log.info("Lista znalezionych spółek: " + newAmerykaSpolki.toString());
-        model.addAttribute("amerykaSpolki", newAmerykaSpolki);
-        model.addAttribute("amerykaSpolkaNew", amerykaSpolkaFind);
-        model.addAttribute("amerykaSpolkaFind", new AmerykaSpolka());
-        return "amerykaspolkaedit";
-    }
+//    @PostMapping("/amerykaspolka/edit")
+//    public String findAmerykaSpolka(@ModelAttribute AmerykaSpolka amerykaSpolkaFind, Model model) {
+//        log.info("Szukać będziemy: " + amerykaSpolkaFind.getTicker());
+//        amerykaSpolki = (List<AmerykaSpolka>) amSpRepository.findAll();
+//        List<AmerykaSpolka> newAmerykaSpolki;
+//        if (!amerykaSpolkaFind.getTicker().equals("")) {
+//            newAmerykaSpolki = amerykaSpolki.stream()
+//                    .filter(amerykaSpolka -> (amerykaSpolka.getTicker()).contains(amerykaSpolkaFind.getTicker().toUpperCase()))
+//                    .collect(Collectors.toList());
+//        } else {
+//            newAmerykaSpolki = amerykaSpolki;
+//        }
+//        log.info("Lista znalezionych spółek: " + newAmerykaSpolki.toString());
+//        model.addAttribute("amerykaSpolki", newAmerykaSpolki);
+//        model.addAttribute("amerykaSpolkaNew", amerykaSpolkaFind);
+//        model.addAttribute("amerykaSpolkaFind", new AmerykaSpolka());
+//        return "amerykaspolkaedit";
+//    }
 
     @PostMapping("/amerykaspolka/save/edit")
     public String saveNameDayEdit(@ModelAttribute AmerykaSpolka modifiedAmerykaSpolka) {
-        amSpRepository.save(modifiedAmerykaSpolka);
-        log.info("Zapisano nowe dane dla spólki: " + ANSI_YELLOW + modifiedAmerykaSpolka.getName() + " (" + modifiedAmerykaSpolka.getTicker() + ")" + ANSI_RESET);
-        amerykaSpolki = (List<AmerykaSpolka>) amSpRepository.findAll();
+
+//        AmerykaSpolka editAmerykaSpolka = amerykaSpolki.stream().filter(amerykaSpolka -> amerykaSpolka.getIdSpolka().equals(modifiedAmerykaSpolka.getIdSpolka())).findFirst().get();
+//                get((int)(long)modifiedAmerykaSpolka.getIdSpolka());
+//        AmerykaSpolka editAmerykaSpolka = amerykaSpolki.stream().filter(amerykaSpolka -> amerykaSpolka.getIdSpolka().equals(modifiedAmerykaSpolka.getIdSpolka())).findFirst().get();
+//        System.out.println(editAmerykaSpolka);
+
+        WszystkieDane wszystkieDane = wszysDaneRepository.findById(modifiedAmerykaSpolka.getIdWszystkieDane()).get();
+        wszystkieDane.setNotatka(modifiedAmerykaSpolka.getNote());
+        wszystkieDane.setWidoczny(modifiedAmerykaSpolka.getWidok());
+//        System.out.println(wszystkieDane);
+        wszysDaneRepository.save(wszystkieDane);
+        amerykaSpolki = queryRepository.findAllWszystkieDane(currentUserName());
+//        System.out.println(amerykaSpolki.get((int)(long)modifiedAmerykaSpolka.getIdSpolka()));
+        log.info("Zapisano nowe dane dla spólki: " + ANSI_YELLOW + modifiedAmerykaSpolka.getName() + " (" + modifiedAmerykaSpolka.getTicker() + ")  - " + currentUserName() + ANSI_RESET);
         return "redirect:/amerykaspolka/edit?index=" + modifiedAmerykaSpolka.getIdSpolka();
     }
 
