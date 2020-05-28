@@ -75,7 +75,7 @@ public class AmSpController {
     @GetMapping("/")
     public String getAllView(Model model) {
         queryRepository.findAllWszystkieDane(currentUserName());
-        if(!showSpolka.show) queryRepository.showWD();
+        if (!showSpolka.show) queryRepository.showWD();
 //        System.out.println("amerykawidok, currentUser: " + currentUser.getName());
 //        amerykaSpolki = wszystkieDaneList.stream().map(wszystkieDane -> wszystkieDane.getAmerykaSpolka()).collect(Collectors.toList());
 //        amerykaSpolki = (List<AmerykaSpolka>) amSpRepository.findAll();
@@ -95,7 +95,7 @@ public class AmSpController {
 //        amerykaSpolki = (List<AmerykaSpolka>) amSpRepository.findAll();
 //        amerykaSpolki.stream().map(amerykaSpolka -> Double.parseDouble(amerykaSpolka.getDay0119()))
         queryRepository.findAllWszystkieDane(currentUserName());
-        if(!showSpolka.show) queryRepository.showWD();
+        if (!showSpolka.show) queryRepository.showWD();
         log.info(ANSI_BLUE + "Odczyt wszystkich danych z bazy, endpoint (/amerykaspolka), użytkownik: " + currentUserName() + ANSI_RESET);
         model.addAttribute("showAll", showSpolka.getShow());
         model.addAttribute("currentUserName", currentUserName());
@@ -150,7 +150,7 @@ public class AmSpController {
 
     @GetMapping("/amerykaspolka/show")
     public String delAmerykaSpolka(@RequestParam Long index, Model model) {
-        AmerykaSpolka showAmerykaSpolka = amerykaSpolki.stream().filter(amerykaSpolka -> amerykaSpolka.getIdSpolka()==index).findFirst().get();
+        AmerykaSpolka showAmerykaSpolka = amerykaSpolki.stream().filter(amerykaSpolka -> amerykaSpolka.getIdSpolka() == index).findFirst().get();
         WszystkieDane wszystkieDane = wszysDaneRepository.findById(showAmerykaSpolka.getIdWszystkieDane()).get();
         System.out.println(wszystkieDane);
         if (wszystkieDane.getWidoczny()) wszystkieDane.setWidoczny(false);
@@ -162,18 +162,18 @@ public class AmSpController {
         return "redirect:/amerykaspolka";
     }
 
-    @PostMapping("/amerykaspolka/delete")
-    public String deleteAmerykaSpolka(@ModelAttribute AmerykaSpolka deleteAmerykaSpolka) {
-        log.info("Usunięto spółkę: " + ANSI_RED + deleteAmerykaSpolka.getName() + " (" + deleteAmerykaSpolka.getTicker() + ")" + ANSI_RESET);
-        amSpRepository.deleteById(deleteAmerykaSpolka.getIdSpolka());
-        amerykaSpolki = (List<AmerykaSpolka>) amSpRepository.findAll();
-        return "redirect:/amerykaspolka";
-    }
+//    @PostMapping("/amerykaspolka/delete")
+//    public String deleteAmerykaSpolka(@ModelAttribute AmerykaSpolka deleteAmerykaSpolka) {
+//        log.info("Usunięto spółkę: " + ANSI_RED + deleteAmerykaSpolka.getName() + " (" + deleteAmerykaSpolka.getTicker() + ")" + ANSI_RESET);
+//        amSpRepository.deleteById(deleteAmerykaSpolka.getIdSpolka());
+//        amerykaSpolki = (List<AmerykaSpolka>) amSpRepository.findAll();
+//        return "redirect:/amerykaspolka";
+//    }
 
     @GetMapping("/amerykaspolka/edit")
     public String editAmerykaSpolka(@RequestParam Long index, Model model) {
 //        AmerykaSpolka modifiedAmerykaSpolka = amSpRepository.findById(index.longValue()).get();
-        AmerykaSpolka modifiedAmerykaSpolka = amerykaSpolki.stream().filter(amerykaSpolka -> amerykaSpolka.getIdSpolka()==((int)(long)(index))).findFirst().get();
+        AmerykaSpolka modifiedAmerykaSpolka = amerykaSpolki.stream().filter(amerykaSpolka -> amerykaSpolka.getIdSpolka() == ((int) (long) (index))).findFirst().get();
         log.info("Spółka do modyfikacji: " + ANSI_RED + modifiedAmerykaSpolka.getName() + " (" + modifiedAmerykaSpolka.getTicker() + ")" + ANSI_RESET);
         model.addAttribute("amerykaSpolkaFind", new AmerykaSpolka());
         model.addAttribute("amerykaSpolkaModified", modifiedAmerykaSpolka);
@@ -223,10 +223,10 @@ public class AmSpController {
 
 
     private String currentUserName() {
-        String username="";
+        String username = "";
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (principal instanceof UserDetails) {
-            username = ((UserDetails)principal).getUsername();
+            username = ((UserDetails) principal).getUsername();
         } else {
             username = principal.toString();
         }
