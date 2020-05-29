@@ -132,7 +132,7 @@
                                 <input th:field="*{courseCurrent}" type="text" class="form-control input-course"
                                        id="courseCurrent"
                                        name="courseCurrent"
-                                       placeholder="course">
+                                       placeholder="course" disabled>
                             </div>
                             <div class="form-group myDisplayFlex">
                                 <label for="course1M" class="label-course" th:text="*{day1M}+' :'"></label>
@@ -140,7 +140,7 @@
                                 <input th:field="*{course1M}" type="text" class="form-control input-course"
                                        id="course1M"
                                        name="course1M"
-                                       placeholder="course">
+                                       placeholder="course" disabled>
                             </div>
                             <div class="form-group myDisplayFlex">
                                 <label for="course3M" class="label-course" th:text="*{day3M}+' :'"></label>
@@ -148,7 +148,7 @@
                                 <input th:field="*{course3M}" type="text" class="form-control input-course"
                                        id="course3M"
                                        name="course3M"
-                                       placeholder="course">
+                                       placeholder="course" disabled>
                             </div>
                             <div class="form-group myDisplayFlex">
                                 <label for="course12M" class="label-course" th:text="*{day12M}+' :'"></label>
@@ -156,7 +156,7 @@
                                 <input th:field="*{course12M}" type="text" class="form-control input-course"
                                        id="course12M"
                                        name="course12M"
-                                       placeholder="course">
+                                       placeholder="course" disabled>
                             </div>
                             <div class="form-group myDisplayFlex">
                                 <label for="courseYTD" class="label-course" th:text="*{dayYTD}+' :'"></label>
@@ -164,7 +164,7 @@
                                 <input th:field="*{courseYTD}" type="text" class="form-control input-course"
                                        id="courseYTD"
                                        name="courseYTD"
-                                       placeholder="course">
+                                       placeholder="course" disabled>
                             </div>
                             <br>
                             Rates of return :
@@ -173,34 +173,35 @@
                                 <input th:field="*{yTD}" type="text" class="form-control input-course"
                                        id="YTD"
                                        name="YTD"
-                                       placeholder="rates">
+                                       placeholder="rates" disabled>
                             </div>
                             <div class="form-group myDisplayFlex">
                                 <label for="M1" class="label-course">1M :</label>
                                 <input th:field="*{m1}" type="text" class="form-control input-course"
                                        id="M1"
                                        name="M1"
-                                       placeholder="rates">
+                                       placeholder="rates" disabled>
                             </div>
                             <div class="form-group myDisplayFlex">
                                 <label for="M3" class="label-course">3M :</label>
                                 <input th:field="*{m3}" type="text" class="form-control input-course"
                                        id="M3"
                                        name="M3"
-                                       placeholder="rates">
+                                       placeholder="rates" disabled>
                             </div>
                             <div class="form-group myDisplayFlex">
                                 <label for="M12" class="label-course">12M :</label>
                                 <input th:field="*{m12}" type="text" class="form-control input-course"
                                        id="M12"
                                        name="M12"
-                                       placeholder="rates">
+                                       placeholder="rates" disabled>
                             </div>
                             <br>
                             Visible on list:
-                            <div class="form-group form-check" style="margin-top: 6px;">
-                                <label class="form-check-label" style="width: 80px;height: 40px;padding-top: 5px;margin-left: 63px;cursor: pointer;" for="widok">Show :</label>
-                                <input type="checkbox" class="form-check-input" style="width: 28px; height: 28px;cursor: pointer;"
+                            <br>
+                            <div style="margin-top: 3px;">
+                                <label class="form-check-label label-course" style="width: 34%; padding-top: 5px; cursor: pointer;" for="widok">Show :</label>
+                                <input type="checkbox" class="form-check-input input-course" style=" width: 28px; height: 28px; cursor: pointer; margin-left: 3px;"
                                        th:field="*{widok}" th:checked="*{widok}" id="widok">
                             </div>
 
