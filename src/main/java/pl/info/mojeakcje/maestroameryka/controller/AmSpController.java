@@ -67,18 +67,18 @@ public class AmSpController {
 
     @GetMapping("/logout")
     public String logout() {
-        log.info(ANSI_RED + "Wylogowano: " + currentUserName() + ANSI_RESET);
+        log.info(ANSI_RED + "Wylogowano: " + currentUser.currentUserName() + ANSI_RESET);
         return "redirect:/amerykaspolka";
     }
 
 
     @GetMapping("/")
     public String getAllView(Model model) {
-        queryRepository.findAllWszystkieDane(currentUserName());
+        queryRepository.findAllWszystkieDane(currentUser.currentUserName());
         if (!showSpolka.show) queryRepository.showWD();
-        log.info(ANSI_BLUE + "Odczyt wszystkich danych z bazy, endpoint (/), użytkownik: " + currentUserName() + ANSI_RESET);
+        log.info(ANSI_BLUE + "Odczyt wszystkich danych z bazy, endpoint (/), użytkownik: " + currentUser.currentUserName() + ANSI_RESET);
         model.addAttribute("showAll", showSpolka.getShow());
-        model.addAttribute("currentUserName", currentUserName());
+        model.addAttribute("currentUserName", currentUser.currentUserName());
         model.addAttribute("amerykaSpolki", amerykaSpolki);
         model.addAttribute("amerykaSpolkaNew", new AmerykaSpolka());
         model.addAttribute("amerykaSpolkaFind", new AmerykaSpolka());
@@ -88,11 +88,11 @@ public class AmSpController {
 
     @GetMapping("/amerykaspolka")
     public String getStart(Model model) {
-        queryRepository.findAllWszystkieDane(currentUserName());
+        queryRepository.findAllWszystkieDane(currentUser.currentUserName());
         if (!showSpolka.show) queryRepository.showWD();
-        log.info(ANSI_BLUE + "Odczyt wszystkich danych z bazy, endpoint (/amerykaspolka), użytkownik: " + currentUserName() + ANSI_RESET);
+        log.info(ANSI_BLUE + "Odczyt wszystkich danych z bazy, endpoint (/amerykaspolka), użytkownik: " + currentUser.currentUserName() + ANSI_RESET);
         model.addAttribute("showAll", showSpolka.getShow());
-        model.addAttribute("currentUserName", currentUserName());
+        model.addAttribute("currentUserName", currentUser.currentUserName());
         model.addAttribute("amerykaSpolki", amerykaSpolki);
         model.addAttribute("amerykaSpolkaNew", new AmerykaSpolka());
         model.addAttribute("amerykaSpolkaFind", new AmerykaSpolka());
@@ -111,7 +111,7 @@ public class AmSpController {
     @GetMapping("/amerykaspolka/find")
     public String getAllFind(Model model) {
         model.addAttribute("showAll", showSpolka.getShow());
-        model.addAttribute("currentUserName", currentUserName());
+        model.addAttribute("currentUserName", currentUser.currentUserName());
         model.addAttribute("amerykaSpolki", amerykaSpolki);
         model.addAttribute("amerykaSpolkaNew", new AmerykaSpolka());
         model.addAttribute("amerykaSpolkaFind", new AmerykaSpolka());
@@ -121,7 +121,7 @@ public class AmSpController {
     @PostMapping("/amerykaspolka")
     public String postFindAmerykaSpolka(@ModelAttribute AmerykaSpolka amerykaSpolkaFind) {
         log.info("Szukać będziemy: " + ANSI_FIOLET + amerykaSpolkaFind.getTicker().toUpperCase() + ANSI_RESET);
-        amerykaSpolki = queryRepository.findAllWszystkieDane(currentUserName());
+        amerykaSpolki = queryRepository.findAllWszystkieDane(currentUser.currentUserName());
         if (!amerykaSpolkaFind.getTicker().equals("")) {
             amerykaSpolki = amerykaSpolki.stream()
                     .filter(amerykaSpolka -> (amerykaSpolka.getTicker()).contains(amerykaSpolkaFind.getTicker().toUpperCase()))
@@ -165,8 +165,8 @@ public class AmSpController {
         wszystkieDane.setNotatka(modifiedAmerykaSpolka.getNote());
         wszystkieDane.setWidoczny(modifiedAmerykaSpolka.getWidok());
         wszysDaneRepository.save(wszystkieDane);
-        amerykaSpolki = queryRepository.findAllWszystkieDane(currentUserName());
-        log.info("Zapisano nowe dane dla spólki: " + ANSI_YELLOW + modifiedAmerykaSpolka.getName() + " (" + modifiedAmerykaSpolka.getTicker() + ")  - " + currentUserName() + ANSI_RESET);
+        amerykaSpolki = queryRepository.findAllWszystkieDane(currentUser.currentUserName());
+        log.info("Zapisano nowe dane dla spólki: " + ANSI_YELLOW + modifiedAmerykaSpolka.getName() + " (" + modifiedAmerykaSpolka.getTicker() + ")  - " + currentUser.currentUserName() + ANSI_RESET);
         return "redirect:/amerykaspolka/edit?index=" + modifiedAmerykaSpolka.getIdSpolka();
     }
 
@@ -186,15 +186,15 @@ public class AmSpController {
     }
 
 
-    private String currentUserName() {
-        String username = "";
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (principal instanceof UserDetails) {
-            username = ((UserDetails) principal).getUsername();
-        } else {
-            username = principal.toString();
-        }
-        return username;
-    }
+//    private String currentUserName() {
+//        String username = "";
+//        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        if (principal instanceof UserDetails) {
+//            username = ((UserDetails) principal).getUsername();
+//        } else {
+//            username = principal.toString();
+//        }
+//        return username;
+//    }
 
 }

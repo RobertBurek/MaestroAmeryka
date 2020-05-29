@@ -7,9 +7,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.info.mojeakcje.maestroameryka.model.*;
+import pl.info.mojeakcje.maestroameryka.model.modelCustomer.CurrentUser;
 import pl.info.mojeakcje.maestroameryka.model.modeleStrategii.Szukana;
 import pl.info.mojeakcje.maestroameryka.model.modeleStrategii.SzukanyModel;
 import pl.info.mojeakcje.maestroameryka.repository.AmSpRepository;
+import pl.info.mojeakcje.maestroameryka.repository.QueryRepository;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -35,12 +37,16 @@ public class AmSpStrategyController {
 
     protected final org.slf4j.Logger log = LoggerFactory.getLogger(getClass());
 
-    AmSpRepository amSpRepository;
+//    AmSpRepository amSpRepository;
+    QueryRepository queryRepository;
+    CurrentUser currentUser;
+    ShowSpolka showSpolka;
 
-    public AmSpStrategyController(AmSpRepository amSpRepository) {
-        this.amSpRepository = amSpRepository;
+    public AmSpStrategyController(QueryRepository queryRepository, CurrentUser currentUser, ShowSpolka showSpolka) {
+        this.queryRepository = queryRepository;
+        this.currentUser = currentUser;
+        this.showSpolka = showSpolka;
     }
-
 
     @GetMapping("/amerykastrategie")
     public String getAllStrategy(Model model) {
@@ -87,13 +93,21 @@ public class AmSpStrategyController {
 //        return "amerykastrategie::#mojeZmiany";
 //    }
 
+    @GetMapping("/showMineOrAllStrategie")
+    public String setShow() {
+        if (showSpolka.getShow()) showSpolka.setShow(false);
+        else showSpolka.setShow(true);
+        return "redirect:/amerykastrategie/find/";
+    }
+
     @GetMapping("/amerykastrategie/find/{id}&{name}")
     public String getSectorStrategy(@PathVariable Integer id, @PathVariable String name, Model model) {
         if (id == -3) {
 
         }
         dodajDoWyszukiwania(id, name);
-        amerykaSpolki = (List<AmerykaSpolka>) amSpRepository.findAll();
+        amerykaSpolki = queryRepository.findAllWszystkieDane(currentUser.currentUserName());
+        if (!showSpolka.show) queryRepository.showWD();
         amerykaSpolki = amerykaSpolki
                 .stream()
                 .filter(szukanaPredicate())
@@ -134,12 +148,14 @@ public class AmSpStrategyController {
         String wierszTabeli = "amerykastrategie::#wierszTabeli"+id;
 //        log.info("amerykastrategie::#wierszTabeli"+id);
 //        log.info("notatka: "+note);
-        AmerykaSpolka amerykaSpolka = amSpRepository.findById(id.longValue()).get();
-        log.info("Notatka dla spólki: "+amerykaSpolka.getName());
-        amerykaSpolka.setNote(note.replaceAll("QTTTQ"," "));
-        amSpRepository.save(amerykaSpolka);
-        log.info("Zmieniono notatkę na: "+amerykaSpolka.getNote());
-        model.addAttribute("amerykaSpolka", amerykaSpolka);
+        /////////////////////////////////////////////
+        //AmerykaSpolka amerykaSpolka = amSpRepository.findById(id.longValue()).get();
+        //log.info("Notatka dla spólki: "+amerykaSpolka.getName());
+        //amerykaSpolka.setNote(note.replaceAll("QTTTQ"," "));
+        //amSpRepository.save(amerykaSpolka);
+        //log.info("Zmieniono notatkę na: "+amerykaSpolka.getNote());
+        //model.addAttribute("amerykaSpolka", amerykaSpolka);
+        ////////////////////////////////////////////////////
 //        model.addAttribute("amerykaSpolki", amerykaSpolki);
 //        model.addAttribute("amerykaSpolkaModified", new AmerykaSpolka());
 //        model.addAttribute("wynikWyszukiwania", amerykaSpolki.size());
