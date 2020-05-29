@@ -12,6 +12,7 @@ import pl.info.mojeakcje.maestroameryka.model.modeleStrategii.Szukana;
 import pl.info.mojeakcje.maestroameryka.model.modeleStrategii.SzukanyModel;
 import pl.info.mojeakcje.maestroameryka.repository.AmSpRepository;
 import pl.info.mojeakcje.maestroameryka.repository.QueryRepository;
+import pl.info.mojeakcje.maestroameryka.repository.WszysDaneRepository;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -37,12 +38,13 @@ public class AmSpStrategyController {
 
     protected final org.slf4j.Logger log = LoggerFactory.getLogger(getClass());
 
-//    AmSpRepository amSpRepository;
+    WszysDaneRepository wszysDaneRepository;
     QueryRepository queryRepository;
     CurrentUser currentUser;
     ShowSpolka showSpolka;
 
-    public AmSpStrategyController(QueryRepository queryRepository, CurrentUser currentUser, ShowSpolka showSpolka) {
+    public AmSpStrategyController(WszysDaneRepository wszysDaneRepository, QueryRepository queryRepository, CurrentUser currentUser, ShowSpolka showSpolka) {
+        this.wszysDaneRepository = wszysDaneRepository;
         this.queryRepository = queryRepository;
         this.currentUser = currentUser;
         this.showSpolka = showSpolka;
@@ -146,20 +148,14 @@ public class AmSpStrategyController {
     @GetMapping("/amerykastrategie/note/{id}&{note}")
     public String chengeNote(@PathVariable Long id, @PathVariable String note, Model model) {
         String wierszTabeli = "amerykastrategie::#wierszTabeli"+id;
-//        log.info("amerykastrategie::#wierszTabeli"+id);
-//        log.info("notatka: "+note);
-        /////////////////////////////////////////////
-        //AmerykaSpolka amerykaSpolka = amSpRepository.findById(id.longValue()).get();
-        //log.info("Notatka dla spólki: "+amerykaSpolka.getName());
-        //amerykaSpolka.setNote(note.replaceAll("QTTTQ"," "));
-        //amSpRepository.save(amerykaSpolka);
-        //log.info("Zmieniono notatkę na: "+amerykaSpolka.getNote());
-        //model.addAttribute("amerykaSpolka", amerykaSpolka);
-        ////////////////////////////////////////////////////
-//        model.addAttribute("amerykaSpolki", amerykaSpolki);
-//        model.addAttribute("amerykaSpolkaModified", new AmerykaSpolka());
-//        model.addAttribute("wynikWyszukiwania", amerykaSpolki.size());
-//        model.addAttribute("filtry", filtry);
+        AmerykaSpolka amerykaSpolka = amerykaSpolki.stream().filter(amSp -> amSp.getIdSpolka().equals(id)).findFirst().get();
+        amerykaSpolka.setNote(note.replaceAll("QTTTQ"," "));
+        WszystkieDane wszystkieDane = wszysDaneRepository.findById(amerykaSpolka.getIdWszystkieDane()).get();
+        log.info("Notatka dla spólki: " + amerykaSpolka.getName());
+        wszystkieDane.setNotatka(note.replaceAll("QTTTQ"," "));
+        wszysDaneRepository.save(wszystkieDane);
+        log.info("Zmieniono notatkę na: " + amerykaSpolka.getNote() + "  - " + currentUser.currentUserName());
+        model.addAttribute("amerykaSpolka", amerykaSpolka);
         return wierszTabeli;
     }
 
