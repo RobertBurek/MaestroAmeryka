@@ -265,6 +265,9 @@
         <article style="width: 80%; padding: 15px;">
 
             <div id="mojeZmiany" style="height: 97%">
+                    <button id="showAll" onclick="przeslijShow()" class="btn btn-outline-success my-2 my-sm-0 myColor myShowStrategie"
+                            th:text="${showAll} ? 'Show mine' : 'Show all'" >Show all
+                    </button>            <!--       onclick="myFunction()     Show mine-->
                 <p></p>
                 <h4 th:text="'Wynik wyszukiwania: (' + ${wynikWyszukiwania} + ')'">Wyniki wyszukiwania:</h4>
                 <p th:text="'Filtrowanie w kolejności:  '+ ${filtry}"></p>

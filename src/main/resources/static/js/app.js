@@ -98,6 +98,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
 })
 
+function przeslijShow() {
+    $("#mojeZmiany").load('/amerykastrategie/find/-3&');
+    console.log("Wysłano zapytanie: " + '/amerykastrategie/find/-3&');
+}
+
+
 
 function startPopup(id) {
     wiersz = id;

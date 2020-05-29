@@ -56,6 +56,7 @@ public class AmSpStrategyController {
         amerykaSpolki.clear();
         filtrowane.clear();
         defaultSort = "NameRosnaco";
+        model.addAttribute("showAll", showSpolka.getShow());
         model.addAttribute("industryList", industryList);
         model.addAttribute("sectorList", sectorList);
         model.addAttribute("marketList", marketList);
@@ -95,17 +96,12 @@ public class AmSpStrategyController {
 //        return "amerykastrategie::#mojeZmiany";
 //    }
 
-    @GetMapping("/showMineOrAllStrategie")
-    public String setShow() {
-        if (showSpolka.getShow()) showSpolka.setShow(false);
-        else showSpolka.setShow(true);
-        return "redirect:/amerykastrategie/find/";
-    }
 
     @GetMapping("/amerykastrategie/find/{id}&{name}")
     public String getSectorStrategy(@PathVariable Integer id, @PathVariable String name, Model model) {
         if (id == -3) {
-
+            if (showSpolka.getShow()) showSpolka.setShow(false);
+            else showSpolka.setShow(true);
         }
         dodajDoWyszukiwania(id, name);
         amerykaSpolki = queryRepository.findAllWszystkieDane(currentUser.currentUserName());
@@ -137,6 +133,7 @@ public class AmSpStrategyController {
                 .stream()
                 .sorted(sortowanieComparator(defaultSort))
                 .collect(Collectors.toList());
+        model.addAttribute("showAll", showSpolka.getShow());
         model.addAttribute("amerykaSpolki", amerykaSpolki);
         model.addAttribute("amerykaSpolkaModified", new AmerykaSpolka());
         model.addAttribute("wynikWyszukiwania", amerykaSpolki.size());
