@@ -51,11 +51,6 @@ public class AmSpControllerRest {
     public String setDataToBase(@PathVariable String nameFile) {
         log.info("NameFile " + ANSI_BLUE + nameFile + ANSI_RESET);
         nameFile = "AmerykaSpolki.csv";
-//        Iterable<AmerykaSpolka> amerykaSp = dBfromCSV.readFromFile(myPath + nameFile);
-//        amerykaSp.forEach(amerykaSpolka -> {
-//            log.info(amerykaSpolka.getTicker() + " -  " + ANSI_BLUE + amerykaSpolka.getName() + ANSI_RESET);
-//            amSpRepository.save(amerykaSpolka);
-//        });
         return "Dane wczytane z kliku " + myPath + nameFile;
     }
 
@@ -65,23 +60,6 @@ public class AmSpControllerRest {
         return amSpRepository.findAll();
     }
 
-//    @GetMapping("/tworzenietabelistrategia") //na podstawie tabeli ameryka_spolka tworzy tabelę strategie
-//    public String createTableStrategy() {
-//        amerykaSpolkiStretegie = ((List<AmerykaSpolka>) amSpRepository.findAll())
-//                .stream()
-//                .map(amerykaSpolka -> getAmerykaSpolkaStrategia(amerykaSpolka)
-//                ).collect(Collectors.toList());
-//        amSpStrategyRepository.saveAll(amerykaSpolkiStretegie);
-//        log.info(ANSI_BLUE + " Zrobiłem !!! Mapowanie tabeli notowań na tabelę Strategie !!!");
-//        return "Tabela Strategia zrobiona !!!";
-//    }
-
-
-//    @GetMapping("/")
-//    public Iterable<AmerykaSpolka> getAll() {
-//        log.info(ANSI_BLUE + "Wypisałem wszystkie dane z bazy MaestroAmeryka z tabeli: ameryka_spolka" + ANSI_RESET);
-//        return amSpRepository.findAll();
-//    }
 
     @GetMapping("/danezbazy/{ticker}")
     public AmerykaSpolka getSpolkaTicker(@PathVariable String ticker) {
@@ -91,6 +69,7 @@ public class AmSpControllerRest {
                 .filter(amerykaSpolka -> amerykaSpolka.getTicker().equals(ticker.toUpperCase()))
                 .findAny().orElse(new AmerykaSpolka());
     }
+
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     public String handleFileUpload(@RequestParam("plik") MultipartFile file) {
@@ -114,6 +93,7 @@ public class AmSpControllerRest {
         return "redirect:/";
     }
 
+
     @GetMapping("/napraw") //na podstawie tabeli ameryka_spolka tworzy tabelę strategie
     public String napraw() {
         List<AmerykaSpolka> zbior = (List<AmerykaSpolka>) amSpRepository.findAll();
@@ -135,6 +115,7 @@ public class AmSpControllerRest {
         log.info(ANSI_BLUE + "Naprawiłem!!!" + ANSI_RESET);
         return " Zrobiłem !!! Odczyt danych z pliku pobranego z HTTP !!!";
     }
+
 
     @GetMapping("/czytajdane") //czyta dane z URL
     public String createTableWithHttp() throws InterruptedException {
