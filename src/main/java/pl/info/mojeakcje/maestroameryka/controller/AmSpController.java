@@ -6,10 +6,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import pl.info.mojeakcje.maestroameryka.model.AmerykaSpolka;
 import pl.info.mojeakcje.maestroameryka.model.ShowSpolka;
 import pl.info.mojeakcje.maestroameryka.model.WszystkieDane;
@@ -107,6 +104,28 @@ public class AmSpController {
         return "redirect:/";
     }
 
+    @GetMapping("/amerykaspolka/show/{id}&{widok}")
+    public String chengeShow(@PathVariable Long id, @PathVariable Boolean widok, Model model) {
+        String position = "amerykawidok::#position"+id;
+        AmerykaSpolka amerykaSpolka = amerykaSpolki.stream().filter(amSp -> amSp.getIdSpolka().equals(id)).findFirst().get();
+//        amerykaSpolka.setNote(note.replaceAll("QTTTQ"," "));
+        WszystkieDane wszystkieDane = wszysDaneRepository.findById(amerykaSpolka.getIdWszystkieDane()).get();
+//        log.info("Zmiana widoczności spółki: " + amerykaSpolka.getName());
+        if (widok) {
+            wszystkieDane.setWidoczny(false);
+            amerykaSpolka.setWidok(false);
+        }
+        else {
+            wszystkieDane.setWidoczny(true);
+            amerykaSpolka.setWidok(true);
+        }
+//        wszystkieDane.setNotatka(note.replaceAll("QTTTQ"," "));
+        wszysDaneRepository.save(wszystkieDane);
+        log.info("Zmieniono widoczność spółki: "+ amerykaSpolka.getName()+" na: " + wszystkieDane.getWidoczny() + "  - " + currentUser.currentUserName());
+        model.addAttribute("amerykaSpolka", amerykaSpolka);
+        return position;
+    }
+
 
     @GetMapping("/amerykaspolka/find")
     public String getAllFind(Model model) {
@@ -118,7 +137,7 @@ public class AmSpController {
         return "amerykawidok";
     }
 
-    @PostMapping("/amerykaspolka")
+    @PostMapping("/amerykaspolka/find")
     public String postFindAmerykaSpolka(@ModelAttribute AmerykaSpolka amerykaSpolkaFind) {
         log.info("Szukać będziemy: " + ANSI_FIOLET + amerykaSpolkaFind.getTicker().toUpperCase() + ANSI_RESET);
         amerykaSpolki = queryRepository.findAllWszystkieDane(currentUser.currentUserName());
@@ -134,17 +153,17 @@ public class AmSpController {
     }
 
 
-    @GetMapping("/amerykaspolka/show")
-    public String showAmerykaSpolka(@RequestParam Long index, Model model) {
-        AmerykaSpolka showAmerykaSpolka = amerykaSpolki.stream().filter(amerykaSpolka -> amerykaSpolka.getIdSpolka().equals(index)).findFirst().get();
-        WszystkieDane wszystkieDane = wszysDaneRepository.findById(showAmerykaSpolka.getIdWszystkieDane()).get();
-        if (wszystkieDane.getWidoczny()) wszystkieDane.setWidoczny(false);
-        else wszystkieDane.setWidoczny(true);
-        wszysDaneRepository.save(wszystkieDane);
-        log.info("Spółka usunięta z listy widoku: " + ANSI_RED + showAmerykaSpolka.getName() + " (" + showAmerykaSpolka.getTicker() + ")" + ANSI_RESET);
-        model.addAttribute("amerykaSpolkaFind", new AmerykaSpolka());
-        return "redirect:/amerykaspolka";
-    }
+//    @GetMapping("/amerykaspolka/show")
+//    public String showAmerykaSpolka(@RequestParam Long index, Model model) {
+//        AmerykaSpolka showAmerykaSpolka = amerykaSpolki.stream().filter(amerykaSpolka -> amerykaSpolka.getIdSpolka().equals(index)).findFirst().get();
+//        WszystkieDane wszystkieDane = wszysDaneRepository.findById(showAmerykaSpolka.getIdWszystkieDane()).get();
+//        if (wszystkieDane.getWidoczny()) wszystkieDane.setWidoczny(false);
+//        else wszystkieDane.setWidoczny(true);
+//        wszysDaneRepository.save(wszystkieDane);
+//        log.info("Spółka usunięta z listy widoku: " + ANSI_RED + showAmerykaSpolka.getName() + " (" + showAmerykaSpolka.getTicker() + ")" + ANSI_RESET);
+//        model.addAttribute("amerykaSpolkaFind", new AmerykaSpolka());
+//        return "redirect:/amerykaspolka";
+//    }
 
 
     @GetMapping("/amerykaspolka/edit")

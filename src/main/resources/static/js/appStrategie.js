@@ -37,8 +37,8 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log("Wysłano zapytanie: " + '/amerykastrategie/find/' + index + '&' + 'market');
             // let notatkaList = document.querySelectorAll('.myNote');
             // console.log(notatkaList);
-            console.log(document.querySelector("#market"+index).checked);
-            if (document.querySelector("#market"+index).checked) countCheckedMarket--;
+            console.log(document.querySelector("#market" + index).checked);
+            if (document.querySelector("#market" + index).checked) countCheckedMarket--;
             else countCheckedMarket++;
             console.log(countCheckedMarket);
             SprawdzZaznaczone("Market");
@@ -53,8 +53,8 @@ document.addEventListener('DOMContentLoaded', function () {
             // console.log(index);
             $("#mojeZmiany").load('/amerykastrategie/find/' + index + '&' + 'sector');
             console.log("Wysłano zapytanie: " + '/amerykastrategie/find/' + index + '&' + 'sector');
-            console.log(document.querySelector("#sector"+index).checked);
-            if (document.querySelector("#sector"+index).checked) countCheckedSector--;
+            console.log(document.querySelector("#sector" + index).checked);
+            if (document.querySelector("#sector" + index).checked) countCheckedSector--;
             else countCheckedSector++;
             console.log(countCheckedSector);
             SprawdzZaznaczone("Sector");
@@ -68,8 +68,8 @@ document.addEventListener('DOMContentLoaded', function () {
             // console.log(index);
             $("#mojeZmiany").load('/amerykastrategie/find/' + index + '&' + 'industry');
             console.log("Wysłano zapytanie: " + '/amerykastrategie/find/' + index + '&' + 'industry');
-            console.log(document.querySelector("#industry"+index).checked);
-            if (document.querySelector("#industry"+index).checked) countCheckedIndustry--;
+            console.log(document.querySelector("#industry" + index).checked);
+            if (document.querySelector("#industry" + index).checked) countCheckedIndustry--;
             else countCheckedIndustry++;
             console.log(countCheckedIndustry);
             SprawdzZaznaczone("Industry");
@@ -98,11 +98,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
 })
 
-function przeslijShow() {
+function przeslijShowButton() {
     $("#mojeZmiany").load('/amerykastrategie/find/-3&');
     console.log("Wysłano zapytanie: " + '/amerykastrategie/find/-3&');
 }
-
 
 
 function startPopup(id) {

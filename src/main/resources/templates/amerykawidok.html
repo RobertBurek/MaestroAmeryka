@@ -52,7 +52,8 @@
                 </li>
                 <li class="nav-item">
                     <!--                    <a class="nav-link myBanerLink" th:href="@{/loginOpenID}">Login-->
-                    <a class="nav-link myBanerLink myBanerLogin" style="color: #61a5ea;" th:href="${currentUserName.equals('anonymousUser')} ? '/loginMaestro' : '/logout'"
+                    <a class="nav-link myBanerLink myBanerLogin" style="color: #61a5ea;"
+                       th:href="${currentUserName.equals('anonymousUser')} ? '/loginMaestro' : '/logout'"
                        th:text="${currentUserName.equals('anonymousUser')} ? 'Login' : 'Logout'">Login
                         <!--                        <img src="https://github.com/fluidicon.png" style="height: 19px; width: 19px;"/>-->
                         <!--                        <img th:src="@{/img/LogoChrome.png}" style="height: 19px; width: 19px;"/>-->
@@ -60,13 +61,13 @@
                     </a>
                 </li>
                 </li>
-<!--                <li class="nav-item">-->
-<!--                    <a class="nav-link myBanerLink" style="color: #61a5ea;" href="/amerykastrategie">Strategie</a>-->
-<!--                </li>-->
+                <!--                <li class="nav-item">-->
+                <!--                    <a class="nav-link myBanerLink" style="color: #61a5ea;" href="/amerykastrategie">Strategie</a>-->
+                <!--                </li>-->
                 <!--                <img style=" width: 450px;" th:src="@{/img/slang13.png}" alt="">-->
             </ul>
             <img class="myBaner" th:src="@{/img/slang13.png}" alt="">
-            <form class="form-inline my-2 my-lg-0 myBanerForm" method="POST" action="/amerykaspolka"
+            <form class="form-inline my-2 my-lg-0 myBanerForm" method="POST" action="/amerykaspolka/find"
                   th:object="${amerykaSpolkaFind}">
                 <input class="form-control mr-sm-2" type="search" placeholder="Ticker" th:field="*{ticker}">
                 <button class="btn btn-outline-success my-2 my-sm-0 myColor" type="submit">Szukaj</button>
@@ -117,7 +118,7 @@
             </form>
             <!--            <label style="color: red; font-weight: bold">LogoMM.png</label>-->
             <h1 th:text="${currentUserName.equals('anonymousUser')} ? 'Rynek amerykański' : ${currentUserName}+', Twoje spółki (rynek amerykański)'"
-            style="margin: 30px 0px;">
+                style="margin: 30px 0px;">
                 Rynek amerykański</h1>
 
             <p></p>
@@ -143,52 +144,57 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="amerykaSpolka: ${amerykaSpolki}" th:ref="'position'+${amerykaSpolka.idSpolka}">
-                        <!--                        <td th:text="${amerykaSpolka.ticker}"/>-->
-                        <td class="tableWidth" style="vertical-align: middle;font-weight: bold;">
-                            <a class="myTableA" th:href="${amerykaSpolka.website}" th:text="${amerykaSpolka.name}"
-                               target="_blank">
-                            </a>
-                        </td>
+                    <tr th:each="amerykaSpolka: ${amerykaSpolki}">
+                        <div th:id="'position'+${amerykaSpolka.idSpolka}">
+                            <!--                        <td th:text="${amerykaSpolka.ticker}"/>-->
+                            <td class="tableWidth" style="vertical-align: middle;font-weight: bold;">
+                                <a class="myTableA" th:href="${amerykaSpolka.website}" th:text="${amerykaSpolka.name}"
+                                   target="_blank">
+                                </a>
+                            </td>
 
-                        <!--                        <td class="tableWidth" style="vertical-align: middle;font-weight: bold;" th:text="${amerykaSpolka.name}"/>-->
-                        <!--                        <a th:href="${amerykaSpolka.website}" th:text="${amerykaSpolka.name}"></a>-->
+                            <!--                        <td class="tableWidth" style="vertical-align: middle;font-weight: bold;" th:text="${amerykaSpolka.name}"/>-->
+                            <!--                        <a th:href="${amerykaSpolka.website}" th:text="${amerykaSpolka.name}"></a>-->
 
-                        <td style="padding-bottom: 6px; padding-top: 6px;">
-                            <table class="myTable" style="font-size: 75%;">
-                                <tr>
-                                    <!--                                    <td class="tableWidthSector" th:text="${amerykaSpolka.ticker}" th:href="${amerykaSpolka.website}"/>-->
-                                    <td class="tableWidthSector">
-                                        <a class="myTableA" th:text="${amerykaSpolka.ticker}"
-                                           th:href="'https://finance.yahoo.com/quote/'+${amerykaSpolka.ticker}+'/profile?p='+${amerykaSpolka.ticker}"
-                                           target="_blank">
-                                        </a>
-                                    </td>
+                            <td style="padding-bottom: 6px; padding-top: 6px;">
+                                <table class="myTable" style="font-size: 75%;">
+                                    <tr>
+                                        <!--                                    <td class="tableWidthSector" th:text="${amerykaSpolka.ticker}" th:href="${amerykaSpolka.website}"/>-->
+                                        <td class="tableWidthSector">
+                                            <a class="myTableA" th:text="${amerykaSpolka.ticker}"
+                                               th:href="'https://finance.yahoo.com/quote/'+${amerykaSpolka.ticker}+'/profile?p='+${amerykaSpolka.ticker}"
+                                               target="_blank">
+                                            </a>
+                                        </td>
 
-                                </tr>
-                                <tr>
-                                    <td th:text="${amerykaSpolka.market}"/>
-                                </tr>
-                            </table>
-                        </td>
-                        <td style="vertical-align:middle;" th:text="${amerykaSpolka.courseCurrent}"/>
+                                    </tr>
+                                    <tr>
+                                        <td th:text="${amerykaSpolka.market}"/>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td style="vertical-align:middle;" th:text="${amerykaSpolka.courseCurrent}"/>
 
-                        <td style="vertical-align:middle; padding: 0px;" th:text="${amerykaSpolka.yTD}"
-                            th:class="${amerykaSpolka.yTD.startsWith('-')} ? 'textCenter negative' : 'textCenter positive'"/>
-                        <td class="textCenter" style="vertical-align:middle;">
-                            <a th:href="@{/amerykaspolka/edit(index=${amerykaSpolka.idSpolka})}">
-                                <i class="fa fa-edit"></i>
-                            </a>
-                        </td>
-                        <!--                        <td class="textCenter"><a href="#"><i class="fa fa-edit"></i></a></td>-->
-                        <td class="textCenter" style="vertical-align:middle;">
-                            <a th:href="@{/amerykaspolka/show(index=${amerykaSpolka.idSpolka})}">
-                                <i th:class="${amerykaSpolka.widok} ? 'fas fa-minus myRed' : 'fas fa-plus myGreen'"></i>
-                            </a>
-                        </td>
-                        <!--                                                <td><a th:href="@{/amerykaSpolka/del(index=${amerykaSpolka.ticker})}"><i class="fa fa-trash"></i></a></td>-->
-                        <!--                        <td class="textCenter" style="vertical-align:middle;"><a href="/amerykastrategie"><i-->
-                        <!--                                class="fa fa-trash"></i></a></td>-->
+                            <td style="vertical-align:middle; padding: 0px;" th:text="${amerykaSpolka.yTD}"
+                                th:class="${amerykaSpolka.yTD.startsWith('-')} ? 'textCenter negative' : 'textCenter positive'"/>
+                            <td class="textCenter" style="vertical-align:middle;">
+                                <a th:href="@{/amerykaspolka/edit(index=${amerykaSpolka.idSpolka})}">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                            </td>
+                            <!--                        <td class="textCenter"><a href="#"><i class="fa fa-edit"></i></a></td>-->
+                            <td class="textCenter" style="vertical-align:middle;">
+                                <!--                            <a th:href="@{/amerykaspolka/show(index=${amerykaSpolka.idSpolka})}">-->
+                                <a href="#"
+                                   th:onclick="'przeslijShow(' + ${amerykaSpolka.idSpolka} +', ' + ${amerykaSpolka.widok} + ')'">
+                                    <i th:id="'show'+${amerykaSpolka.idSpolka}"
+                                       th:class="${amerykaSpolka.widok} ? 'fas fa-minus myRed' : 'fas fa-plus myGreen'"></i>
+                                </a>
+                            </td>
+                            <!--                                                <td><a th:href="@{/amerykaSpolka/del(index=${amerykaSpolka.ticker})}"><i class="fa fa-trash"></i></a></td>-->
+                            <!--                        <td class="textCenter" style="vertical-align:middle;"><a href="/amerykastrategie"><i-->
+                            <!--                                class="fa fa-trash"></i></a></td>-->
+                        </div>
                     </tr>
                     </tbody>
 
@@ -237,6 +243,7 @@
     </footer>
 </div>
 <script th:src="@{/js/info.js}"></script>
+<script th:src="@{/js/appWidok.js}"></script>
 
 </body>
 </html>

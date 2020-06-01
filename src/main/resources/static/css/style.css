@@ -165,7 +165,7 @@ img {
 }
 
 .listSpolka {
-    max-height: 95%;
+    max-height: 94%;
     overflow: auto;
 
 }
@@ -425,7 +425,7 @@ section p {
 /*MEDIA*/
 @media (max-width: 1320px ) {
     .listSpolka {
-        max-height: 95%;
+        max-height: 94%;
     }
 
     main {
@@ -435,7 +435,7 @@ section p {
 
 @media (max-width: 1150px ) {
     .listSpolka {
-        max-height: 95%;
+        max-height: 94%;
     }
 
     main {
@@ -450,7 +450,7 @@ section p {
 
 @media (max-width: 960px ) {
     .listSpolka {
-        max-height: 95%;
+        max-height: 94%;
     }
 
     main {
