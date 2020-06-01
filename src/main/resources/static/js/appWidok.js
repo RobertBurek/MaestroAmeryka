@@ -1,11 +1,8 @@
-// document.addEventListener('DOMContentLoaded', function () {
-//
-// }
-
 function przeslijShowButton() {
     $("#mojeZmiany").load('/amerykastrategie/find/-3&');
     console.log("Wysłano zapytanie: " + '/amerykastrategie/find/-3&');
-}
+};
+
 
 function przeslijShow(id, widok) {
     wiersz = id;
@@ -29,4 +26,4 @@ function przeslijShow(id, widok) {
         }
     });
     location.href = "#";
-}
+};

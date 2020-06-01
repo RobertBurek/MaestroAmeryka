@@ -1,6 +1,4 @@
-
 document.addEventListener('DOMContentLoaded', function () {
-
     $.getJSON('http://www.geoplugin.net/json.gp?jsoncallback=?', function (data) {
         // console.log(JSON.stringify(data, null, 2));
         infoJSON = JSON.stringify(data, null, 2);
@@ -8,12 +6,9 @@ document.addEventListener('DOMContentLoaded', function () {
         const infoCITY = info.geoplugin_city;
         const infoIP = info.geoplugin_request;
         const infoCountry = info.geoplugin_countryName;
-
-        // console.log(infoIP + "&" + infoCITY + "&" + infoCountry);
         $.ajax({
             url: '/info/' + infoIP + "&" + infoCITY + "&" + infoCountry,
             type: 'PUT'
         });
     });
-
 });
