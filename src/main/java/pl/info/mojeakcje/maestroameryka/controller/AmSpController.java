@@ -2,8 +2,6 @@ package pl.info.mojeakcje.maestroameryka.controller;
 
 import lombok.extern.log4j.Log4j2;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -44,23 +42,13 @@ public class AmSpController {
         this.wszysDaneRepository = wszysDaneRepository;
     }
 
-//    @GetMapping("/loginOpenID")
-//    public String getLoginOpenID() {
-//        return "redirect:/amerykawidok";
-//    }
-
-//    @GetMapping("/loginMaestro/error")
-//    public String loginError(@RequestParam String error, Model model) {
-//        log.info("Jestem w loginMaestro.html: " + ANSI_RED + error + ANSI_RESET);
-//        model.addAttribute("amerykaSpolkaFind", new AmerykaSpolka());
-//        return "loginMaestro";
-//    }
 
     @GetMapping("/loginMaestro")
     public String login() {
         log.info(ANSI_RED + "Proces logowania!!!" + ANSI_RESET);
         return "loginMaestro";
     }
+
 
     @GetMapping("/logout")
     public String logout() {
@@ -104,24 +92,21 @@ public class AmSpController {
         return "redirect:/";
     }
 
+
     @GetMapping("/amerykaspolka/show/{id}&{widok}")
     public String chengeShow(@PathVariable Long id, @PathVariable Boolean widok, Model model) {
-        String position = "amerykawidok::#position"+id;
+        String position = "amerykawidok::#position" + id;
         AmerykaSpolka amerykaSpolka = amerykaSpolki.stream().filter(amSp -> amSp.getIdSpolka().equals(id)).findFirst().get();
-//        amerykaSpolka.setNote(note.replaceAll("QTTTQ"," "));
         WszystkieDane wszystkieDane = wszysDaneRepository.findById(amerykaSpolka.getIdWszystkieDane()).get();
-//        log.info("Zmiana widoczności spółki: " + amerykaSpolka.getName());
         if (widok) {
             wszystkieDane.setWidoczny(false);
             amerykaSpolka.setWidok(false);
-        }
-        else {
+        } else {
             wszystkieDane.setWidoczny(true);
             amerykaSpolka.setWidok(true);
         }
-//        wszystkieDane.setNotatka(note.replaceAll("QTTTQ"," "));
         wszysDaneRepository.save(wszystkieDane);
-        log.info("Zmieniono widoczność spółki: "+ amerykaSpolka.getName()+" na: " + wszystkieDane.getWidoczny() + "  - " + currentUser.currentUserName());
+        log.info("Zmieniono widoczność spółki: " + amerykaSpolka.getName() + " na: " + wszystkieDane.getWidoczny() + "  - " + currentUser.currentUserName());
         model.addAttribute("amerykaSpolka", amerykaSpolka);
         return position;
     }
@@ -136,6 +121,7 @@ public class AmSpController {
         model.addAttribute("amerykaSpolkaFind", new AmerykaSpolka());
         return "amerykawidok";
     }
+
 
     @PostMapping("/amerykaspolka/find")
     public String postFindAmerykaSpolka(@ModelAttribute AmerykaSpolka amerykaSpolkaFind) {
@@ -153,25 +139,10 @@ public class AmSpController {
     }
 
 
-//    @GetMapping("/amerykaspolka/show")
-//    public String showAmerykaSpolka(@RequestParam Long index, Model model) {
-//        AmerykaSpolka showAmerykaSpolka = amerykaSpolki.stream().filter(amerykaSpolka -> amerykaSpolka.getIdSpolka().equals(index)).findFirst().get();
-//        WszystkieDane wszystkieDane = wszysDaneRepository.findById(showAmerykaSpolka.getIdWszystkieDane()).get();
-//        if (wszystkieDane.getWidoczny()) wszystkieDane.setWidoczny(false);
-//        else wszystkieDane.setWidoczny(true);
-//        wszysDaneRepository.save(wszystkieDane);
-//        log.info("Spółka usunięta z listy widoku: " + ANSI_RED + showAmerykaSpolka.getName() + " (" + showAmerykaSpolka.getTicker() + ")" + ANSI_RESET);
-//        model.addAttribute("amerykaSpolkaFind", new AmerykaSpolka());
-//        return "redirect:/amerykaspolka";
-//    }
-
-
     @GetMapping("/amerykaspolka/edit")
     public String editAmerykaSpolka(@RequestParam Long index, Model model) {
-
         AmerykaSpolka editAmerykaSpolka = amerykaSpolki.stream().filter(amerykaSpolka -> amerykaSpolka.getIdSpolka().equals(index)).findFirst().get();
         log.info("Spółka do modyfikacji: " + ANSI_RED + editAmerykaSpolka.getName() + " (" + editAmerykaSpolka.getTicker() + ")" + ANSI_RESET);
-
         model.addAttribute("amerykaSpolkaFind", new AmerykaSpolka());
         model.addAttribute("amerykaSpolkaModified", editAmerykaSpolka);
         return "amerykaspolkaedit";
@@ -203,17 +174,5 @@ public class AmSpController {
 //        log.info("Zajęło mi to: " + (executionTime / 1000000000) + "s");
         return "amerykawidok";
     }
-
-
-//    private String currentUserName() {
-//        String username = "";
-//        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        if (principal instanceof UserDetails) {
-//            username = ((UserDetails) principal).getUsername();
-//        } else {
-//            username = principal.toString();
-//        }
-//        return username;
-//    }
 
 }
