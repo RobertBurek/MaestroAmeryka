@@ -434,7 +434,7 @@ section p {
 
 /*POPUP*/
 
-/*MEDIA*/
+/*MEDIA//////////////////////////////////////////////////////*/
 @media screen and (max-width: 1320px ) {
     .listSpolka {
         max-height: 93%;
@@ -444,6 +444,9 @@ section p {
     }
     .myBaner{
         left: -3%;
+    }
+    .form-control{
+        width: 360px;
     }
 }
 
@@ -485,11 +488,14 @@ section p {
         top: -50px;
         left: 130px;
     }
+    .myBanerLink{
+        margin-left: 110px;
+    }
     .myBanerForm{
         position: relative;
-        top: -195px;
-        left: 585px;
-        width: 325px;
+        top: -200px;
+        left: 58%;
+        width: 360px;
     }
 }
 
@@ -543,12 +549,24 @@ section p {
         top: -50px;
         left: 130px;
     }
+    .myBanerLink{
+        margin-left: 110px;
+    }
     .myBanerForm {
         position: relative;
-        top: -195px;
-        left: 370px;
+        top: -200px;
+        left: 58%;
+    }
+    .form-control{
+        width: 360px;
     }
 }
+
+/*@media screen and (max-width: 500px ) {*/
+/*    .myBanerForm {*/
+/*        left: 300px;*/
+/*    }*/
+/*}*/
 
 /*@media screen and (max-width: 758px ) {*/
 /*    .listSpolka {*/
