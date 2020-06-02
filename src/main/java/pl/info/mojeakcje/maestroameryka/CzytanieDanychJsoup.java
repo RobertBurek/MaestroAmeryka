@@ -307,6 +307,8 @@ public class CzytanieDanychJsoup {
     }
 
 
+
+
     //        !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //            Metoda  automatycznego zapisu danych z HTTP, uruchamiana zawsze przy uruchomianiu aplikacji
     @EventListener(ApplicationReadyEvent.class)
@@ -317,7 +319,7 @@ public class CzytanieDanychJsoup {
         Duration czasOczekiwania = Duration.between(teraz, startCzytaj);
         if (czasOczekiwania.getSeconds() < 0) czasOczekiwania = Duration.between(teraz.minusDays(1), startCzytaj);
         log.info(ANSI_FIOLET + "Czytanie danych zacznie się za: " + czasOczekiwania.getSeconds() + "s" + ANSI_RESET);
-        TimerTask taskNew = new TimerTask() {
+        TimerTask taskCzytaj = new TimerTask() {
             @Override
             public void run() {
                 try {
@@ -328,13 +330,27 @@ public class CzytanieDanychJsoup {
                 }
             }
         };
-        Timer timer = new Timer();
-        timer.schedule(taskNew, czasOczekiwania.getSeconds() * 1000, 86400000);
+        Timer timerCzytaj = new Timer();
+        timerCzytaj.schedule(taskCzytaj, czasOczekiwania.getSeconds() * 1000, 86400000);
 
 //        currentUser.setName("Guest");
 //        currentUser.setIdCU(3L);
         queryRepository.findAllWszystkieDane("anonymousUser");
 //        queryRepository.setView("anonymousUser", 9L);
+
+        startCzytaj = LocalDateTime.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), LocalDate.now().getDayOfMonth(), 05, 01);
+        teraz = LocalDateTime.now();
+        czasOczekiwania = Duration.between(teraz, startCzytaj);
+        if (czasOczekiwania.getSeconds() < 0) czasOczekiwania = Duration.between(teraz.minusDays(1), startCzytaj);
+        log.info(ANSI_FIOLET + "Czyszczenie listy gości zacznie się za: " + czasOczekiwania.getSeconds() + "s" + ANSI_RESET);
+        TimerTask taskClearGoscie = new TimerTask() {
+            @Override
+            public void run() {
+                    queryRepository.clearGoscie(LocalDate.now().minusDays(2).toString());
+            }
+        };
+        Timer timerClear = new Timer();
+        timerClear.schedule(taskClearGoscie, czasOczekiwania.getSeconds() * 1000, 86400000);
     }
 
 }

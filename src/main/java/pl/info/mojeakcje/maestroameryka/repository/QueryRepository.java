@@ -1,14 +1,11 @@
 package pl.info.mojeakcje.maestroameryka.repository;
 
-import antlr.ANTLRError;
 import lombok.extern.log4j.Log4j2;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import pl.info.mojeakcje.maestroameryka.model.AmerykaSpolka;
 import pl.info.mojeakcje.maestroameryka.model.WszystkieDane;
-import pl.info.mojeakcje.maestroameryka.model.modelCustomer.CurrentUser;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -101,7 +98,7 @@ public class QueryRepository {
 
     public List<AmerykaSpolka> findAllWszystkieDane(String currentUserName) {
         amerykaSpolki.clear();
-        List<Object> wszystkieDaneList =getDaneWithView(currentUserName);
+        List<Object> wszystkieDaneList = getDaneWithView(currentUserName);
         Iterator itr = wszystkieDaneList.iterator();
         while (itr.hasNext()) {
             Object[] obj = (Object[]) itr.next();
@@ -129,16 +126,26 @@ public class QueryRepository {
         return amerykaSpolki;
     }
 
+
     public void showWD() {
         amerykaSpolki = amerykaSpolki.stream().filter(amerykaSpolka -> amerykaSpolka.getWidok()).collect(Collectors.toList());
     }
 
+
     @Transactional
-    public void clearSetupAnonymus(){
+    public void clearSetupAnonymus() {
         entityManager.createNativeQuery("UPDATE `anonymousUser` SET `widoczny` = b'1' WHERE `anonymousUser`.`id_customer` = 9")
                 .executeUpdate();
         entityManager.createNativeQuery("UPDATE `anonymousUser` SET `notatka` = '' WHERE `anonymousUser`.`id_customer` = 9")
                 .executeUpdate();
         log.info("Wyczyszczono dane dla AnonymousUsera!");
+    }
+
+    @Transactional
+    public void clearGoscie(String dateClear) {
+        entityManager.createNativeQuery("DELETE FROM `goscie` WHERE `goscie`.`info_kiedy` <= ? ")
+                .setParameter(1, dateClear)
+                .executeUpdate();
+        log.info("Wyczyszczono dane o gościach z przed 3 dni!");
     }
 }

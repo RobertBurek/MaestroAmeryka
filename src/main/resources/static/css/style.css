@@ -464,7 +464,6 @@ section p {
     .myBaner{
         display: none;
     }
-
 }
 
 @media screen and (max-width: 992px ) {
@@ -506,7 +505,6 @@ section p {
     main {
         height: 1800px;
     }
-
 }
 
 @media screen and (max-width: 840px ) {
