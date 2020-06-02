@@ -186,8 +186,9 @@
                             <td class="textCenter" style="vertical-align:middle;">
                                 <!--                            <a th:href="@{/amerykaspolka/show(index=${amerykaSpolka.idSpolka})}">-->
                                 <a href="#"
-                                   th:onclick="'przeslijShow(' + ${amerykaSpolka.idSpolka} +', ' + ${amerykaSpolka.widok} + ')'">
+                                   th:onclick="'przeslijShow(' + ${amerykaSpolka.idSpolka} + ')'">
                                     <i th:id="'show'+${amerykaSpolka.idSpolka}"
+                                       th:value="${amerykaSpolka.widok}"
                                        th:class="${amerykaSpolka.widok} ? 'fas fa-minus myRed' : 'fas fa-plus myGreen'"></i>
                                 </a>
                             </td>

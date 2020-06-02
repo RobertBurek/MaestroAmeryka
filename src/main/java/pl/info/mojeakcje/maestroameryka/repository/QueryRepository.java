@@ -132,4 +132,13 @@ public class QueryRepository {
     public void showWD() {
         amerykaSpolki = amerykaSpolki.stream().filter(amerykaSpolka -> amerykaSpolka.getWidok()).collect(Collectors.toList());
     }
+
+    @Transactional
+    public void clearSetupAnonymus(){
+        entityManager.createNativeQuery("UPDATE `anonymousUser` SET `widoczny` = b'1' WHERE `anonymousUser`.`id_customer` = 9")
+                .executeUpdate();
+        entityManager.createNativeQuery("UPDATE `anonymousUser` SET `notatka` = '' WHERE `anonymousUser`.`id_customer` = 9")
+                .executeUpdate();
+        log.info("Wyczyszczono dane dla AnonymousUsera!");
+    }
 }

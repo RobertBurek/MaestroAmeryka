@@ -89,7 +89,6 @@ img {
 }
 
 
-
 .myForm {
     display: flex;
 }
@@ -128,6 +127,7 @@ img {
     color: black;
     text-decoration: none;
 }
+
 .myTableA:hover {
     color: black;
     text-decoration: none;
@@ -137,7 +137,7 @@ img {
     border: 2px solid #61a5ea;
 }
 
-.tytulyKolumn{
+.tytulyKolumn {
     background-color: grey;
     color: white;
 }
@@ -196,7 +196,7 @@ img {
     border-color: #61a5ea;
 }
 
-.myShow{
+.myShow {
     float: right;
     height: 24px;
     margin-top: 70px !important;
@@ -212,11 +212,11 @@ img {
     margin-right: 0px !important;
 }
 
-.myGreen{
+.myGreen {
     color: green;
 }
 
-.myRed{
+.myRed {
     color: red;
 }
 
@@ -261,7 +261,7 @@ label {
     width: 90%;
 }
 
-#mainWebsite{
+#mainWebsite {
     order: -1;
 }
 
@@ -322,12 +322,12 @@ section p {
     text-align: justify;
 }
 
-.myNote{
+.myNote {
     cursor: pointer;
 }
 
 
-.myNote:hover{
+.myNote:hover {
     cursor: pointer;
 }
 
@@ -344,6 +344,7 @@ section p {
     visibility: hidden;
     opacity: 0;
 }
+
 .overlay:target {
     visibility: visible;
     opacity: 1;
@@ -352,6 +353,7 @@ section p {
     left: 0;
     right: 0;
 }
+
 .popup {
     /*margin: 70px auto;*/
     padding: 20px;
@@ -363,12 +365,14 @@ section p {
     top: 40%;
     left: 65%;
 }
+
 .popup h2 {
     margin-top: -2px;
     margin-right: 4px;
     color: #333;
     font-family: Tahoma, Arial, sans-serif;
 }
+
 .popup .close {
     position: absolute;
     top: -5px;
@@ -379,33 +383,39 @@ section p {
     text-decoration: none;
     color: #333;
 }
+
 .popup .close:hover {
     color: #61a5ea;
 }
+
 .popup .content {
     max-height: 30%;
     overflow: auto;
 }
-.center{
+
+.center {
     margin: 20px 17%;
 }
-.zacznijmy{
-    color:black;
+
+.zacznijmy {
+    color: black;
     margin-left: 36%;
 }
+
 .box {
     width: 40%;
     padding: 35px;
     border: 2px solid #fff;
 }
 
-.boxstyle{
+.boxstyle {
     margin: 0 auto;
-    background: rgba(255,255,255,0.2);
+    background: rgba(255, 255, 255, 0.2);
     border-radius: 20px/50px;
     background-clip: padding-box;
     text-align: center;
 }
+
 .button {
     font-size: 1em;
     padding: 10px;
@@ -417,48 +427,73 @@ section p {
     cursor: pointer;
     transition: all 0.3s ease-out;
 }
+
 .button:hover {
     background: #06D85F;
 }
+
 /*POPUP*/
 
 /*MEDIA*/
-@media (max-width: 1320px ) {
+@media screen and (max-width: 1320px ) {
     .listSpolka {
         max-height: 93%;
     }
-
     main {
         height: 1350px;
     }
+    .myBaner{
+        left: -3%;
+    }
 }
 
-@media (max-width: 1150px ) {
+@media screen and (max-width: 1178px ) {
     .listSpolka {
         max-height: 93%;
     }
-
     main {
         height: 1700px;
     }
-
     .input-course {
         width: 100px;
         margin-right: 10%;
     }
+    .myBaner{
+        display: none;
+    }
+
 }
 
-@media (max-width: 960px ) {
+@media screen and (max-width: 992px ) {
     .listSpolka {
         max-height: 93%;
     }
-
     main {
         height: 1750px;
     }
+    .myBaner{
+        display: block;
+        position: relative;
+        top: -200px;
+        left: 26%;
+    }
+    .myBorder{
+        height: 157px;
+    }
+    .myBanerLogin{
+        position: relative;
+        top: -50px;
+        left: 130px;
+    }
+    .myBanerForm{
+        position: relative;
+        top: -195px;
+        left: 585px;
+        width: 325px;
+    }
 }
 
-@media (max-width: 910px ) {
+@media screen and (max-width: 910px ) {
     .listSpolka {
         max-height: 96%;
     }
@@ -468,7 +503,7 @@ section p {
 
 }
 
-@media (max-width: 840px ) {
+@media screen and (max-width: 840px ) {
     .listSpolka {
         max-height: 96%;
     }
@@ -483,7 +518,7 @@ section p {
     }
 }
 
-@media (max-width: 800px ) {
+@media screen and (max-width: 800px ) {
     .listSpolka {
         max-height: 96%;
     }
@@ -503,120 +538,132 @@ section p {
         top: 10%;
         left: 40%;
     }
-    .myBaner{
-        left: 120px;
-        top: -200px;
-    }
-    .myBanerLogin{
+    .myBanerLogin {
         position: relative;
         top: -50px;
         left: 130px;
     }
-    .myBanerForm{
+    .myBanerForm {
         position: relative;
         top: -195px;
-        left: 372px;
-    }
-    .collapse.show {
-        height: 70px;
+        left: 370px;
     }
 }
 
-@media (max-width: 758px ) {
-    .listSpolka {
-        max-height: 96%;
-    }
-    main {
-        height: 2500px;
-    }
-}
+/*@media screen and (max-width: 758px ) {*/
+/*    .listSpolka {*/
+/*        max-height: 96%;*/
+/*    }*/
+/*    main {*/
+/*        height: 2500px;*/
+/*    }*/
+/*}*/
 
-@media (max-width: 700px ) {
-    .listSpolka {
-        max-height: 96%;
-    }
+/*@media screen and (max-width: 680px ) {*/
+/*    .listSpolka {*/
+/*        max-height: 96%;*/
+/*    }*/
+/*    main {*/
+/*        height: 1940px;*/
+/*    }*/
+/*    section p {*/
+/*        font-size: 80%;*/
+/*    }*/
+/*}*/
 
-    main {
-        height: 25200px;
-    }
-}
+/*@media screen and (max-width: 620px ) {*/
+/*    .listSpolka {*/
+/*        max-height: 96%;*/
+/*    }*/
+/*    main {*/
+/*        height: 2170px;*/
+/*    }*/
+/*    .myColumn {*/
+/*        width: 50%;*/
+/*        margin: 0px 0px;*/
+/*        padding-left: 0px;*/
+/*    }*/
+/*    .btn-outline-success {*/
+/*        font-size: 90%;*/
+/*    }*/
+/*    h3 {*/
+/*        font-size: 1.3rem;*/
+/*    }*/
+/*}*/
 
-@media (max-width: 680px ) {
-    .listSpolka {
-        max-height: 96%;
-    }
-    main {
-        height: 1940px;
-    }
-    section p {
-        font-size: 80%;
-    }
+/*@media screen and (max-width: 566px ) {*/
+/*    .listSpolka {*/
+/*        max-height: 96%;*/
+/*    }*/
+/*    main {*/
+/*        height: 2250px;*/
+/*    }*/
+/*    .input-course {*/
+/*        margin-right: 2px;*/
+/*        font-size: 90%;*/
+/*        width: 80px;*/
+/*    }*/
+/*    .myForm {*/
+/*        font-size: 80%;*/
+/*    }*/
+/*    .btn-outline-success {*/
+/*        font-size: 80%;*/
+/*    }*/
+/*    section p {*/
+/*        font-size: 74%;*/
+/*    }*/
+/*    h3 {*/
+/*        font-size: 1.0rem;*/
+/*    }*/
+/*}*/
 
-}
+/*@media screen and (max-width: 458px ) {*/
+/*    .listSpolka {*/
+/*        max-height: 96%;*/
+/*    }*/
+/*    main {*/
+/*        height: 2500px;*/
+/*    }*/
+/*    .btn-outline-success {*/
+/*        font-size: 60%;*/
+/*    }*/
+/*    .popup {*/
+/*        width: 330px;*/
+/*        top: 10%;*/
+/*        left: 10%;*/
+/*    }*/
+/*    .myBaner {*/
+/*        left: 216px;*/
+/*        top: -200px;*/
+/*    }*/
+/*    .myBanerLogin {*/
+/*        position: relative;*/
+/*        top: -50px;*/
+/*        left: 130px;*/
+/*    }*/
+/*    .myBanerForm {*/
+/*        position: relative;*/
+/*        top: -195px;*/
+/*        left: 370px;*/
+/*    }*/
+/*    .form-control{*/
+/*        width: 200px;*/
+/*    }*/
+/*}*/
 
-@media (max-width: 620px ) {
-    .listSpolka {
-        max-height: 96%;
-    }
-
-    main {
-        height: 2170px;
-    }
-
-    .myColumn {
-        width: 50%;
-        margin: 0px 0px;
-        padding-left: 0px;
-    }
-
-    .btn-outline-success {
-        font-size: 90%;
-    }
-
-    h3 {
-        font-size: 1.3rem;
-    }
-}
-
-@media (max-width: 566px ) {
-    .listSpolka {
-        max-height: 96%;
-    }
-    main {
-        height: 2250px;
-    }
-    .input-course {
-        margin-right: 2px;
-        font-size: 90%;
-        width: 80px;
-    }
-    .myForm {
-        font-size: 80%;
-    }
-    .btn-outline-success {
-        font-size: 80%;
-    }
-    section p {
-        font-size: 74%;
-    }
-    h3 {
-        font-size: 1.0rem;
-    }
-}
-
-@media (max-width: 458px ) {
-    .listSpolka {
-        max-height: 96%;
-    }
-    main {
-        height: 2500px;
-    }
-    .btn-outline-success {
-        font-size: 60%;
-    }
-    .popup {
-        width: 330px;
-        top: 10%;
-        left: 10%;
-    }
-}
+/*@media screen and (max-width: 300px ) {ó*/
+/*    .myBaner {*/
+/*        left: 120px;*/
+/*        top: -200px;*/
+/*    }*/
+/*    .myBanerLogin {*/
+/*        position: relative;*/
+/*        top: -50px;*/
+/*        left: 130px;*/
+/*    }*/
+/*    .myBanerForm {*/
+/*        position: relative;*/
+/*        top: -195px;*/
+/*        left: 370px;*/
+/*    }*/
+/* }*/

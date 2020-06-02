@@ -12,6 +12,7 @@ import pl.info.mojeakcje.maestroameryka.model.modelCustomer.CurrentUser;
 import pl.info.mojeakcje.maestroameryka.repository.AmSpRepository;
 import pl.info.mojeakcje.maestroameryka.repository.QueryRepository;
 import pl.info.mojeakcje.maestroameryka.repository.WszysDaneRepository;
+import pl.info.mojeakcje.maestroameryka.service.ClearAnonymous;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,15 +34,16 @@ public class AmSpController {
     QueryRepository queryRepository;
     ShowSpolka showSpolka;
     WszysDaneRepository wszysDaneRepository;
+    ClearAnonymous clearAnonymous;
 
-    public AmSpController(CurrentUser currentUser, AmSpRepository amSpRepository, QueryRepository queryRepository, ShowSpolka showSpolka, WszysDaneRepository wszysDaneRepository) {
+    public AmSpController(CurrentUser currentUser, AmSpRepository amSpRepository, QueryRepository queryRepository, ShowSpolka showSpolka, WszysDaneRepository wszysDaneRepository, ClearAnonymous clearAnonymous) {
         this.currentUser = currentUser;
         this.amSpRepository = amSpRepository;
         this.queryRepository = queryRepository;
         this.showSpolka = showSpolka;
         this.wszysDaneRepository = wszysDaneRepository;
+        this.clearAnonymous = clearAnonymous;
     }
-
 
     @GetMapping("/loginMaestro")
     public String login() {
@@ -95,6 +97,7 @@ public class AmSpController {
 
     @GetMapping("/amerykaspolka/show/{id}&{widok}")
     public String chengeShow(@PathVariable Long id, @PathVariable Boolean widok, Model model) {
+        if ((currentUser.currentUserName().equals("anonymousUser"))&&(!isDelay)) clearAnonymous.clearShowAnonymousUser(20L);
         String position = "amerykawidok::#position" + id;
         AmerykaSpolka amerykaSpolka = amerykaSpolki.stream().filter(amSp -> amSp.getIdSpolka().equals(id)).findFirst().get();
         WszystkieDane wszystkieDane = wszysDaneRepository.findById(amerykaSpolka.getIdWszystkieDane()).get();
@@ -151,6 +154,7 @@ public class AmSpController {
 
     @PostMapping("/amerykaspolka/save/edit")
     public String saveNameDayEdit(@ModelAttribute AmerykaSpolka modifiedAmerykaSpolka) {
+        if ((currentUser.currentUserName().equals("anonymousUser"))&&(!isDelay)) clearAnonymous.clearShowAnonymousUser(20L);
         WszystkieDane wszystkieDane = wszysDaneRepository.findById(modifiedAmerykaSpolka.getIdWszystkieDane()).get();
         wszystkieDane.setNotatka(modifiedAmerykaSpolka.getNote());
         wszystkieDane.setWidoczny(modifiedAmerykaSpolka.getWidok());
