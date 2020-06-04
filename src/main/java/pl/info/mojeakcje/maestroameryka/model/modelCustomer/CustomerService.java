@@ -45,7 +45,6 @@ public class CustomerService implements IUserService {
         customer.setRoleCustomer("ROLE_USER");
         customer.setIpCustomer(currentUser.getIpCU());
         log.info("Zapisano nowego użytkownika: " + customer.getNickCustomer());
-//        return customer;
             return custoRepository.save(customer);
     }
 

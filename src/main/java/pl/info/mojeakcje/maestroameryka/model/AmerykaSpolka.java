@@ -1,7 +1,10 @@
 package pl.info.mojeakcje.maestroameryka.model;
 
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
 public class AmerykaSpolka {
@@ -32,9 +35,7 @@ public class AmerykaSpolka {
     private String website;
     private Boolean widok;
     private Long idWszystkieDane;
-//    @ManyToOne
-//    @JoinColumn(name = "customer_id")
-//    private Customer customer;
+
 
     public AmerykaSpolka() {
     }
@@ -232,15 +233,6 @@ public class AmerykaSpolka {
     public void setIdWszystkieDane(Long idWszystkieDane) {
         this.idWszystkieDane = idWszystkieDane;
     }
-
-    //    public Customer getCustomer() {
-//        return customer;
-//    }
-//
-//    public void setCustomer(Customer customer) {
-//        this.customer = customer;
-//    }
-
 
     public Boolean getWidok() {
         return widok;
