@@ -49,7 +49,6 @@ public class QueryRepository {
 
     @Transactional
     public List<WszystkieDane> getDane(Long idCustomer) {
-//        CREATE VIEW widok AS
 
         return entityManager.createNativeQuery("SELECT * FROM wszystkie_dane INNER JOIN customer\n" +
                 "ON customer.id_customer = wszystkie_dane.cust_id INNER JOIN ameryka_spolka\n" +
@@ -69,8 +68,9 @@ public class QueryRepository {
                 "WHERE wszystkie_dane.cust_id= ?;")
                 .setParameter(1, idCustomer)
                 .executeUpdate();
-        log.info("Ustawiłem vidok dla: " + name + "  nr: " + idCustomer);
+        log.info("Ustawiłem widok dla: " + name + "  nr: " + idCustomer);
     }
+
 
     @Transactional
 //    public List<WszystkieDane> getDaneWithView(String name) {

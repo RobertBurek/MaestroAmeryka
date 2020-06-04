@@ -3,12 +3,13 @@ package pl.info.mojeakcje.maestroameryka.model.modelCustomer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import pl.info.mojeakcje.maestroameryka.model.AmerykaSpolka;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @Entity
 public class Customer implements UserDetails {
@@ -18,6 +19,7 @@ public class Customer implements UserDetails {
     private Long idCustomer;
     private String nickCustomer;
     private String passwordCustomer;
+//    private String matchPasswordCustomer;
     private String roleCustomer;
     private String ipCustomer;
 //    @OneToMany(targetEntity = AmerykaSpolka.class, cascade =CascadeType.ALL) //mappedBy = "customer")
@@ -73,6 +75,22 @@ public class Customer implements UserDetails {
 //        Można rozbudować w bazie.
         return true;
     }
+
+    public Long getIdCustomer() {
+        return idCustomer;
+    }
+
+    public void setIdCustomer(Long idCustomer) {
+        this.idCustomer = idCustomer;
+    }
+
+//    public String getMatchPasswordCustomer() {
+//        return matchPasswordCustomer;
+//    }
+//
+//    public void setMatchPasswordCustomer(String matchPasswordCustomer) {
+//        this.matchPasswordCustomer = matchPasswordCustomer;
+//    }
 
     public Long getId() {
         return idCustomer;

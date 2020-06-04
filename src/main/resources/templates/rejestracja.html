@@ -30,35 +30,38 @@
         <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
             <div class="card card-signin my-5">
                 <div class="card-body">
-                    <h5 class="card-title text-center">Zaloguj się</h5>
-                    <form class="form-signin" method="POST" th:action="@{/loginMaestro}">
+<!--                    <h1 th:text="#{label.form.title}">form</h1>-->
+                    <h5 class="card-title text-center">Zarejestruj się</h5>
+                    <form name="formRejestracja" class="form-signin" th:object="${newCustomer}" method="POST" enctype="utf8" th:action="@{/rejestracja}">
                         <div class="form-label-group">
-                            <input th:value="${nickUser}" name="username"  type="text" id="nick" class="form-control" style="padding: 12px;padding-left: 80px;" placeholder="Nick" required autofocus>
+                            <input th:field="*{nickCustomer}" name="username"  type="text" id="nick" class="form-control" style="padding: 12px;padding-left: 80px;" placeholder="Nick" required autofocus>
                             <label for="nick">Nick :</label>
+                            <p th:each="error: ${#fields.errors('nickCustomer')}"
+                               th:text="${error}">Validation error</p>
                         </div>
                         <div class="form-label-group">
-                            <input th:value="${passUser}" name="password" type="password" id="inputPassword" class="form-control myInput" style="padding: 12px;padding-left: 110px;" placeholder="Password" required>
+                            <input th:field="*{passwordCustomer}" name="password" type="password" id="inputPassword" class="form-control myInput" style="padding: 12px;padding-left: 110px;" placeholder="Password" required>
                             <label for="inputPassword">Password :</label>
+                            <p th:each="error : ${#fields.errors('passwordCustomer')}"
+                               th:text="${error}">Validation error</p>
                         </div>
-<!--                        <div class="form-label-group" hidden="hidden">-->
-<!--                            <input name="password" type="password" id="inputPasswordTwo" class="form-control myInput" style="padding: 12px;" placeholder="Password" required>-->
-<!--                            <label for="inputPasswordTwo"></label>-->
-<!--                        </div>-->
-                        <button class="btn btn-lg btn-primary btn-block text-uppercase" style="background: #61a5ea;" type="submit">Zaloguj</button>
-                        <a class="btn btn-lg btn-primary btn-block text-uppercase" style="background: #61a5ea;"href="/rejestracja"
-                        th:if="${nickUser.equals('')}">Rejestracja</a>
-<!--                        th:hidden="${nickUser.equals('anonymousUser')} ? 'Login' : 'Logout'">Rejestracja</a>-->
+                        <div class="form-label-group">
+                            <input th:field="*{matchPasswordCustomer}" name="password" type="password" id="inputPasswordTwo" class="form-control myInput" style="padding: 12px;padding-left: 110px;" placeholder="Password" required>
+                            <label for="inputPasswordTwo">Password :</label>
+                        </div>
+                        <button class="btn btn-lg btn-primary btn-block text-uppercase" style="background: #61a5ea;" type="submit">Zapisz</button>
                         <hr class="my-4">
                     </form>
-<!--                    <button class="btn btn-lg btn-primary btn-block text-uppercase" style="background: #61a5ea;" th:action="@{/rejestracja}">Rejestracja</button>-->
-<!--                    <a class="btn btn-outline-success" href="/rejestracja">Rejestracja</a>-->
-                    <div style="color: red; text-align: center;" th:if="${param.error}">
-                        Invalid nick or password.
-                    </div>
+                    <p style="color: red; text-align: center;"th:text="${message}"></p>
+<!--                    <div style="color: red; text-align: center;" th:if="${param.error}" >-->
+
+<!--                        Duplicate nick or passwords are different.-->
+<!--                    </div>-->
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script th:src="@{/js/appRejestracja.js}"></script>
 </body>
 </html>

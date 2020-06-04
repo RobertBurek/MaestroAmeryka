@@ -2,6 +2,7 @@ package pl.info.mojeakcje.maestroameryka;
 
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -10,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import pl.info.mojeakcje.maestroameryka.model.modelCustomer.NewUserDetailsService;
 import pl.info.mojeakcje.maestroameryka.model.modelCustomer.UserDetailsServiceImpl;
 import pl.info.mojeakcje.maestroameryka.repository.AmSpRepository;
 import pl.info.mojeakcje.maestroameryka.repository.CustoRepository;
@@ -31,6 +33,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private CustoRepository custoRepository;
     private AmSpRepository amSpRepository;
     private WszysDaneRepository wszysDaneRepository;
+//    private NewUserDetailsService newUserDetailsService;
 
 
     public WebSecurityConfig(UserDetailsServiceImpl userDetailsService, CustoRepository custoRepository, AmSpRepository amSpRepository, WszysDaneRepository wszysDaneRepository) {
@@ -38,13 +41,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         this.custoRepository = custoRepository;
         this.amSpRepository = amSpRepository;
         this.wszysDaneRepository = wszysDaneRepository;
-
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+//    @Bean
+//    public PasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder();
+//    }
+
+
+    @Autowired
+    NewUserDetailsService newUserDetailsService;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -53,7 +59,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .withUser(new User("Admin", passwordEncoder().encode("Admin"), Collections.singleton(new SimpleGrantedAuthority("admin"))));
 
         auth.userDetailsService(userDetailsService).getUserDetailsService();
+        auth.userDetailsService(newUserDetailsService).getUserDetailsService();
     }
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -77,6 +85,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .and()
 //                .formLogin()
 //                .failureUrl("/login.html?error=true")
+//                .and()
+//                .formLogin()
+//                .loginPage("/rejestracja").permitAll()
                 .and()
                 .logout()
                 .logoutSuccessUrl("/amerykaspolka")
@@ -208,7 +219,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //        Thread.sleep(2000);
 //        System.out.println("Zrobione!!!");
 //        queryRepository.setView("anonymousUser", 9L);
-//        log.info("zmieniłem na 2");  //-----------------------------------------------
+//        log.info("zmieniłem na 2");
+//        -----------------------------------------------
 
 //        currentUser.setName("Guest");
 //        currentUser.setIdCU(9L);

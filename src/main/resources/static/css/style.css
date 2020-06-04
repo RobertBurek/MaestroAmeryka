@@ -445,9 +445,6 @@ section p {
     .myBaner{
         left: -3%;
     }
-    .form-control{
-        width: 360px;
-    }
 }
 
 @media screen and (max-width: 1178px ) {
@@ -493,6 +490,12 @@ section p {
     .myBanerForm{
         position: relative;
         top: -200px;
+        left: 58%;
+        width: 360px;
+    }
+    .myBanerFormEdit{
+        position: relative;
+        top: -115px;
         left: 58%;
         width: 360px;
     }
@@ -560,126 +563,126 @@ section p {
     }
 }
 
-/*@media screen and (max-width: 500px ) {*/
-/*    .myBanerForm {*/
-/*        left: 300px;*/
-/*    }*/
-/*}*/
+@media screen and (max-width: 500px ) {
+    .myBanerForm {
+        left: 300px;
+    }
+}
 
-/*@media screen and (max-width: 758px ) {*/
-/*    .listSpolka {*/
-/*        max-height: 96%;*/
-/*    }*/
-/*    main {*/
-/*        height: 2500px;*/
-/*    }*/
-/*}*/
+@media screen and (max-width: 758px ) {
+    .listSpolka {
+        max-height: 96%;
+    }
+    main {
+        height: 2500px;
+    }
+}
 
-/*@media screen and (max-width: 680px ) {*/
-/*    .listSpolka {*/
-/*        max-height: 96%;*/
-/*    }*/
-/*    main {*/
-/*        height: 1940px;*/
-/*    }*/
-/*    section p {*/
-/*        font-size: 80%;*/
-/*    }*/
-/*}*/
+@media screen and (max-width: 680px ) {
+    .listSpolka {
+        max-height: 96%;
+    }
+    main {
+        height: 1940px;
+    }
+    section p {
+        font-size: 80%;
+    }
+}
 
-/*@media screen and (max-width: 620px ) {*/
-/*    .listSpolka {*/
-/*        max-height: 96%;*/
-/*    }*/
-/*    main {*/
-/*        height: 2170px;*/
-/*    }*/
-/*    .myColumn {*/
-/*        width: 50%;*/
-/*        margin: 0px 0px;*/
-/*        padding-left: 0px;*/
-/*    }*/
-/*    .btn-outline-success {*/
-/*        font-size: 90%;*/
-/*    }*/
-/*    h3 {*/
-/*        font-size: 1.3rem;*/
-/*    }*/
-/*}*/
+@media screen and (max-width: 620px ) {
+    .listSpolka {
+        max-height: 96%;
+    }
+    main {
+        height: 2170px;
+    }
+    .myColumn {
+        width: 50%;
+        margin: 0px 0px;
+        padding-left: 0px;
+    }
+    .btn-outline-success {
+        font-size: 90%;
+    }
+    h3 {
+        font-size: 1.3rem;
+    }
+}
 
-/*@media screen and (max-width: 566px ) {*/
-/*    .listSpolka {*/
-/*        max-height: 96%;*/
-/*    }*/
-/*    main {*/
-/*        height: 2250px;*/
-/*    }*/
-/*    .input-course {*/
-/*        margin-right: 2px;*/
-/*        font-size: 90%;*/
-/*        width: 80px;*/
-/*    }*/
-/*    .myForm {*/
-/*        font-size: 80%;*/
-/*    }*/
-/*    .btn-outline-success {*/
-/*        font-size: 80%;*/
-/*    }*/
-/*    section p {*/
-/*        font-size: 74%;*/
-/*    }*/
-/*    h3 {*/
-/*        font-size: 1.0rem;*/
-/*    }*/
-/*}*/
+@media screen and (max-width: 566px ) {
+    .listSpolka {
+        max-height: 96%;
+    }
+    main {
+        height: 2250px;
+    }
+    .input-course {
+        margin-right: 2px;
+        font-size: 90%;
+        width: 80px;
+    }
+    .myForm {
+        font-size: 80%;
+    }
+    .btn-outline-success {
+        font-size: 80%;
+    }
+    section p {
+        font-size: 74%;
+    }
+    h3 {
+        font-size: 1.0rem;
+    }
+}
 
-/*@media screen and (max-width: 458px ) {*/
-/*    .listSpolka {*/
-/*        max-height: 96%;*/
-/*    }*/
-/*    main {*/
-/*        height: 2500px;*/
-/*    }*/
-/*    .btn-outline-success {*/
-/*        font-size: 60%;*/
-/*    }*/
-/*    .popup {*/
-/*        width: 330px;*/
-/*        top: 10%;*/
-/*        left: 10%;*/
-/*    }*/
-/*    .myBaner {*/
-/*        left: 216px;*/
-/*        top: -200px;*/
-/*    }*/
-/*    .myBanerLogin {*/
-/*        position: relative;*/
-/*        top: -50px;*/
-/*        left: 130px;*/
-/*    }*/
-/*    .myBanerForm {*/
-/*        position: relative;*/
-/*        top: -195px;*/
-/*        left: 370px;*/
-/*    }*/
-/*    .form-control{*/
-/*        width: 200px;*/
-/*    }*/
-/*}*/
+@media screen and (max-width: 458px ) {
+    .listSpolka {
+        max-height: 96%;
+    }
+    main {
+        height: 2500px;
+    }
+    .btn-outline-success {
+        font-size: 60%;
+    }
+    .popup {
+        width: 330px;
+        top: 10%;
+        left: 10%;
+    }
+    .myBaner {
+        left: 216px;
+        top: -200px;
+    }
+    .myBanerLogin {
+        position: relative;
+        top: -50px;
+        left: 130px;
+    }
+    .myBanerForm {
+        position: relative;
+        top: -195px;
+        left: 370px;
+    }
+    .form-control{
+        width: 200px;
+    }
+}
 
-/*@media screen and (max-width: 300px ) {ó*/
-/*    .myBaner {*/
-/*        left: 120px;*/
-/*        top: -200px;*/
-/*    }*/
-/*    .myBanerLogin {*/
-/*        position: relative;*/
-/*        top: -50px;*/
-/*        left: 130px;*/
-/*    }*/
-/*    .myBanerForm {*/
-/*        position: relative;*/
-/*        top: -195px;*/
-/*        left: 370px;*/
-/*    }*/
-/* }*/
+@media screen and (max-width: 300px ) {ó
+    .myBaner {
+        left: 120px;
+        top: -200px;
+    }
+    .myBanerLogin {
+        position: relative;
+        top: -50px;
+        left: 130px;
+    }
+    .myBanerForm {
+        position: relative;
+        top: -195px;
+        left: 370px;
+    }
+ }

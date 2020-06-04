@@ -38,6 +38,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         log.info(ANSI_MORSKI + ANSI_BOLD + "Próba logowania przez: " + ANSI_BLUEE + s + ANSI_RESET);
         UserDetails byNickCustomer = custoRepository.findByNickCustomer(s);
         UserDetails userDetailsNew;
+        if (byNickCustomer == null){
+            throw new UsernameNotFoundException(
+                    "No user found with username: "+ s);
+        }
         if (byNickCustomer.getAuthorities().toString().equals("[ROLE_ADMIN]")) {
             log.info("Jestem adminem!!!");
             userDetailsNew = User.builder()

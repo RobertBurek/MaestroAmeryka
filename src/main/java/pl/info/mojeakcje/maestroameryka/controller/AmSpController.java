@@ -45,24 +45,12 @@ public class AmSpController {
         this.clearAnonymous = clearAnonymous;
     }
 
-    @GetMapping("/loginMaestro")
-    public String login() {
-        log.info(ANSI_RED + "Proces logowania!!!" + ANSI_RESET);
-        return "loginMaestro";
-    }
-
-
-    @GetMapping("/logout")
-    public String logout() {
-        log.info(ANSI_RED + "Wylogowano: " + currentUser.currentUserName() + ANSI_RESET);
-        return "redirect:/amerykaspolka";
-    }
-
 
     @GetMapping("/")
     public String getAllView(Model model) {
         queryRepository.findAllWszystkieDane(currentUser.currentUserName());
         if (!showSpolka.show) queryRepository.showWD();
+        amerykaSpolki = amerykaSpolki.stream().sorted((o1, o2) -> o1.getName().compareTo(o2.getName())).collect(Collectors.toList());
         log.info(ANSI_BLUE + "Odczyt wszystkich danych z bazy, endpoint (/), użytkownik: " + currentUser.currentUserName() + ANSI_RESET);
         model.addAttribute("showAll", showSpolka.getShow());
         model.addAttribute("currentUserName", currentUser.currentUserName());
@@ -75,8 +63,10 @@ public class AmSpController {
 
     @GetMapping("/amerykaspolka")
     public String getStart(Model model) {
+        clearAnonymous.clearShowAnonymousUser(0L);
         queryRepository.findAllWszystkieDane(currentUser.currentUserName());
         if (!showSpolka.show) queryRepository.showWD();
+        amerykaSpolki = amerykaSpolki.stream().sorted((o1, o2) -> o1.getName().compareTo(o2.getName())).collect(Collectors.toList());
         log.info(ANSI_BLUE + "Odczyt wszystkich danych z bazy, endpoint (/amerykaspolka), użytkownik: " + currentUser.currentUserName() + ANSI_RESET);
         model.addAttribute("showAll", showSpolka.getShow());
         model.addAttribute("currentUserName", currentUser.currentUserName());
@@ -97,7 +87,8 @@ public class AmSpController {
 
     @GetMapping("/amerykaspolka/show/{id}&{widok}")
     public String chengeShow(@PathVariable Long id, @PathVariable Boolean widok, Model model) {
-        if ((currentUser.currentUserName().equals("anonymousUser"))&&(!isDelay)) clearAnonymous.clearShowAnonymousUser(20L);
+        if ((currentUser.currentUserName().equals("anonymousUser")) && (!isDelay))
+            clearAnonymous.clearShowAnonymousUser(20L);
         String position = "amerykawidok::#position" + id;
         AmerykaSpolka amerykaSpolka = amerykaSpolki.stream().filter(amSp -> amSp.getIdSpolka().equals(id)).findFirst().get();
         WszystkieDane wszystkieDane = wszysDaneRepository.findById(amerykaSpolka.getIdWszystkieDane()).get();
@@ -154,7 +145,8 @@ public class AmSpController {
 
     @PostMapping("/amerykaspolka/save/edit")
     public String saveNameDayEdit(@ModelAttribute AmerykaSpolka modifiedAmerykaSpolka) {
-        if ((currentUser.currentUserName().equals("anonymousUser"))&&(!isDelay)) clearAnonymous.clearShowAnonymousUser(20L);
+        if ((currentUser.currentUserName().equals("anonymousUser")) && (!isDelay))
+            clearAnonymous.clearShowAnonymousUser(20L);
         WszystkieDane wszystkieDane = wszysDaneRepository.findById(modifiedAmerykaSpolka.getIdWszystkieDane()).get();
         wszystkieDane.setNotatka(modifiedAmerykaSpolka.getNote());
         wszystkieDane.setWidoczny(modifiedAmerykaSpolka.getWidok());

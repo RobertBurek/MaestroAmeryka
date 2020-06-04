@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 import pl.info.mojeakcje.maestroameryka.model.AmerykaSpolka;
 import pl.info.mojeakcje.maestroameryka.model.modelCustomer.CurrentUser;
 import pl.info.mojeakcje.maestroameryka.repository.AmSpRepository;
@@ -15,7 +16,10 @@ import pl.info.mojeakcje.maestroameryka.repository.QueryRepository;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
-import java.time.*;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.*;
 
 import static pl.info.mojeakcje.maestroameryka.MaestroamerykaApplication.*;
@@ -67,14 +71,37 @@ public class CzytanieDanychJsoup {
         Double wynik;
         String stopa;
 
+        String url = "https://finance.yahoo.com/quote/FOXA/history?p=FOXA";
+        String endDate = "";
+        Long startDate = 0L;
+
+        RestTemplate restTemplate = new RestTemplate();
+        String values = restTemplate.getForObject(url, String.class);
+        String[] lines = values.split("<>");
+        String[] linia;
+        List<String> nowaL = new ArrayList<>();
+        for (String st : lines) {
+            if (st.contains("root.App.now")) {
+                linia = st.split("root.App.now");
+                for (String znak : linia) {
+                    if (znak.startsWith(" = ")) {
+                        endDate = znak.substring(3, znak.indexOf(";") - 3);
+                    }
+                }
+            }
+        }
+        Long rokTime = 31536000L + 5 * 86400L;
+        startDate = Long.parseLong(endDate) - rokTime;
+
+
         // ustalanie parametrów dla URL
-        LocalDate localDateStart = LocalDate.of(2020, 05, 02);
+//        LocalDate localDateStart = LocalDate.of(2020, 05, 02);
         LocalDate localDateNow = LocalDate.now();
-        Period period = Period.between(localDateStart, localDateNow);
-//        System.out.println("Minęło dni (period): " + period.getDays());
-        Long deltaTime = period.getDays() * 86400L;
-        Long startTime = 1588450505L;  //  02.05.2020 22:15
-        Long rokTime = 31536000L + 5 * 86400L;  // roku + 5 dni
+//        Period period = Period.between(localDateStart, localDateNow);
+////        System.out.println("Minęło dni (period): " + period.getDays());
+//        Long deltaTime = period.getDays() * 86400L;
+//        Long startTime = 1588450505L;  //  02.05.2020 22:15
+//        Long rokTime = 31536000L + 5 * 86400L;  // roku + 5 dni
         LocalDate localDateFind = LocalDate.now();
 
         List<String> listaDat = new ArrayList<>();
@@ -103,7 +130,8 @@ public class CzytanieDanychJsoup {
 
 //            System.out.println("https://query1.finance.yahoo.com/v7/finance/download/" + amSp.getTicker() + "?period1=" + (startTime + deltaTime - rokTime) + "&period2=" + (startTime + deltaTime) + "&interval=1d&events=history");
 //            log.info("https://query1.finance.yahoo.com/v7/finance/download/" + amSp.getTicker() + "?period1=" + (startTime + deltaTime - rokTime) + "&period2=" + (startTime + deltaTime) + "&interval=1d&events=history");
-            Document document = connect("https://query1.finance.yahoo.com/v7/finance/download/" + amSp.getTicker() + "?period1=" + (startTime + deltaTime - rokTime) + "&period2=" + (startTime + deltaTime) + "&interval=1d&events=history");
+//            Document document = connect("https://query1.finance.yahoo.com/v7/finance/download/" + amSp.getTicker() + "?period1=" + (startTime + deltaTime - rokTime) + "&period2=" + (startTime + deltaTime) + "&interval=1d&events=history");
+            Document document = connect("https://query1.finance.yahoo.com/v7/finance/download/" + amSp.getTicker() + "?period1=" + startDate + "&period2=" + endDate + "&interval=1d&events=history");
 
             // Tworzenie listy dat
             localDateNow = LocalDate.now();
@@ -169,7 +197,8 @@ public class CzytanieDanychJsoup {
             }
 
             log.info(ANSI_YELLOW + "Czytam spółkę: " + ANSI_RESET + amSp.getTicker() + ANSI_FIOLET + "       daty: " + listaDat + ANSI_RESET);
-            log.info("https://query1.finance.yahoo.com/v7/finance/download/" + amSp.getTicker() + "?period1=" + (startTime + deltaTime - rokTime) + "&period2=" + (startTime + deltaTime) + "&interval=1d&events=history");
+//            log.info("https://query1.finance.yahoo.com/v7/finance/download/" + amSp.getTicker() + "?period1=" + (startTime + deltaTime - rokTime) + "&period2=" + (startTime + deltaTime) + "&interval=1d&events=history");
+            log.info("https://query1.finance.yahoo.com/v7/finance/download/" + amSp.getTicker() + "?period1=" + startDate + "&period2=" + endDate + "&interval=1d&events=history");
 
             // wyszukiwanie wartości kursów, po dacie w pobranym pliku
             if (listaDat.size() > 0) {
@@ -261,7 +290,7 @@ public class CzytanieDanychJsoup {
 //            nowaSpolka = changeNull(nowaSpolka);
 //            amSpRepository.save(nowaSpolka);
 
-            int millis = new Random().nextInt(400) + 300;
+            int millis = new Random().nextInt(400) + 600;
 //            System.out.println("Czekam: " + millis + "ms");
             Thread.sleep(millis);
 
@@ -307,14 +336,12 @@ public class CzytanieDanychJsoup {
     }
 
 
-
-
     //        !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //            Metoda  automatycznego zapisu danych z HTTP, uruchamiana zawsze przy uruchomianiu aplikacji
     @EventListener(ApplicationReadyEvent.class)
     public void get() {
 
-        LocalDateTime startCzytaj = LocalDateTime.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), LocalDate.now().getDayOfMonth(), 22, 20);
+        LocalDateTime startCzytaj = LocalDateTime.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), LocalDate.now().getDayOfMonth(), 22, 40);
         LocalDateTime teraz = LocalDateTime.now();
         Duration czasOczekiwania = Duration.between(teraz, startCzytaj);
         if (czasOczekiwania.getSeconds() < 0) czasOczekiwania = Duration.between(teraz.minusDays(1), startCzytaj);
@@ -346,7 +373,7 @@ public class CzytanieDanychJsoup {
         TimerTask taskClearGoscie = new TimerTask() {
             @Override
             public void run() {
-                    queryRepository.clearGoscie(LocalDate.now().minusDays(2).toString());
+                queryRepository.clearGoscie(LocalDate.now().minusDays(3).toString());
             }
         };
         Timer timerClear = new Timer();

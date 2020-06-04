@@ -1,7 +1,5 @@
 package pl.info.mojeakcje.maestroameryka.model.modelCustomer;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -11,7 +9,8 @@ public class CurrentUser {
 
 
     private String name;
-    private Long idCU;
+    private String ipCU;
+    private String pass;
 
     public String currentUserName() {
         String username = "";
@@ -24,6 +23,14 @@ public class CurrentUser {
         return username;
     }
 
+    public String getPass() {
+        return pass;
+    }
+
+    public void setPass(String pass) {
+        this.pass = pass;
+    }
+
     public String getName() {
         return name;
     }
@@ -32,19 +39,20 @@ public class CurrentUser {
         this.name = name;
     }
 
-    public Long getIdCU() {
-        return idCU;
+    public String getIpCU() {
+        return ipCU;
     }
 
-    public void setIdCU(Long idCU) {
-        this.idCU = idCU;
+    public void setIpCU(String ipCU) {
+        this.ipCU = ipCU;
     }
 
     @Override
     public String toString() {
         return "CurrentUser{" +
                 "name='" + name + '\'' +
-                ", idCU=" + idCU +
+                ", ipCU='" + ipCU + '\'' +
+                ", pass='" + pass + '\'' +
                 '}';
     }
 }

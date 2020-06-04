@@ -53,7 +53,7 @@
                 <!--                </li>-->
             </ul>
             <img class="myBaner" th:src="@{/img/slang13.png}" alt="">
-            <form class="form-inline my-2 my-lg-0" method="POST" action="/amerykaspolka/find"
+            <form class="form-inline my-2 my-lg-0 myBanerFormEdit" method="POST" action="/amerykaspolka/find"
                   th:object="${amerykaSpolkaFind}">
                 <input class="form-control mr-sm-2" type="search" placeholder="Ticker" th:field="*{ticker}">
                 <button class="btn btn-outline-success my-2 my-sm-0 myColor" type="submit">Szukaj</button>
@@ -266,7 +266,7 @@
 
             <div id="mojeZmiany" style="height: 97%">
                     <button id="showAll" onclick="przeslijShowButton()" class="btn btn-outline-success my-2 my-sm-0 myColor myShowStrategie"
-                            th:text="${showAll} ? 'Show mine' : 'Show all'" >Show all
+                            th:text="${showAll} ? 'SHOW LESS' : 'SHOW ALL'" type="submit">SHOW ALL
                     </button>            <!--       onclick="myFunction()     Show mine-->
                 <p></p>
                 <h4 th:text="'Wynik wyszukiwania: (' + ${wynikWyszukiwania} + ')'">Wyniki wyszukiwania:</h4>
