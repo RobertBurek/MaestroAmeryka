@@ -1,21 +1,10 @@
 package pl.info.mojeakcje.maestroameryka.model.modelCustomer;
 
-import pl.info.mojeakcje.maestroameryka.controller.CustomerController;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-
-//@CustomerController.PasswordMatches
 public class CustomerDto {
 
-//    @NotNull
-//    @NotEmpty
     private String nickCustomer;
-//    @NotNull
-//    @NotEmpty
     private String passwordCustomer;
-//    @NotNull
-//    @NotEmpty
     private String matchPasswordCustomer;
 
 
