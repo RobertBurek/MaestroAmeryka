@@ -24,10 +24,6 @@ public class AmSpNewControllerRest {
         this.amSpRepository = amSpRepository;
     }
 
-    //    public AmSpNewControllerRest(AmSpNewRepository amSpNewRepository, AmSpRepository amSpRepository) {
-//        this.amSpNewRepository = amSpNewRepository;
-//        this.amSpRepository = amSpRepository;
-//    }
 
     @GetMapping("/modyfikuj")
     public String modyfikuj() throws InterruptedException {
