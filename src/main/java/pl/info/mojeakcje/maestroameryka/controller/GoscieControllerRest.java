@@ -13,7 +13,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
-import static pl.info.mojeakcje.maestroameryka.MaestroamerykaApplication.*;
+import static pl.info.mojeakcje.maestroameryka.MaestroamerykaApplication.ANSI_RESET;
+import static pl.info.mojeakcje.maestroameryka.MaestroamerykaApplication.ANSI_YELLOW;
 
 @Log4j2
 @RestController
@@ -23,10 +24,6 @@ public class GoscieControllerRest {
 
     GoscieRepository goscieRepository;
     CurrentUser currentUser;
-
-//    public GoscieControllerRest(GoscieRepository goscieRepository) {
-//        this.goscieRepository = goscieRepository;
-//    }
 
 
     public GoscieControllerRest(GoscieRepository goscieRepository, CurrentUser currentUser) {
