@@ -3,7 +3,7 @@ package pl.info.mojeakcje.maestroameryka.model;
 import pl.info.mojeakcje.maestroameryka.model.modelCustomer.Customer;
 
 import javax.persistence.*;
-import java.util.List;
+
 
 @Entity
 public class WszystkieDane {
@@ -11,13 +11,10 @@ public class WszystkieDane {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne//(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "cust_id", referencedColumnName = "idCustomer")
     private Customer customer;
-//        @OneToMany//targetEntity = AmerykaSpolka.class, cascade = CascadeType.ALL //mappedBy = "customer")
-//    @JoinColumn(name = "spolka_id", referencedColumnName = "id")
-//    private List<AmerykaSpolka> amerykaSpolki;
-    @OneToOne//(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "spolka_id", referencedColumnName = "idSpolka")
     private AmerykaSpolka amerykaSpolka;
     private String notatka;
@@ -42,15 +39,7 @@ public class WszystkieDane {
         this.customer = customer;
     }
 
-//    public List<AmerykaSpolka> getAmerykaSpolki() {
-//        return amerykaSpolki;
-//    }
-//
-//    public void setAmerykaSpolki(List<AmerykaSpolka> amerykaSpolki) {
-//        this.amerykaSpolki = amerykaSpolki;
-//    }
-
-        public AmerykaSpolka getAmerykaSpolka() {
+    public AmerykaSpolka getAmerykaSpolka() {
         return amerykaSpolka;
     }
 
