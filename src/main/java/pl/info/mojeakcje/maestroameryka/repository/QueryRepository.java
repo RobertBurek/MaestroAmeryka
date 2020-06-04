@@ -21,17 +21,8 @@ public class QueryRepository {
 
     protected final org.slf4j.Logger log = LoggerFactory.getLogger(getClass());
 
-//    @Autowired
-//    CurrentUser currentUser;
-
     @PersistenceContext
     private EntityManager entityManager;
-
-    //    @Query("UPDATE wszystkie_dane SET cust_id = 500 WHERE wszystkie_dane.id = 1")
-//    void changeIdNewCustomer(Long id);
-
-    //    @Query("INSERT INTO wszystkie_dane SELECT * FROM nowy_customer")
-//    void copyNewCustomer();
 
     @Transactional
     public void changeIdNewCustomer(Long id) {
@@ -49,13 +40,11 @@ public class QueryRepository {
 
     @Transactional
     public List<WszystkieDane> getDane(Long idCustomer) {
-
         return entityManager.createNativeQuery("SELECT * FROM wszystkie_dane INNER JOIN customer\n" +
                 "ON customer.id_customer = wszystkie_dane.cust_id INNER JOIN ameryka_spolka\n" +
                 "ON ameryka_spolka.id = wszystkie_dane.spolka_id\n" +
                 "WHERE wszystkie_dane.cust_id= ?", WszystkieDane.class)
                 .setParameter(1, idCustomer)
-//                .executeUpdate();
                 .getResultList();
     }
 
@@ -73,28 +62,12 @@ public class QueryRepository {
 
 
     @Transactional
-//    public List<WszystkieDane> getDaneWithView(String name) {
     public List<Object> getDaneWithView(String name) {
-//        long startTime = System.nanoTime();
-//        List<WszystkieDane> wszystkieDanes = entityManager.createNativeQuery("SELECT * FROM " + name)
         List<Object> wszystkieDanes = entityManager.createNativeQuery("SELECT * FROM " + name)
-//        return entityManager.createQuery("SELECT WszystkieDane FROM " + name)
-//                .setParameter(1, name)
-//                .executeUpdate();
-
                 .getResultList();
-//        long executionTime = System.nanoTime() - startTime;
-//        log.info("Zajęło mi to: " + (executionTime / 1000000000) + "s");
         return wszystkieDanes;
-//        return entityManager.createNativeQuery("SELECT * FROM " + name, WszystkieDane.class)
-////        return entityManager.createQuery("SELECT WszystkieDane FROM " + name)
-////.setMaxResults(20)
-////                .setParameter(1, name)
-////                .executeUpdate();
-//                .getResultList();
     }
 
-//    INSERT INTO `MaestroAmerykaTeraz`.`wszystkie_dane`( `notatka`, `widoczny`, `spolka_id`, `cust_id`) SELECT `notatka`, `widoczny`, `spolka_id`, `cust_id` FROM `MaestroAmerykaTeraz`.`nowy_customer`
 
     public List<AmerykaSpolka> findAllWszystkieDane(String currentUserName) {
         amerykaSpolki.clear();
@@ -120,7 +93,6 @@ public class QueryRepository {
             amerykaSpolka.setCourseYTD(String.valueOf(obj[15]));
             amerykaSpolka.setCourse12M(String.valueOf(obj[11]));
             amerykaSpolka.setCourseCurrent(String.valueOf(obj[14]));
-//            if (Long.parseLong(String.valueOf(obj[10]))==1) System.out.println(amerykaSpolka);
             amerykaSpolki.add(amerykaSpolka);
         }
         return amerykaSpolki;
@@ -140,6 +112,7 @@ public class QueryRepository {
                 .executeUpdate();
         log.info("Wyczyszczono dane dla AnonymousUsera!");
     }
+
 
     @Transactional
     public void clearGoscie(String dateClear) {
