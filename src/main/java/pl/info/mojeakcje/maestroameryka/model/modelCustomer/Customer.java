@@ -19,12 +19,8 @@ public class Customer implements UserDetails {
     private Long idCustomer;
     private String nickCustomer;
     private String passwordCustomer;
-//    private String matchPasswordCustomer;
     private String roleCustomer;
     private String ipCustomer;
-//    @OneToMany(targetEntity = AmerykaSpolka.class, cascade =CascadeType.ALL) //mappedBy = "customer")
-//    @JoinColumn(name = "customer_id", referencedColumnName = "id")
-//    private List<AmerykaSpolka> amerykaSpolki;
 
 
     public Customer(String nickCustomer, String passwordCustomer, String roleCustomer, String ipCustomer) {
@@ -84,14 +80,6 @@ public class Customer implements UserDetails {
         this.idCustomer = idCustomer;
     }
 
-//    public String getMatchPasswordCustomer() {
-//        return matchPasswordCustomer;
-//    }
-//
-//    public void setMatchPasswordCustomer(String matchPasswordCustomer) {
-//        this.matchPasswordCustomer = matchPasswordCustomer;
-//    }
-
     public Long getId() {
         return idCustomer;
     }
@@ -131,14 +119,6 @@ public class Customer implements UserDetails {
     public void setIpCustomer(String ipCustomer) {
         this.ipCustomer = ipCustomer;
     }
-
-//    public List<AmerykaSpolka> getAmerykaSpolki() {
-//        return amerykaSpolki;
-//    }
-//
-//    public void setAmerykaSpolki(List<AmerykaSpolka> amerykaSpolki) {
-//        this.amerykaSpolki = amerykaSpolki;
-//    }
 
 
     @Override
