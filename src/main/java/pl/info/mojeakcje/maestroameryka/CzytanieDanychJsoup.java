@@ -316,7 +316,7 @@ public class CzytanieDanychJsoup {
     @EventListener(ApplicationReadyEvent.class)
     public void get() {
 
-        LocalDateTime startCzytaj = LocalDateTime.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), LocalDate.now().getDayOfMonth(), 22, 40);
+        LocalDateTime startCzytaj = LocalDateTime.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), LocalDate.now().getDayOfMonth(), 22, 20);
         LocalDateTime teraz = LocalDateTime.now();
         Duration czasOczekiwania = Duration.between(teraz, startCzytaj);
         if (czasOczekiwania.getSeconds() < 0) czasOczekiwania = Duration.between(teraz.minusDays(1), startCzytaj);
@@ -337,7 +337,7 @@ public class CzytanieDanychJsoup {
 
         queryRepository.findAllWszystkieDane("anonymousUser");
 
-        startCzytaj = LocalDateTime.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), LocalDate.now().getDayOfMonth(), 05, 01);
+        startCzytaj = LocalDateTime.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), LocalDate.now().getDayOfMonth(), 05, 15);
         teraz = LocalDateTime.now();
         czasOczekiwania = Duration.between(teraz, startCzytaj);
         if (czasOczekiwania.getSeconds() < 0) czasOczekiwania = Duration.between(teraz.minusDays(1), startCzytaj);

@@ -265,9 +265,10 @@
         <article style="width: 80%; padding: 15px;">
 
             <div id="mojeZmiany" style="height: 97%">
-                    <button id="showAll" onclick="przeslijShowButton()" class="btn btn-outline-success my-2 my-sm-0 myColor myShowStrategie"
-                            th:text="${showAll} ? 'SHOW LESS' : 'SHOW ALL'" type="submit">SHOW ALL
-                    </button>            <!--       onclick="myFunction()     Show mine-->
+                <button id="showAll" onclick="przeslijShowButton()"
+                        class="btn btn-outline-success my-2 my-sm-0 myColor myShowStrategie"
+                        th:text="${showAll} ? 'SHOW LESS' : 'SHOW ALL'" type="submit">SHOW ALL
+                </button>            <!--       onclick="myFunction()     Show mine-->
                 <p></p>
                 <h4 th:text="'Wynik wyszukiwania: (' + ${wynikWyszukiwania} + ')'">Wyniki wyszukiwania:</h4>
                 <p th:text="'Filtrowanie w kolejności:  '+ ${filtry}"></p>
@@ -295,55 +296,55 @@
 
                         <tr th:each="amerykaSpolka: ${amerykaSpolki}">
                             <div th:id="'wierszTabeli'+${amerykaSpolka.idSpolka}">
-                                <td style="padding-bottom: 0px;padding-top: 5px;">
-                                    <table class="myTable ">
-                                        <tr>
-                                            <td class="tableWidth" style="font-weight: bold;">
-                                                <a class="myTableA" th:href="${amerykaSpolka.website}"
-                                                   th:text="${amerykaSpolka.name}"
-                                                   target="_blank">
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td style="font-size: 75%;">
-                                                <a class="myTableA" th:text="${amerykaSpolka.ticker}"
-                                                   th:href="'https://finance.yahoo.com/quote/'+${amerykaSpolka.ticker}+'/profile?p='+${amerykaSpolka.ticker}"
-                                                   target="_blank">
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                                <td style="padding-bottom: 6px; padding-top: 6px;">
-                                    <table class="myTable" style="font-size: 75%;">
-                                        <tr>
-                                            <td class="tableWidthSector"
-                                                th:text="${amerykaSpolka.sector}"/>
-                                        </tr>
-                                        <tr>
-                                            <td th:text="${amerykaSpolka.industry}"/>
-                                        </tr>
-                                    </table>
-                                </td>
-                                <td style="vertical-align:middle; padding: 0px; font-size: 75%;"
-                                    th:text="${amerykaSpolka.market}"/>
-                                <td style="vertical-align:middle; padding: 0px;" th:text="${amerykaSpolka.yTD}"
-                                    th:class="${amerykaSpolka.yTD.startsWith('-')} ? 'textCenter negative' : 'textCenter positive'"/>
-                                <td style="vertical-align:middle; padding: 0px;" th:text="${amerykaSpolka.m1}"
-                                    th:class="${amerykaSpolka.m1.startsWith('-')} ? 'textCenter negative' : 'textCenter positive'"/>
-                                <td style="vertical-align:middle; padding: 0px;" th:text="${amerykaSpolka.m3}"
-                                    th:class="${amerykaSpolka.m3.startsWith('-')} ? 'textCenter negative' : 'textCenter positive'"/>
-                                <td style="vertical-align:middle; padding: 0px;" th:text="${amerykaSpolka.m12}"
-                                    th:class="${amerykaSpolka.m12.startsWith('-')} ? 'textCenter negative' : 'textCenter positive'"/>
-                                <td class="textCenter" style="vertical-align:middle;">
-                                    <i th:id="'note'+${amerykaSpolka.idSpolka}"
-                                       th:title="${amerykaSpolka.note}"
-                                       th:value="${amerykaSpolka.name}+' ('+${amerykaSpolka.ticker}+')'"
-                                       th:onclick="'startPopup('+${amerykaSpolka.idSpolka}+');'"
-                                       th:class="${amerykaSpolka.note.length()>0} ? 'far fa-comment-dots isNote myNote' : 'far fa-comment myNote'"
-                                    ></i>
-                                </td>
+                                    <td style="padding-bottom: 0px;padding-top: 5px;">
+                                        <table class="myTable ">
+                                            <tr>
+                                                <td class="tableWidth" style="font-weight: bold;">
+                                                    <a class="myTableA" th:href="${amerykaSpolka.website}"
+                                                       th:text="${amerykaSpolka.name}"
+                                                       target="_blank">
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="font-size: 75%;">
+                                                    <a class="myTableA" th:text="${amerykaSpolka.ticker}"
+                                                       th:href="'https://finance.yahoo.com/quote/'+${amerykaSpolka.ticker}+'/profile?p='+${amerykaSpolka.ticker}"
+                                                       target="_blank">
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td style="padding-bottom: 6px; padding-top: 6px;">
+                                        <table class="myTable" style="font-size: 75%;">
+                                            <tr>
+                                                <td class="tableWidthSector"
+                                                    th:text="${amerykaSpolka.sector}"/>
+                                            </tr>
+                                            <tr>
+                                                <td th:text="${amerykaSpolka.industry}"/>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td style="vertical-align:middle; padding: 0px; font-size: 75%;"
+                                        th:text="${amerykaSpolka.market}"/>
+                                    <td style="vertical-align:middle; padding: 0px;" th:text="${amerykaSpolka.yTD}"
+                                        th:class="${amerykaSpolka.yTD.startsWith('-')} ? 'textCenter negative' : 'textCenter positive'"/>
+                                    <td style="vertical-align:middle; padding: 0px;" th:text="${amerykaSpolka.m1}"
+                                        th:class="${amerykaSpolka.m1.startsWith('-')} ? 'textCenter negative' : 'textCenter positive'"/>
+                                    <td style="vertical-align:middle; padding: 0px;" th:text="${amerykaSpolka.m3}"
+                                        th:class="${amerykaSpolka.m3.startsWith('-')} ? 'textCenter negative' : 'textCenter positive'"/>
+                                    <td style="vertical-align:middle; padding: 0px;" th:text="${amerykaSpolka.m12}"
+                                        th:class="${amerykaSpolka.m12.startsWith('-')} ? 'textCenter negative' : 'textCenter positive'"/>
+                                    <td class="textCenter" style="vertical-align:middle;">
+                                        <i th:id="'note'+${amerykaSpolka.idSpolka}"
+                                           th:title="${amerykaSpolka.note}"
+                                           th:value="${amerykaSpolka.name}+' ('+${amerykaSpolka.ticker}+')'"
+                                           th:onclick="'startPopup('+${amerykaSpolka.idSpolka}+');'"
+                                           th:class="${amerykaSpolka.note.length()>0} ? 'far fa-comment-dots isNote myNote' : 'far fa-comment myNote'"
+                                        ></i>
+                                    </td>
                             </div>
                         </tr>
                         </tbody>
