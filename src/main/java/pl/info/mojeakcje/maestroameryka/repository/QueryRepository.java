@@ -33,7 +33,8 @@ public class QueryRepository {
 
     @Transactional
     public void copyNewCustomer() {
-        entityManager.createNativeQuery("INSERT INTO `MaestroAmerykaTeraz`.`wszystkie_dane`( `notatka`, `widoczny`, `spolka_id`, `cust_id`) SELECT `notatka`, `widoczny`, `spolka_id`, `cust_id` FROM `MaestroAmerykaTeraz`.`nowy_customer`")
+//        entityManager.createNativeQuery("INSERT INTO `MaestroAmerykaTeraz`.`wszystkie_dane`( `notatka`, `widoczny`, `spolka_id`, `cust_id`) SELECT `notatka`, `widoczny`, `spolka_id`, `cust_id` FROM `MaestroAmerykaTeraz`.`nowy_customer`")
+        entityManager.createNativeQuery("INSERT INTO `wszystkie_dane`( `notatka`, `widoczny`, `spolka_id`, `cust_id`) SELECT `notatka`, `widoczny`, `spolka_id`, `cust_id` FROM `nowy_customer`")
                 .executeUpdate();
     }
 
