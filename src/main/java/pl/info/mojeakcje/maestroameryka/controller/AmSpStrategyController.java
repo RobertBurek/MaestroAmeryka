@@ -6,7 +6,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import pl.info.mojeakcje.maestroameryka.model.AmerykaSpolka;
 import pl.info.mojeakcje.maestroameryka.model.ShowSpolka;
 import pl.info.mojeakcje.maestroameryka.model.WszystkieDane;
@@ -69,6 +71,23 @@ public class AmSpStrategyController {
         model.addAttribute("filtry", filtry);
         return "amerykastrategie";
     }
+
+//    POST dla wyszukiwania w zakładce STARTEGIA
+//    @PostMapping("/amerykastrategie/find")
+//    public String strategiaFindAmerykaSpolka(@ModelAttribute AmerykaSpolka amerykaSpolkaFind) {
+//        log.info("Szukać będziemy: " + ANSI_FIOLET + amerykaSpolkaFind.getTicker().toUpperCase() + ANSI_RESET);
+//        amerykaSpolki = queryRepository.findAllWszystkieDane(currentUser.currentUserName());
+//        if (!amerykaSpolkaFind.getTicker().equals("")) {
+//            amerykaSpolki = amerykaSpolki.stream()
+//                    .filter(amerykaSpolka -> (amerykaSpolka.getTicker()).contains(amerykaSpolkaFind.getTicker().toUpperCase()))
+//                    .collect(Collectors.toList());
+//        }
+//        log.info("Lista znalezionych spółek: " + ANSI_YELLOW + amerykaSpolki.stream()
+//                .map(amerykaSpolka -> amerykaSpolka.getTicker() + ", ")
+//                .collect(Collectors.joining()) + ANSI_RESET);
+////        return "redirect:/amerykaspolka/find";
+//        return "redirect:/amerykastrategie";
+//    }
 
 
     @GetMapping("/amerykastrategie/find/{id}&{name}")

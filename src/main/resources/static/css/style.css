@@ -88,6 +88,9 @@ img {
     padding-left: 50px;
 }
 
+.form-control::placeholder{
+    color: #73777b !important;
+}
 
 .myForm {
     display: flex;

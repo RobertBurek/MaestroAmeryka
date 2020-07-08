@@ -69,8 +69,20 @@
             <img class="myBaner" th:src="@{/img/slang13.png}" alt="">
             <form class="form-inline my-2 my-lg-0 myBanerForm" method="POST" action="/amerykaspolka/find"
                   th:object="${amerykaSpolkaFind}">
-                <input class="form-control mr-sm-2" type="search" placeholder="Ticker" th:field="*{ticker}">
-                <button class="btn btn-outline-success my-2 my-sm-0 myColor" type="submit">Szukaj</button>
+<!--                <div class="input-group">-->
+                <div class="input-group mb-3" style="margin-top: 17px;">
+                <select class="custom-select" id="inputGroupSelect" style="width: 105px;color: #61a5ea;" th:field="*{idWszystkieDane}">
+                    <option value="1">Name</option>
+                    <option value="2">Ticker</option>
+                    <option value="3">Secktor</option>
+                    <option value="4">Industry</option>
+                </select>
+<!--                    <div class="input-group-append">-->
+                        <input class="form-control mr-sm-2" type="search" placeholder="Phrase..." th:field="*{ticker}" style="width: 150px;">
+                </div>
+                        <button class="btn btn-outline-success my-2 my-sm-0 myColor" type="submit">Szukaj</button>
+<!--                    </div>-->
+<!--                </div>-->
             </form>
         </div>
     </nav>

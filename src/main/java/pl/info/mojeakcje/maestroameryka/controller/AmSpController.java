@@ -15,6 +15,7 @@ import pl.info.mojeakcje.maestroameryka.repository.WszysDaneRepository;
 import pl.info.mojeakcje.maestroameryka.service.ClearAnonymous;
 
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import static pl.info.mojeakcje.maestroameryka.MaestroamerykaApplication.*;
@@ -119,11 +120,26 @@ public class AmSpController {
 
     @PostMapping("/amerykaspolka/find")
     public String postFindAmerykaSpolka(@ModelAttribute AmerykaSpolka amerykaSpolkaFind) {
-        log.info("Szukać będziemy: " + ANSI_FIOLET + amerykaSpolkaFind.getTicker().toUpperCase() + ANSI_RESET);
+        log.info("Szukać będziemy: " + ANSI_FIOLET + amerykaSpolkaFind.getTicker().toUpperCase() + ANSI_RESET+" , w grupie: "+amerykaSpolkaFind.getIdWszystkieDane());
         amerykaSpolki = queryRepository.findAllWszystkieDane(currentUser.currentUserName());
         if (!amerykaSpolkaFind.getTicker().equals("")) {
             amerykaSpolki = amerykaSpolki.stream()
-                    .filter(amerykaSpolka -> (amerykaSpolka.getTicker()).contains(amerykaSpolkaFind.getTicker().toUpperCase()))
+//                    .filter(amerykaSpolka -> (amerykaSpolka.getTicker()).contains(amerykaSpolkaFind.getTicker().toUpperCase()))
+//                    .filter(amerykaSpolka -> (amerykaSpolka.getName().toUpperCase()).contains(amerykaSpolkaFind.getTicker().toUpperCase()))
+                    .filter(new Predicate<AmerykaSpolka>() {
+                        @Override
+                        public boolean test(AmerykaSpolka amerykaSpolka) {
+                            if (amerykaSpolkaFind.getIdWszystkieDane()==1)
+                                return (amerykaSpolka.getName().toUpperCase()).contains(amerykaSpolkaFind.getTicker().toUpperCase());
+                            if (amerykaSpolkaFind.getIdWszystkieDane()==2)
+                                return (amerykaSpolka.getTicker()).contains(amerykaSpolkaFind.getTicker().toUpperCase());
+                            if (amerykaSpolkaFind.getIdWszystkieDane()==4)
+                                return (amerykaSpolka.getIndustry().toUpperCase()).contains(amerykaSpolkaFind.getTicker().toUpperCase());
+                            if (amerykaSpolkaFind.getIdWszystkieDane()==3)
+                                return (amerykaSpolka.getSector().toUpperCase()).contains(amerykaSpolkaFind.getTicker().toUpperCase());
+                            return false;
+                        }
+                    })
                     .collect(Collectors.toList());
         }
         log.info("Lista znalezionych spółek: " + ANSI_YELLOW + amerykaSpolki.stream()
