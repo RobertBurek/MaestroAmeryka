@@ -170,7 +170,7 @@ function selectMarketsList() {
         ListInputMarket.forEach(value => {
             if (value.checked) countCheckedMarket++;
         });
-        console.log("Market zwybrane: " + countCheckedMarket);
+        console.log("Market wybrane: " + countCheckedMarket);
         if (countCheckedMarket != 0) document.querySelector('#customSwitchMarket').checked = false;
         if (countCheckedMarket != 0) marketButton.innerHTML = "Market  (" + countCheckedMarket + ")";
         else marketButton.innerHTML = "Market";
@@ -189,7 +189,7 @@ function selectMarketsList() {
         ListInputSector.forEach(value => {
             if (value.checked) countCheckedSector++;
         });
-        console.log("Sector zwybrane: " + countCheckedSector);
+        console.log("Sector wybrane: " + countCheckedSector);
         if (countCheckedSector != 0) document.querySelector('#customSwitchSector').checked = true;
         if (countCheckedSector == 0) document.querySelector('#customSwitchSector').checked = false;
         if (countCheckedSector != 0) sectorButton.innerHTML = "Sector  (" + countCheckedSector + ")";
@@ -203,7 +203,7 @@ function selectMarketsList() {
         ListInputIndustry.forEach(value => {
             if (value.checked) countCheckedIndustry++;
         });
-        console.log("Industry zwybrane: " + countCheckedIndustry);
+        console.log("Industry wybrane: " + countCheckedIndustry);
         if (countCheckedIndustry != 0) document.querySelector('#customSwitchIndustry').checked = true;
         if (countCheckedIndustry == 0) document.querySelector('#customSwitchIndustry').checked = false;
         if (countCheckedIndustry != 0) industryButton.innerHTML = "Industry  (" + countCheckedIndustry + ")";
@@ -219,7 +219,7 @@ function selectSectorsList() {
         ListInputSector.forEach(value => {
             if (value.checked) countCheckedSector++;
         });
-        console.log("Sector zwybrane: " + countCheckedSector);
+        console.log("Sector wybrane: " + countCheckedSector);
         if (countCheckedSector != 0) document.querySelector('#customSwitchSector').checked = false;
         if (countCheckedSector != 0) sectorButton.innerHTML = "Sector  (" + countCheckedSector + ")";
         else sectorButton.innerHTML = "Sector";
@@ -238,7 +238,7 @@ function selectSectorsList() {
         ListInputMarket.forEach(value => {
             if (value.checked) countCheckedMarket++;
         });
-        console.log("Market zwybrane: " + countCheckedMarket);
+        console.log("Market wybrane: " + countCheckedMarket);
         if (countCheckedMarket != 0) document.querySelector('#customSwitchMarket').checked = true;
         if (countCheckedMarket == 0) document.querySelector('#customSwitchMarket').checked = false;
         if (countCheckedMarket != 0) marketButton.innerHTML = "Market  (" + countCheckedMarket + ")";
@@ -252,7 +252,7 @@ function selectSectorsList() {
         ListInputIndustry.forEach(value => {
             if (value.checked) countCheckedIndustry++;
         });
-        console.log("Industry zwybrane: " + countCheckedIndustry);
+        console.log("Industry wybrane: " + countCheckedIndustry);
         if (countCheckedIndustry != 0) document.querySelector('#customSwitchIndustry').checked = true;
         if (countCheckedIndustry == 0) document.querySelector('#customSwitchIndustry').checked = false;
         if (countCheckedIndustry != 0) industryButton.innerHTML = "Industry  (" + countCheckedIndustry + ")";
@@ -268,7 +268,7 @@ function selectIndustriesList() {
         ListInputIndustry.forEach(value => {
             if (value.checked) countCheckedIndustry++;
         });
-        console.log("Industry zwybrane: " + countCheckedIndustry);
+        console.log("Industry wybrane: " + countCheckedIndustry);
         if (countCheckedIndustry != 0) document.querySelector('#customSwitchIndustry').checked = false;
         if (countCheckedIndustry != 0) industryButton.innerHTML = "Industry  (" + countCheckedIndustry + ")";
         else industryButton.innerHTML = "Industry";
@@ -287,7 +287,7 @@ function selectIndustriesList() {
         ListInputMarket.forEach(value => {
             if (value.checked) countCheckedMarket++;
         });
-        console.log("Market zwybrane: " + countCheckedMarket);
+        console.log("Market wybrane: " + countCheckedMarket);
         if (countCheckedMarket != 0) document.querySelector('#customSwitchMarket').checked = true;
         if (countCheckedMarket == 0) document.querySelector('#customSwitchMarket').checked = false;
         if (countCheckedMarket != 0) marketButton.innerHTML = "Market  (" + countCheckedMarket + ")";
@@ -301,7 +301,7 @@ function selectIndustriesList() {
         ListInputSector.forEach(value => {
             if (value.checked) countCheckedSector++;
         });
-        console.log("Sector zwybrane: " + countCheckedSector);
+        console.log("Sector wybrane: " + countCheckedSector);
         if (countCheckedSector != 0) document.querySelector('#customSwitchSector').checked = true;
         if (countCheckedSector == 0) document.querySelector('#customSwitchSector').checked = false;
         if (countCheckedSector != 0) sectorButton.innerHTML = "Sector  (" + countCheckedSector + ")";
