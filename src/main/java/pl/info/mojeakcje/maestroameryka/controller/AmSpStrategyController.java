@@ -92,15 +92,12 @@ public class AmSpStrategyController {
         return "amerykastrategie";
     }
 
-    //    POST dla wyszukiwania w zakładce STARTEGIA
     @PostMapping("/amerykastrategie/find")
     public String strategiaFindAmerykaSpolka(@ModelAttribute AmerykaSpolka amerykaSpolkaFind) {
         log.info("Szukać będziemy: " + ANSI_FIOLET + amerykaSpolkaFind.getTicker().toUpperCase() + ANSI_RESET + " , w grupie: " + amerykaSpolkaFind.getIdWszystkieDane());
         amerykaSpolki = queryRepository.findAllWszystkieDane(currentUser.currentUserName());
         if (!amerykaSpolkaFind.getTicker().equals("")) {
             amerykaSpolki = amerykaSpolki.stream()
-//                    .filter(amerykaSpolka -> (amerykaSpolka.getTicker()).contains(amerykaSpolkaFind.getTicker().toUpperCase()))
-//                    .filter(amerykaSpolka -> (amerykaSpolka.getName().toUpperCase()).contains(amerykaSpolkaFind.getTicker().toUpperCase()))
                     .filter(predicateFind(amerykaSpolkaFind))
                     .collect(Collectors.toList());
         }
@@ -118,34 +115,25 @@ public class AmSpStrategyController {
         log.info("Lista znalezionych spółek: " + ANSI_YELLOW + amerykaSpolki.stream()
                 .map(amerykaSpolka -> amerykaSpolka.getTicker() + ", ")
                 .collect(Collectors.joining()) + ANSI_RESET);
-//        return "redirect:/amerykastrategie/find/0&";
-//        log.info(amerykaSpolki.toString());
         return "redirect:/amerykastrategie/result";
     }
 
     @GetMapping("/amerykastrategie/find/{id}&{name}")
     public String getSectorStrategy(@PathVariable Integer id, @PathVariable String name, Model model) {
-        log.info(ANSI_RED + "1 - " + amerykaSpolki.size() + ANSI_RESET);
         if (id == -3) {
             if (showSpolka.getShow()) showSpolka.setShow(false);
             else showSpolka.setShow(true);
         }
-        log.info(ANSI_RED + "2 - " + amerykaSpolki.size() + ANSI_RESET);
         dodajDoWyszukiwania(id, name);
-        log.info(ANSI_RED + "3 - " + amerykaSpolki.size() + ANSI_RESET);
 //        amerykaSpolki = queryRepository.findAllWszystkieDane(currentUser.currentUserName());
-        log.info(ANSI_RED + "4  " + amerykaSpolki.size() + ANSI_RESET);
         if (!showSpolka.show) queryRepository.showWD();
-        log.info(ANSI_RED + "5 - " + amerykaSpolki.size() + ANSI_RESET);
 //        amerykaSpolki = amerykaSpolki
 //                .stream()
 //                .filter(szukanaPredicate())
 //                .collect(Collectors.toList());
         log.info(ANSI_RED + "Ilość pokazanych spółek: " + amerykaSpolki.size() + ANSI_RESET);
-        log.info(ANSI_RED + "6 - " + amerykaSpolki.size() + ANSI_RESET);
 //        if (szukane.size() == 0)
 //            amerykaSpolki.clear();
-        log.info(ANSI_RED + "7 - " + amerykaSpolki.size() + ANSI_RESET);
         filtry = "";
         if (filtrowane.size() > 0) {
             for (String filtr : filtrowane) {
@@ -157,17 +145,14 @@ public class AmSpStrategyController {
                 filtry += filtr + ",  ";
             }
         }
-        log.info(ANSI_RED + "8 - " + amerykaSpolki.size() + ANSI_RESET);
         if (id == -2) {
             log.info(ANSI_BLUE + "Posortowałem: " + name + ANSI_RESET);
             defaultSort = name;
         }
-        log.info(ANSI_RED + "9 - " + amerykaSpolki.size() + ANSI_RESET);
         amerykaSpolki = amerykaSpolki
                 .stream()
                 .sorted(sortowanieComparator(defaultSort))
                 .collect(Collectors.toList());
-        log.info(ANSI_RED + "10 - " + amerykaSpolki.size() + ANSI_RESET);
         model.addAttribute("showAll", showSpolka.getShow());
         model.addAttribute("amerykaSpolki", amerykaSpolki);
         model.addAttribute("amerykaSpolkaModified", new AmerykaSpolka());
@@ -369,7 +354,6 @@ public class AmSpStrategyController {
             @Override
             public boolean test(AmerykaSpolka amerykaSpolka) {
                 boolean flaga = false;
-//                boolean flaga = true;
                 for (Szukana szukana : szukane) {
                     switch (szukana.getRodzajSzukanej()) {
                         case "market": {
@@ -410,10 +394,6 @@ public class AmSpStrategyController {
             log.info(ANSI_GREEN + "Dodano/Usunięto do pokazania: " + name + " / " + szukana.getSzukanaWartosc() + ANSI_RESET);
             log.info(ANSI_GREEN_ + "Ilość warunków: " + szukane.size() + ANSI_RESET);
             log.info(ANSI_GREEN + "Lista warunków: " + szukane + ANSI_RESET);
-//            if (szukane.size() > 0) amerykaSpolki = queryRepository.findAllWszystkieDane(currentUser.currentUserName())
-//                    .stream()
-//                    .filter(szukanaPredicate())
-//                    .collect(Collectors.toList());
             if (szukane.size() == 0) amerykaSpolki.clear();
             amerykaSpolkiFound.clear();
         }
@@ -427,17 +407,6 @@ public class AmSpStrategyController {
             log.info(ANSI_YELLOW + "Ilość filtrów: " + filtrowane.size() + ANSI_RESET);
             log.info(ANSI_YELLOW + "Lista filtrów: " + filtrowane + ANSI_RESET);
             if (amerykaSpolkiFound.size() > 0) amerykaSpolki = amerykaSpolkiFound;
-//            filtry = "";
-//            if (filtrowane.size() > 0) {
-//                for (String filtr : filtrowane) {
-//                    amerykaSpolki = amerykaSpolki
-//                            .stream()
-//                            .filter(wyszukajPredicate(filtr))
-//                            .collect(Collectors.toList());
-//                    log.info(ANSI_FIOLET + "Ilość po filtrowaniu: " + amerykaSpolki.size() + ANSI_RESET);
-//                    filtry += filtr + ",  ";
-//                }
-//            }
         }
     }
 
