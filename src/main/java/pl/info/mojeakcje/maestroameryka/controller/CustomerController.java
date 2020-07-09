@@ -1,6 +1,5 @@
 package pl.info.mojeakcje.maestroameryka.controller;
 
-import lombok.extern.log4j.Log4j2;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,7 +23,6 @@ import static pl.info.mojeakcje.maestroameryka.MaestroamerykaApplication.*;
  * Created by Robert Burek
  */
 
-@Log4j2
 @Controller
 public class CustomerController {
 

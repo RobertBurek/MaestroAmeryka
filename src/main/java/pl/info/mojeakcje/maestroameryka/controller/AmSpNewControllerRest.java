@@ -1,7 +1,6 @@
 package pl.info.mojeakcje.maestroameryka.controller;
 
 
-import lombok.extern.log4j.Log4j2;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,7 +10,6 @@ import pl.info.mojeakcje.maestroameryka.repository.AmSpRepository;
 
 import java.util.Random;
 
-@Log4j2
 @RestController
 public class AmSpNewControllerRest {
 

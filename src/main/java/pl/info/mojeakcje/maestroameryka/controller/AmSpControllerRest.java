@@ -1,6 +1,5 @@
 package pl.info.mojeakcje.maestroameryka.controller;
 
-import lombok.extern.log4j.Log4j2;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,7 +26,6 @@ import static pl.info.mojeakcje.maestroameryka.MaestroamerykaApplication.ANSI_RE
  * Created by Robert Burek
  */
 
-@Log4j2
 @RestController
 public class AmSpControllerRest {
 
