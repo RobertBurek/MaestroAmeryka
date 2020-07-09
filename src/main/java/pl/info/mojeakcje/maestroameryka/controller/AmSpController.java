@@ -1,6 +1,5 @@
 package pl.info.mojeakcje.maestroameryka.controller;
 
-import lombok.extern.log4j.Log4j2;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,7 +23,6 @@ import static pl.info.mojeakcje.maestroameryka.MaestroamerykaApplication.*;
  * Created by Robert Burek
  */
 
-@Log4j2
 @Controller
 public class AmSpController {
 
@@ -120,22 +118,20 @@ public class AmSpController {
 
     @PostMapping("/amerykaspolka/find")
     public String postFindAmerykaSpolka(@ModelAttribute AmerykaSpolka amerykaSpolkaFind) {
-        log.info("Szukać będziemy: " + ANSI_FIOLET + amerykaSpolkaFind.getTicker().toUpperCase() + ANSI_RESET+" , w grupie: "+amerykaSpolkaFind.getIdWszystkieDane());
+        log.info("Szukać będziemy: " + ANSI_FIOLET + amerykaSpolkaFind.getTicker().toUpperCase() + ANSI_RESET + " , w grupie: " + amerykaSpolkaFind.getIdWszystkieDane());
         amerykaSpolki = queryRepository.findAllWszystkieDane(currentUser.currentUserName());
         if (!amerykaSpolkaFind.getTicker().equals("")) {
             amerykaSpolki = amerykaSpolki.stream()
-//                    .filter(amerykaSpolka -> (amerykaSpolka.getTicker()).contains(amerykaSpolkaFind.getTicker().toUpperCase()))
-//                    .filter(amerykaSpolka -> (amerykaSpolka.getName().toUpperCase()).contains(amerykaSpolkaFind.getTicker().toUpperCase()))
                     .filter(new Predicate<AmerykaSpolka>() {
                         @Override
                         public boolean test(AmerykaSpolka amerykaSpolka) {
-                            if (amerykaSpolkaFind.getIdWszystkieDane()==1)
+                            if (amerykaSpolkaFind.getIdWszystkieDane() == 1)
                                 return (amerykaSpolka.getName().toUpperCase()).contains(amerykaSpolkaFind.getTicker().toUpperCase());
-                            if (amerykaSpolkaFind.getIdWszystkieDane()==2)
+                            if (amerykaSpolkaFind.getIdWszystkieDane() == 2)
                                 return (amerykaSpolka.getTicker()).contains(amerykaSpolkaFind.getTicker().toUpperCase());
-                            if (amerykaSpolkaFind.getIdWszystkieDane()==4)
+                            if (amerykaSpolkaFind.getIdWszystkieDane() == 4)
                                 return (amerykaSpolka.getIndustry().toUpperCase()).contains(amerykaSpolkaFind.getTicker().toUpperCase());
-                            if (amerykaSpolkaFind.getIdWszystkieDane()==3)
+                            if (amerykaSpolkaFind.getIdWszystkieDane() == 3)
                                 return (amerykaSpolka.getSector().toUpperCase()).contains(amerykaSpolkaFind.getTicker().toUpperCase());
                             return false;
                         }
