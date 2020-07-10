@@ -3,6 +3,7 @@ package pl.info.mojeakcje.maestroameryka.controller;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
@@ -66,6 +67,13 @@ public class AmSpControllerRest {
                 .stream()
                 .filter(amerykaSpolka -> amerykaSpolka.getTicker().equals(ticker.toUpperCase()))
                 .findAny().orElse(new AmerykaSpolka());
+    }
+
+    @RequestMapping("/usunSpolke/{id}&{ticker}")
+    public AmerykaSpolka deleteSpolkaInDB(@PathVariable Long id, @PathVariable String ticker) {
+        AmerykaSpolka amerykaSpolka = amSpRepository.findById(id).get();
+        if (amerykaSpolka.getTicker().equals(ticker.toUpperCase())) log.info("To właściwa spółka: " + ticker.toUpperCase());
+    return amerykaSpolka;
     }
 
 
