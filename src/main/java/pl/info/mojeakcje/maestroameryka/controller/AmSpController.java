@@ -118,6 +118,7 @@ public class AmSpController {
 
     @PostMapping("/amerykaspolka/find")
     public String postFindAmerykaSpolka(@ModelAttribute AmerykaSpolka amerykaSpolkaFind) {
+        showSpolka.setShow(true);
         log.info("Szukać będziemy: " + ANSI_FIOLET + amerykaSpolkaFind.getTicker().toUpperCase() + ANSI_RESET + " , w grupie: " + amerykaSpolkaFind.getIdWszystkieDane());
         amerykaSpolki = queryRepository.findAllWszystkieDane(currentUser.currentUserName());
         if (!amerykaSpolkaFind.getTicker().equals("")) {
