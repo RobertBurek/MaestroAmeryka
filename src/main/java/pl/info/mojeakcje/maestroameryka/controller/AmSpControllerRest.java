@@ -97,6 +97,19 @@ public class AmSpControllerRest {
     }
 
 
+    @RequestMapping("/naprawWidoki")
+    public void naprawWidoki() {
+        List<Customer> Customers = (List<Customer>) custoRepository.findAll();
+        for (Customer customer : Customers) {
+            if (!customer.getNickCustomer().equals("")) {
+                queryRepository.delView(customer.getNickCustomer());
+                queryRepository.setView(customer.getNickCustomer(), customer.getId());
+                log.info("Zmieniono widok dla użytkownika: " + customer.getNickCustomer());
+            }
+        }
+    }
+
+
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     public String handleFileUpload(@RequestParam("plik") MultipartFile file) {
         if (!file.isEmpty()) {
