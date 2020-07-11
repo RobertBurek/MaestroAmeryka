@@ -104,13 +104,6 @@ public class AmSpStrategyController {
                 .stream()
                 .filter(predicateFind(amerykaSpolkaFind))
                 .collect(Collectors.toList());
-        ;
-        if (amerykaSpolkiFound == amerykaSpolki) {
-            log.info("są to te same obiekty");
-        } else {
-            log.info("są to inne obiekty");
-        }
-        ;
         log.info("Lista znalezionych spółek: " + ANSI_YELLOW + amerykaSpolki.stream()
                 .map(amerykaSpolka -> amerykaSpolka.getTicker() + ", ")
                 .collect(Collectors.joining()) + ANSI_RESET);
@@ -124,16 +117,9 @@ public class AmSpStrategyController {
             else showSpolka.setShow(true);
         }
         dodajDoWyszukiwania(id, name);
-//        amerykaSpolki = queryRepository.findAllWszystkieDane(currentUser.currentUserName());
         if (!showSpolka.show) queryRepository.showWD();
-            else if ((szukane.size() == 0) && (amerykaSpolkiFound.size() > 0)) amerykaSpolki = amerykaSpolkiFound;
-//        amerykaSpolki = amerykaSpolki
-//                .stream()
-//                .filter(szukanaPredicate())
-//                .collect(Collectors.toList());
+        else if ((szukane.size() == 0) && (amerykaSpolkiFound.size() > 0)) amerykaSpolki = amerykaSpolkiFound;
         log.info(ANSI_RED + "Ilość pokazanych spółek: " + amerykaSpolki.size() + ANSI_RESET);
-//        if (szukane.size() == 0)
-//            amerykaSpolki.clear();
         filtry = "";
         if (filtrowane.size() > 0) {
             for (String filtr : filtrowane) {
