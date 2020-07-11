@@ -1,6 +1,6 @@
 function przeslijShowButton() {
     $("#mojeZmiany").load('/amerykastrategie/find/-3&');
-    console.log("Wysłano zapytanie: " + '/amerykastrategie/find/-3&');
+    console.log("Wysłano ALL/LESS: " + '/amerykastrategie/find/-3&');
 };
 
 

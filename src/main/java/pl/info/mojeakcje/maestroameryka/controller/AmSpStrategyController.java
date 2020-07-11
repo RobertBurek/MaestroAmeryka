@@ -92,6 +92,7 @@ public class AmSpStrategyController {
 
     @PostMapping("/amerykastrategie/find")
     public String strategiaFindAmerykaSpolka(@ModelAttribute AmerykaSpolka amerykaSpolkaFind) {
+        showSpolka.setShow(true);
         log.info("Szukać będziemy: " + ANSI_FIOLET + amerykaSpolkaFind.getTicker().toUpperCase() + ANSI_RESET + " , w grupie: " + amerykaSpolkaFind.getIdWszystkieDane());
         amerykaSpolki = queryRepository.findAllWszystkieDane(currentUser.currentUserName());
         if (!amerykaSpolkaFind.getTicker().equals("")) {
@@ -125,6 +126,7 @@ public class AmSpStrategyController {
         dodajDoWyszukiwania(id, name);
 //        amerykaSpolki = queryRepository.findAllWszystkieDane(currentUser.currentUserName());
         if (!showSpolka.show) queryRepository.showWD();
+            else if ((szukane.size() == 0) && (amerykaSpolkiFound.size() > 0)) amerykaSpolki = amerykaSpolkiFound;
 //        amerykaSpolki = amerykaSpolki
 //                .stream()
 //                .filter(szukanaPredicate())
