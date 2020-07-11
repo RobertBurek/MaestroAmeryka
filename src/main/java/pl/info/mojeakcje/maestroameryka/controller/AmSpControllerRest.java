@@ -8,7 +8,10 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import pl.info.mojeakcje.maestroameryka.CzytanieDanychJsoup;
 import pl.info.mojeakcje.maestroameryka.model.AmerykaSpolka;
+import pl.info.mojeakcje.maestroameryka.model.modelCustomer.Customer;
 import pl.info.mojeakcje.maestroameryka.repository.AmSpRepository;
+import pl.info.mojeakcje.maestroameryka.repository.CustoRepository;
+import pl.info.mojeakcje.maestroameryka.repository.QueryRepository;
 import pl.info.mojeakcje.maestroameryka.service.DBfromCSV;
 
 import java.io.BufferedOutputStream;
@@ -39,6 +42,12 @@ public class AmSpControllerRest {
 
     @Autowired
     DBfromCSV dBfromCSV;
+
+    @Autowired
+    QueryRepository queryRepository;
+
+    @Autowired
+    CustoRepository custoRepository;
 
     //    @Value("${data.folder.csv}")
     @Value("${data.folder.csv}")
@@ -71,9 +80,19 @@ public class AmSpControllerRest {
     @RequestMapping("/usunSpolke/{id}&{ticker}")
     public AmerykaSpolka deleteSpolkaInDB(@PathVariable Long id, @PathVariable String ticker) {
         AmerykaSpolka amerykaSpolka = amSpRepository.findById(id).get();
-        if (amerykaSpolka.getTicker().equals(ticker.toUpperCase()))
-            log.info("To właściwa spółka: " + ticker.toUpperCase());
-        else log.info("Nie ta spółka !!!!  Id nie zgadza się z ticker. " + amerykaSpolka.getTicker() + " != " + ticker.toUpperCase());
+        if (amerykaSpolka.getTicker().equals(ticker.toUpperCase())) {
+            log.info("To właściwa spółka: " + ticker.toUpperCase() + " do usunięcia!!! ");
+            queryRepository.del_ameryka_spolka(id);
+            List<Customer> Customers = (List<Customer>) custoRepository.findAll();
+            for (Customer customer : Customers) {
+                if (!customer.getNickCustomer().equals("")) {
+                    queryRepository.delView(customer.getNickCustomer());
+                    queryRepository.setView(customer.getNickCustomer(), customer.getId());
+                    log.info("Zmieniono widok dla użytkownika: " + customer.getNickCustomer());
+                }
+            }
+        } else
+            log.info("Nie ta spółka !!!!  Id nie zgadza się z ticker. " + amerykaSpolka.getTicker() + " != " + ticker.toUpperCase());
         return amerykaSpolka;
     }
 

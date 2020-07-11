@@ -62,7 +62,7 @@ public class AmSpController {
 
     @GetMapping("/amerykaspolka")
     public String getStart(Model model) {
-        clearAnonymous.clearShowAnonymousUser(0L);
+        clearAnonymous.clearShowAnonymousUser(10L);
         queryRepository.findAllWszystkieDane(currentUser.currentUserName());
         if (!showSpolka.show) queryRepository.showWD();
         amerykaSpolki = amerykaSpolki.stream().sorted((o1, o2) -> o1.getName().compareTo(o2.getName())).collect(Collectors.toList());
@@ -87,7 +87,7 @@ public class AmSpController {
     @GetMapping("/amerykaspolka/show/{id}&{widok}")
     public String chengeShow(@PathVariable Long id, @PathVariable Boolean widok, Model model) {
         if ((currentUser.currentUserName().equals("anonymousUser")) && (!isDelay))
-            clearAnonymous.clearShowAnonymousUser(20L);
+            clearAnonymous.clearShowAnonymousUser(10L);
         String position = "amerykawidok::#position" + id;
         AmerykaSpolka amerykaSpolka = amerykaSpolki.stream().filter(amSp -> amSp.getIdSpolka().equals(id)).findFirst().get();
         WszystkieDane wszystkieDane = wszysDaneRepository.findById(amerykaSpolka.getIdWszystkieDane()).get();

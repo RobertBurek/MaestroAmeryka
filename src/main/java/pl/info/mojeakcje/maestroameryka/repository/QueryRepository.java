@@ -63,8 +63,7 @@ public class QueryRepository {
 
     @Transactional
     public void delView(String name) {
-        entityManager.createNativeQuery("DROP VIEW ?;")
-                .setParameter(1, name)
+        entityManager.createNativeQuery("DROP VIEW " + name + ";")
                 .executeUpdate();
         log.info("Usunięto widok: " + name);
     }
@@ -133,14 +132,14 @@ public class QueryRepository {
 
     @Transactional
     public void del_ameryka_spolka(Long id_spolka) {
-        entityManager.createNativeQuery("DELETE FROM `ameryka_spolka` WHERE `ameryka_spolka`.`id_spolka` = ? ")
-                .setParameter(1, id_spolka)
-                .executeUpdate();
-        log.info("Usunięto spółkę o id_spolka: " + id_spolka + " z tabeli ameryka_spolka.");
         entityManager.createNativeQuery("DELETE FROM `wszystkie_dane` WHERE `wszystkie_dane`.`spolka_id` = ? ")
                 .setParameter(1, id_spolka)
                 .executeUpdate();
         log.info("Usunięto wszystkie rekordy o id_spolka: " + id_spolka + " z tabeli wszystkie_dane.");
+        entityManager.createNativeQuery("DELETE FROM `ameryka_spolka` WHERE `ameryka_spolka`.`id_spolka` = ? ")
+                .setParameter(1, id_spolka)
+                .executeUpdate();
+        log.info("Usunięto spółkę o id_spolka: " + id_spolka + " z tabeli ameryka_spolka.");
         entityManager.createNativeQuery("DELETE FROM `nowy_customer` WHERE `nowy_customer`.`spolka_id` = ? ")
                 .setParameter(1, id_spolka)
                 .executeUpdate();
