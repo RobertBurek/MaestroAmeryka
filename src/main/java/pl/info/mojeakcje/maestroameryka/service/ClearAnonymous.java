@@ -32,7 +32,7 @@ public class ClearAnonymous {
         TimerTask taskClear = new TimerTask() {
             @Override
             public void run() {
-                queryRepository.clearSetupAnonymus();
+                queryRepository.clearSetupAnonymous();
                 isDelay = false;
             }
         };
