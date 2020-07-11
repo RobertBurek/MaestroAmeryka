@@ -1,6 +1,5 @@
 package pl.info.mojeakcje.maestroameryka.repository;
 
-import lombok.extern.log4j.Log4j2;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +14,7 @@ import java.util.stream.Collectors;
 
 import static pl.info.mojeakcje.maestroameryka.MaestroamerykaApplication.amerykaSpolki;
 
-@Log4j2
+
 @Repository
 public class QueryRepository {
 
@@ -114,7 +113,7 @@ public class QueryRepository {
 
     @Transactional
     public void clearSetupAnonymous() {
-        entityManager.createNativeQuery("UPDATE `anonymousUser` SET `widoczny` = b'1' WHERE `anonymousUser`.`id_customer` = 9")
+        entityManager.createNativeQuery("UPDATE `anonymousUser` SET `widoczny` = b'0' WHERE `anonymousUser`.`id_customer` = 9")
                 .executeUpdate();
         entityManager.createNativeQuery("UPDATE `anonymousUser` SET `notatka` = '' WHERE `anonymousUser`.`id_customer` = 9")
                 .executeUpdate();

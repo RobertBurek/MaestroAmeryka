@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ShowSpolka {
 
-    public static Boolean show = false;
+    public static Boolean show = true;
 
     public Boolean getShow() {
         return show;
