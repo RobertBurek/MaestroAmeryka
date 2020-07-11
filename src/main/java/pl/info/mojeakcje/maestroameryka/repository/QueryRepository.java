@@ -61,6 +61,14 @@ public class QueryRepository {
         log.info("Ustawiłem widok dla: " + name + "  nr: " + idCustomer);
     }
 
+    @Transactional
+    public void delView(String name) {
+        entityManager.createNativeQuery("DROP VIEW ?;")
+                .setParameter(1, name)
+                .executeUpdate();
+        log.info("Usunięto widok: " + name);
+    }
+
 
     @Transactional
     public List<Object> getDaneWithView(String name) {
