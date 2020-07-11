@@ -73,6 +73,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/amerykastrategie").hasRole("USER")
 //                .antMatchers("/amerykaspolka/save/edit").hasRole("USER")
                 .antMatchers("/amerykaspolka/show").hasRole("USER")
+                .antMatchers("/usunSpolke/{id}&{ticker}").hasRole("ADMIN")
+//                .antMatchers("/danezbazy").hasRole("ADMIN")
+                .antMatchers("/odczytdanychzplikucsv/{nameFile}").hasRole("ADMIN")
+                .antMatchers("/naprawWidoki").hasRole("ADMIN")
+                .antMatchers("/napraw").hasRole("ADMIN")
+//                .antMatchers("/danezbazy/{ticker}").hasRole("ADMIN")
 
 
 //                .antMatchers("/**").hasRole("ADMIN")
