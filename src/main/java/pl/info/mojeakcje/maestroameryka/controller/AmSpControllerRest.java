@@ -156,7 +156,7 @@ public class AmSpControllerRest {
     }
 
 
-    @GetMapping("/czytajdane") //czyta dane z URL
+    @GetMapping("/czytajDane") //czyta dane z URL
     public String createTableWithHttp() throws InterruptedException {
         log.info(ANSI_BLUE + " Ręcznie uruchomiono czytanie danych!!!" + ANSI_RESET);
         czytanieDanychJsoup.czytaj();

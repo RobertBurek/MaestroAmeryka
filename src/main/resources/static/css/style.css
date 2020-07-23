@@ -492,14 +492,14 @@ section p {
     }
     .myBanerForm{
         position: relative;
-        top: -200px;
-        left: 58%;
+        top: -215px;
+        left: 53%;
         width: 360px;
     }
     .myBanerFormEdit{
         position: relative;
-        top: -115px;
-        left: 58%;
+        top: -120px;
+        left: 54%;
         width: 360px;
     }
 }
@@ -525,6 +525,9 @@ section p {
     }
     article {
         padding: 0px;
+    }
+    .myBaner{
+        left: 24%;
     }
 }
 
