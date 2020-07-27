@@ -35,4 +35,6 @@ public class GoscieControllerRest {
         currentUser.setIpCU(infoKto);
         goscieRepository.save(new Goscie(LocalDate.now(), LocalTime.now(), infoKto, infoMiasto, infoKraj));
     }
+
+
 }
