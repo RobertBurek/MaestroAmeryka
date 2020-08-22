@@ -102,7 +102,11 @@ public class AmSpControllerRest {
         List<Customer> Customers = (List<Customer>) custoRepository.findAll();
         for (Customer customer : Customers) {
             if (!customer.getNickCustomer().equals("")) {
-                queryRepository.delView(customer.getNickCustomer());
+                try {
+                    queryRepository.delView(customer.getNickCustomer());
+                } catch (Exception ex){
+                    log.info("Nie usunąłem widoku " + customer.getNickCustomer());
+                }
                 queryRepository.setView(customer.getNickCustomer(), customer.getId());
                 log.info("Zmieniono widok dla użytkownika: " + customer.getNickCustomer());
             }

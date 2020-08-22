@@ -51,7 +51,7 @@ public class QueryRepository {
 
     @Transactional
     public void setView(String name, Long idCustomer) {
-        entityManager.createNativeQuery("CREATE or replace VIEW " + name + " AS SELECT * FROM wszystkie_dane INNER JOIN customer " +
+        entityManager.createNativeQuery("CREATE or replace VIEW `" + name + "` AS SELECT * FROM wszystkie_dane INNER JOIN customer " +
                 "ON customer.id_customer = wszystkie_dane.cust_id INNER JOIN ameryka_spolka " +
                 "ON ameryka_spolka.id_spolka = wszystkie_dane.spolka_id " +
                 "WHERE wszystkie_dane.cust_id= ?;")
@@ -62,15 +62,19 @@ public class QueryRepository {
 
     @Transactional
     public void delView(String name) {
-        entityManager.createNativeQuery("DROP VIEW " + name + ";")
-                .executeUpdate();
-        log.info("Usunięto widok: " + name);
+        try {
+            entityManager.createNativeQuery("DROP VIEW `" + name + "`;")
+                    .executeUpdate();
+            log.info("Usunięto widok: " + name);
+        } catch (Exception ex){
+            log.info("Brak widok: " + name + " , nie można usunąć.");
+        };
     }
 
 
     @Transactional
     public List<Object> getDaneWithView(String name) {
-        List<Object> wszystkieDanes = entityManager.createNativeQuery("SELECT * FROM " + name)
+        List<Object> wszystkieDanes = entityManager.createNativeQuery("SELECT * FROM `" + name + "`;")
                 .getResultList();
         return wszystkieDanes;
     }
