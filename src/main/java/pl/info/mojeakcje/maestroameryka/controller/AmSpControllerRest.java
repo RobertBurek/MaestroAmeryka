@@ -98,7 +98,7 @@ public class AmSpControllerRest {
 
 
     @RequestMapping("/naprawWidoki")
-    public void naprawWidoki() {
+    public String naprawWidoki() {
         List<Customer> Customers = (List<Customer>) custoRepository.findAll();
         for (Customer customer : Customers) {
             if (!customer.getNickCustomer().equals("")) {
@@ -111,6 +111,7 @@ public class AmSpControllerRest {
                 log.info("Zmieniono widok dla użytkownika: " + customer.getNickCustomer());
             }
         }
+        return "Naprawiłem widoki użytkowników!!!";
     }
 
 
@@ -152,7 +153,7 @@ public class AmSpControllerRest {
                 amerykaSpolka.setM1(amerykaSpolka.getM1().replace(",", "."));
                 amerykaSpolka.setM12(amerykaSpolka.getM12().replace(",", "."));
                 amerykaSpolka.setyTD(amerykaSpolka.getyTD().replace(",", "."));
-                amSpRepository.save(amerykaSpolka);
+//                amSpRepository.save(amerykaSpolka);    zakomentowane na wszelki wypadek
             }
         });
         log.info(ANSI_BLUE + "Naprawiłem!!!" + ANSI_RESET);
@@ -160,7 +161,7 @@ public class AmSpControllerRest {
     }
 
 
-    @GetMapping("/czytajDane") //czyta dane z URL
+    @GetMapping("/czytajDane") //czyta dane z URLi
     public String createTableWithHttp() throws InterruptedException {
         log.info(ANSI_BLUE + " Ręcznie uruchomiono czytanie danych!!!" + ANSI_RESET);
         czytanieDanychJsoup.czytaj();
@@ -185,7 +186,7 @@ public class AmSpControllerRest {
             }
             amerykaSpolka.setWebsite(webSite);
             System.out.println(amerykaSpolka.getIdSpolka() + "  " + webSite);
-            amSpRepository.save(amerykaSpolka);
+//            amSpRepository.save(amerykaSpolka);    zakomentowane na wszelki wypadek
             int millis = new Random().nextInt(200);
             Thread.sleep(millis);
         }

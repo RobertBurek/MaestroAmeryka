@@ -51,6 +51,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/usunSpolke/{id}&{ticker}").hasRole("ADMIN")
                 .antMatchers("/odczytdanychzplikucsv/{nameFile}").hasRole("ADMIN")
                 .antMatchers("/naprawWidoki").hasRole("ADMIN")
+                .antMatchers("/customers").hasRole("ADMIN")
+                .antMatchers("/customers/{id_customer}").hasRole("ADMIN")
                 .antMatchers("/napraw").hasRole("ADMIN")
                 .and()
                 .formLogin()
