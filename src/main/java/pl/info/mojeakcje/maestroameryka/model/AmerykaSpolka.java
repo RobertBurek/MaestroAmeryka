@@ -1,13 +1,17 @@
 package pl.info.mojeakcje.maestroameryka.model;
 
 
+import org.springframework.hateoas.RepresentationModel;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+
 @Entity
-public class AmerykaSpolka {
+public class AmerykaSpolka extends RepresentationModel<AmerykaSpolka> {
+//public class AmerykaSpolka extends ResourceSupport {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
