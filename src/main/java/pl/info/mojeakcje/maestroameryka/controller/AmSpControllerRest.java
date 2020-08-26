@@ -1,12 +1,12 @@
 package pl.info.mojeakcje.maestroameryka.controller;
 
-import org.jetbrains.annotations.NotNull;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
@@ -19,18 +19,12 @@ import pl.info.mojeakcje.maestroameryka.repository.CustoRepository;
 import pl.info.mojeakcje.maestroameryka.repository.QueryRepository;
 import pl.info.mojeakcje.maestroameryka.service.DBfromCSV;
 
-import javax.annotation.Resource;
-import javax.xml.ws.Response;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 import java.util.function.Consumer;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -42,6 +36,7 @@ import static pl.info.mojeakcje.maestroameryka.MaestroamerykaApplication.ANSI_RE
  */
 
 @RestController
+//@RequestMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
 public class AmSpControllerRest {
 
     protected final org.slf4j.Logger log = LoggerFactory.getLogger(getClass());
@@ -81,15 +76,16 @@ public class AmSpControllerRest {
 
 
     @GetMapping("/danezbazy/{ticker}")
-    public ResponseEntity<EntityModel<AmerykaSpolka>> getSpolkaTicker(@PathVariable String ticker) {
+    public ResponseEntity<AmerykaSpolka> getSpolkaTicker(@PathVariable String ticker) {
         Link link = linkTo(AmSpControllerRest.class).slash("/danezbazy/" + ticker).withSelfRel();
         log.info(ANSI_BLUE + "Dane z bazy MaestroAmeryka z tabeli: ameryka_spolka, spolka: " + ticker.toUpperCase() + ANSI_RESET);
         AmerykaSpolka amerykaSpolkaGetTicker = ((List<AmerykaSpolka>) amSpRepository.findAll())
                 .stream()
                 .filter(amerykaSpolka -> amerykaSpolka.getTicker().equals(ticker.toUpperCase()))
                 .findAny().orElse(new AmerykaSpolka());
-        EntityModel<AmerykaSpolka> amerykaSpolkaResource = new EntityModel<>(amerykaSpolkaGetTicker, link);
-        return new ResponseEntity<>(amerykaSpolkaResource, HttpStatus.OK);
+//        EntityModel<AmerykaSpolka> amerykaSpolkaResource = new EntityModel<>(amerykaSpolkaGetTicker, link);
+        amerykaSpolkaGetTicker.add(link);
+        return new ResponseEntity<>(amerykaSpolkaGetTicker, HttpStatus.OK);
     }
 
     @RequestMapping("/usunSpolke/{id}&{ticker}")
@@ -119,7 +115,7 @@ public class AmSpControllerRest {
             if (!customer.getNickCustomer().equals("")) {
                 try {
                     queryRepository.delView(customer.getNickCustomer());
-                } catch (Exception ex){
+                } catch (Exception ex) {
                     log.info("Nie usunąłem widoku " + customer.getNickCustomer());
                 }
                 queryRepository.setView(customer.getNickCustomer(), customer.getId());
