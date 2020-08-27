@@ -3,6 +3,7 @@ package pl.info.mojeakcje.maestroameryka.controller;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
@@ -69,9 +70,13 @@ public class AmSpControllerRest {
     }
 
     @GetMapping("/danezbazy")
-    public Iterable<AmerykaSpolka> getDatabase() {
+    public CollectionModel<AmerykaSpolka> getDatabase() {
+        Iterable<AmerykaSpolka> allAmerykaSpolka = amSpRepository.findAll();
+        allAmerykaSpolka.forEach(amerykaSpolka -> amerykaSpolka.add(linkTo(AmSpControllerRest.class).slash("/danezbazy/" + amerykaSpolka.getTicker()).withSelfRel()));
+        Link link = linkTo(AmSpControllerRest.class).slash("/danezbazy").withSelfRel();
+        CollectionModel<AmerykaSpolka> amerykaSpolkaResource = new CollectionModel<>(allAmerykaSpolka, link);
         log.info(ANSI_BLUE + "Wypisałem wszystkie dane z bazy MaestroAmeryka z tabeli: ameryka_spolka" + ANSI_RESET);
-        return amSpRepository.findAll();
+        return amerykaSpolkaResource;
     }
 
 
