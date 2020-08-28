@@ -70,13 +70,13 @@ public class AmSpControllerRest {
     }
 
     @GetMapping("/danezbazy")
-    public CollectionModel<AmerykaSpolka> getDatabase() {
+    public ResponseEntity<CollectionModel<AmerykaSpolka>> getDatabase() {
         Iterable<AmerykaSpolka> allAmerykaSpolka = amSpRepository.findAll();
         allAmerykaSpolka.forEach(amerykaSpolka -> amerykaSpolka.add(linkTo(AmSpControllerRest.class).slash("/danezbazy/" + amerykaSpolka.getTicker()).withSelfRel()));
         Link link = linkTo(AmSpControllerRest.class).slash("/danezbazy").withSelfRel();
         CollectionModel<AmerykaSpolka> amerykaSpolkaResource = new CollectionModel<>(allAmerykaSpolka, link);
         log.info(ANSI_BLUE + "Wypisałem wszystkie dane z bazy MaestroAmeryka z tabeli: ameryka_spolka" + ANSI_RESET);
-        return amerykaSpolkaResource;
+        return new ResponseEntity<>(amerykaSpolkaResource, HttpStatus.OK);
     }
 
 
