@@ -79,6 +79,17 @@ public class AmSpControllerRest {
         return new ResponseEntity<>(amerykaSpolkaResource, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/danezbazy", produces = MediaType.TEXT_PLAIN_VALUE)
+    public String getDatabaseTickets() {
+        String allAmerykaSpolka = ((List<AmerykaSpolka>) amSpRepository.findAll())
+                .stream()
+                .map(AmerykaSpolka::getTicker)
+                .reduce((acc, curr) -> String.join(", ", acc, curr))
+                .orElse(" ");
+        log.info(ANSI_BLUE + "Wynik: " + allAmerykaSpolka + ANSI_RESET);
+        return allAmerykaSpolka;
+    }
+
 
     @GetMapping("/danezbazy/{ticker}")
     public ResponseEntity<AmerykaSpolka> getSpolkaTicker(@PathVariable String ticker) {
