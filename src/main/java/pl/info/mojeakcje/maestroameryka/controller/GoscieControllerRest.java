@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.info.mojeakcje.maestroameryka.model.modelCustomer.CurrentUser;
-import pl.info.mojeakcje.maestroameryka.model.modelCustomer.Customer;
 import pl.info.mojeakcje.maestroameryka.model.modelGoscie.Goscie;
 import pl.info.mojeakcje.maestroameryka.repository.GoscieRepository;
 
@@ -14,11 +13,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 import static pl.info.mojeakcje.maestroameryka.MaestroamerykaApplication.*;
-import static pl.info.mojeakcje.maestroameryka.MaestroamerykaApplication.ANSI_BLUE;
 
 @RestController
 public class GoscieControllerRest {
@@ -43,16 +39,20 @@ public class GoscieControllerRest {
 
 
     @GetMapping("/goscie")
-    public Iterable<Goscie> getDBCustomers() {
+    public String getDBCustomers() {
         log.info(ANSI_BLUE + "Wypisałem wszystkich z ostatnich trzech dni." + ANSI_RESET);
-        return goscieRepository.findAll();
-//                .stream()
-//                .map(new Function<Customer, String>() {
-//                    @Override
-//                    public String apply(Customer customer) {
-//                        return customer.getNickCustomer();
-//                    }
-//                }).collect(Collectors.toList());
+        String goscieLista = ((List<Goscie>) goscieRepository.findAll())
+                .stream()
+                .map(goscie -> String.join(" ,  ",
+                        "IP: " + goscie.getInfoKto(),
+                        "Kraj: " + goscie.getInfoKraj(),
+                        "Miasto: " + goscie.getInfoMiasto(),
+                        "dnia: " + goscie.getInfoKiedy().toString(),
+                        "o godzinie: " + goscie.getInfoOKtorej().toString()
+                ))
+                .reduce((acc, curr) -> String.join("<br>", acc, curr))
+                .orElse(" ");
+        return goscieLista;
     }
 
     @GetMapping("/goscie/{id_gosc}")
