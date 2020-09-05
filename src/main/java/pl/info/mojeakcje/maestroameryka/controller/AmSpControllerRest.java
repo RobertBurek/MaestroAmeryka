@@ -29,6 +29,7 @@ import java.util.UUID;
 import java.util.function.Consumer;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import static pl.info.mojeakcje.maestroameryka.MaestroamerykaApplication.ANSI_BLUE;
 import static pl.info.mojeakcje.maestroameryka.MaestroamerykaApplication.ANSI_RESET;
 
@@ -93,7 +94,8 @@ public class AmSpControllerRest {
 
     @GetMapping("/danezbazy/{ticker}")
     public ResponseEntity<AmerykaSpolka> getSpolkaTicker(@PathVariable String ticker) {
-        Link link = linkTo(AmSpControllerRest.class).slash("/danezbazy/" + ticker).withSelfRel();
+//        Link link = linkTo(AmSpControllerRest.class).slash("/danezbazy/" + ticker).withSelfRel();
+        Link link = linkTo(methodOn(AmSpControllerRest.class).getSpolkaTicker(ticker)).withSelfRel();
         log.info(ANSI_BLUE + "Dane z bazy MaestroAmeryka z tabeli: ameryka_spolka, spolka: " + ticker.toUpperCase() + ANSI_RESET);
         AmerykaSpolka amerykaSpolkaGetTicker = ((List<AmerykaSpolka>) amSpRepository.findAll())
                 .stream()
