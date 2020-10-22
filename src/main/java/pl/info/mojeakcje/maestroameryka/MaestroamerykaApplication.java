@@ -2,6 +2,7 @@ package pl.info.mojeakcje.maestroameryka;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import pl.info.mojeakcje.maestroameryka.model.AmerykaSpolka;
 import pl.info.mojeakcje.maestroameryka.model.modeleStrategii.Industry;
 import pl.info.mojeakcje.maestroameryka.model.modeleStrategii.Market;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootApplication
+@EnableAspectJAutoProxy(proxyTargetClass=true)
 public class MaestroamerykaApplication {
 
     public static List<AmerykaSpolka> amerykaSpolki = new ArrayList<>();
